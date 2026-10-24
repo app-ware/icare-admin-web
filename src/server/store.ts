@@ -44,7 +44,9 @@ export class PortalStore {
       CREATE TABLE IF NOT EXISTS preview_dealer_centers (dealer_id INTEGER NOT NULL, center_id INTEGER NOT NULL, center_type INTEGER NOT NULL, PRIMARY KEY(dealer_id,center_id,center_type));
       CREATE TABLE IF NOT EXISTS dealer_operations (id TEXT PRIMARY KEY, mode TEXT NOT NULL, actor_id INTEGER NOT NULL, target_id INTEGER, action TEXT NOT NULL, state TEXT NOT NULL, created_at INTEGER NOT NULL, completed_at INTEGER);
       CREATE TABLE IF NOT EXISTS preview_center_users (id INTEGER PRIMARY KEY,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,local_id INTEGER,secure_id INTEGER,username TEXT NOT NULL,local_username TEXT NOT NULL,first_name TEXT NOT NULL,last_name TEXT NOT NULL,email TEXT NOT NULL,active INTEGER,is_admin INTEGER,is_super_admin INTEGER NOT NULL,issues TEXT NOT NULL,roles TEXT NOT NULL);
-      CREATE TABLE IF NOT EXISTS center_user_operations (id TEXT PRIMARY KEY,mode TEXT NOT NULL,actor_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,user_key TEXT NOT NULL,action TEXT NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,completed_at INTEGER);`);
+      CREATE TABLE IF NOT EXISTS center_user_operations (id TEXT PRIMARY KEY,mode TEXT NOT NULL,actor_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,user_key TEXT NOT NULL,action TEXT NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,completed_at INTEGER);
+      CREATE TABLE IF NOT EXISTS preview_report_grants (dealer_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,PRIMARY KEY(dealer_id,center_id,center_type));
+      CREATE TABLE IF NOT EXISTS report_exports (id TEXT PRIMARY KEY,dealer_id INTEGER NOT NULL,mode TEXT NOT NULL,params TEXT NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,finished_at INTEGER,filename TEXT);`);
   }
   transaction<T>(action: () => T): T {
     this.db.exec('BEGIN IMMEDIATE');

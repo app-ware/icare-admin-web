@@ -13,6 +13,7 @@ export interface DealerIdentity {
   isSuperAdmin: boolean;
   credentialStamp: string;
   ownedKeys: string[];
+  reportKeys: string[];
 }
 export async function authenticateDealer(
   username: string,
@@ -38,7 +39,8 @@ export async function loadDealer(dealerId: number): Promise<DealerIdentity | nul
       CONVERT(varchar(64),HASHBYTES('SHA2_256',CONVERT(varbinary(max),user_password)+CONVERT(varbinary(16),password_salt)),2) AS credential_stamp
     FROM dbo.Dealers account WHERE dealer_id=@dealerId AND is_active=1
       AND NOT EXISTS(SELECT 1 FROM dbo.Dealers duplicate WHERE duplicate.username=account.username AND duplicate.is_active=1 AND duplicate.dealer_id<>account.dealer_id);
-    SELECT DISTINCT center_id,center_type FROM dbo.Dealer_Centers WHERE dealer_id=@dealerId;`);
+    SELECT DISTINCT center_id,center_type FROM dbo.Dealer_Centers WHERE dealer_id=@dealerId;
+    SELECT DISTINCT center_id,center_type FROM dbo.Dealer_Page_Center_Access WHERE dealer_id=@dealerId AND page_id=7 AND center_type IN(1,3);`);
   const rows = result.recordsets as unknown as Record<string, unknown>[][];
   const row = rows[0]?.[0];
   if (!row || !row.credential_stamp) return null;
@@ -53,6 +55,10 @@ export async function loadDealer(dealerId: number): Promise<DealerIdentity | nul
     isSuperAdmin: row.is_super_admin === true,
     credentialStamp: String(row.credential_stamp),
     ownedKeys,
+    reportKeys: rows[2].flatMap((link) => {
+      const ref = centerRefSchema.safeParse({ id: link.center_id, type: link.center_type });
+      return ref.success ? [centerKey(ref.data)] : [];
+    }),
   };
 }
 export function demoDealer(dealerId: number): DealerIdentity | null {
@@ -67,6 +73,10 @@ export function demoDealer(dealerId: number): DealerIdentity | null {
     isSuperAdmin: dealer.isSuperAdmin,
     credentialStamp: 'isolated-preview-v1',
     ownedKeys: dealer.centers.map(centerKey),
+    reportKeys: store.db
+      .prepare('SELECT center_id,center_type FROM preview_report_grants WHERE dealer_id=?')
+      .all(dealerId)
+      .map((r) => `${r.center_id}_${r.center_type}`),
   };
 }
 export { centerGrants };

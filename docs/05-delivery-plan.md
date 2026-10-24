@@ -6,6 +6,8 @@ Source analysis and the three-catalog follow-up are complete for the supplied en
 
 Existing center-user profiles, secure sign-in status and mapping visibility are also delivered in [chapter 11](11-center-user-management.md); the owner explicitly kept creation/password resets pending. The rollout below is ordered by dependencies. Durations should be estimated after staging contracts and team capacity are known; a reliable schedule cannot be inferred from page count alone.
 
+[Chapter 12](12-activity-and-reports.md) delivers read-only activity, explicit legacy Excel ranges/exclusive dates, scoped class/demo summaries and bounded synchronous XLSX generation with own-account history. This does not complete historical business-output acceptance, durable background exports or the pending Accounting/Logging integrations. The owner reconfirmed user creation/password resets remain pending.
+
 | Phase                        | Work                                                                                                                                    | Exit criteria                                                                                           |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | 0 — Evidence                 | Three catalogs inspected; obtain missing Accounting/Logging, reconcile reference seeds, approve grants/consumers, deployment/photo tree | Representative contracts/data, identity transition, activity rules and backup plan reviewed             |

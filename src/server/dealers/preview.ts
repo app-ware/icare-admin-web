@@ -5,6 +5,13 @@ import { digest, type PortalStore } from '@/server/store';
 
 export function seedDealerPreview(store: PortalStore) {
   store.seedPreview();
+  if (!store.db.prepare("SELECT 1 FROM settings WHERE key='preview-report-grants-seeded'").get())
+    store.transaction(() => {
+      store.db.prepare('INSERT OR IGNORE INTO preview_report_grants VALUES (900002,104,3)').run();
+      store.db
+        .prepare("INSERT OR IGNORE INTO settings VALUES ('preview-report-grants-seeded','1')")
+        .run();
+    });
   store.transaction(() => {
     if (store.db.prepare("SELECT 1 FROM settings WHERE key='preview-dealers-seeded'").get()) return;
     const insert = store.db.prepare('INSERT OR IGNORE INTO preview_dealers VALUES (?,?,?,?,?,?,?)');

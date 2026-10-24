@@ -13,6 +13,8 @@ import {
   ShieldCheck,
   Sparkles,
   UsersRound,
+  BarChart3,
+  FileSpreadsheet,
   X,
 } from 'lucide-react';
 import type { PortalActor } from '@/domain/access';
@@ -72,20 +74,26 @@ export function Shell({
     { href: '/', label: 'Overview', Icon: LayoutDashboard },
     { href: '/centers', label: 'Care centers', Icon: Building2 },
     { href: '/users', label: 'Center users', Icon: UsersRound },
+    { href: '/activity', label: 'Activity & insights', Icon: BarChart3 },
+    { href: '/reports', label: 'Reports', Icon: FileSpreadsheet },
     ...(actor.isSuperAdmin ? [{ href: '/dealers', label: 'Dealers', Icon: UsersRound }] : []),
     { href: '/access', label: 'Access & sessions', Icon: ShieldCheck },
   ];
   const title = path.startsWith('/centers')
     ? 'Care centers'
-    : path.startsWith('/users')
-      ? 'Center users'
-      : path.startsWith('/dealers')
-        ? 'Dealers'
-        : path === '/access'
-          ? 'Access & sessions'
-          : path === '/'
-            ? 'Overview'
-            : 'Coming next';
+    : path.startsWith('/activity')
+      ? 'Activity & insights'
+      : path.startsWith('/reports')
+        ? 'Reports'
+        : path.startsWith('/users')
+          ? 'Center users'
+          : path.startsWith('/dealers')
+            ? 'Dealers'
+            : path === '/access'
+              ? 'Access & sessions'
+              : path === '/'
+                ? 'Overview'
+                : 'Coming next';
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main-content">
@@ -131,10 +139,7 @@ export function Shell({
         </nav>
         <p className="nav-label next-label">COMING NEXT</p>
         <nav aria-label="Upcoming modules">
-          {[
-            { href: '/activity', label: 'Activity & reports' },
-            { href: '/payments', label: 'Accounting' },
-          ].map((item) => (
+          {[{ href: '/payments', label: 'Accounting' }].map((item) => (
             <Link
               href={item.href}
               className="nav-item muted-nav"

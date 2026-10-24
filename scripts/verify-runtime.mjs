@@ -33,7 +33,16 @@ try {
     await new Promise((r) => setTimeout(r, 250));
   }
   assert.ok(ready);
-  for (const route of ['/', '/centers', '/dealers', '/users', '/access', '/payments']) {
+  for (const route of [
+    '/',
+    '/centers',
+    '/dealers',
+    '/users',
+    '/activity',
+    '/reports',
+    '/access',
+    '/payments',
+  ]) {
     const response = await fetch(origin + route, { redirect: 'manual' });
     assert.equal(response.status, 307);
     assert.ok(response.headers.get('location').endsWith('/login'));
@@ -52,6 +61,10 @@ try {
     '/api/center-users?centerId=9999&centerType=1',
     '/api/center-users/centers',
     '/api/center-users/1/9999/l_1',
+    '/api/activity?centerId=9999&centerType=1&period=2024-03',
+    '/api/activity/centers',
+    '/api/activity/context',
+    '/api/reports/exports',
   ]) {
     const response = await fetch(origin + route);
     assert.equal(response.status, 401);

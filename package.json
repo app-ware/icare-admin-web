@@ -12,12 +12,13 @@
     "verify:build": "node scripts/verify-build-privacy.mjs",
     "start": "next start --hostname 127.0.0.1",
     "typecheck": "tsc --noEmit",
-    "test": "node --conditions=react-server --import tsx --test tests/access.test.ts tests/domain.test.ts tests/inventory.test.ts tests/portal.test.ts tests/sql-configuration.test.ts tests/dealers.test.ts tests/center-users.test.ts",
+    "test": "node --conditions=react-server --import tsx --test tests/access.test.ts tests/domain.test.ts tests/inventory.test.ts tests/portal.test.ts tests/sql-configuration.test.ts tests/dealers.test.ts tests/center-users.test.ts tests/activity.test.ts",
     "test:e2e": "playwright test",
     "audit:legacy": "node scripts/audit-legacy.mjs",
     "format": "prettier --write ."
   },
   "dependencies": {
+    "exceljs": "4.4.0",
     "lucide-react": "1.60.0",
     "mssql": "12.7.10",
     "next": "16.4.2",
@@ -35,5 +36,11 @@
     "prettier": "3.9.10",
     "tsx": "4.23.15",
     "typescript": "7.0.2"
+  },
+  "overrides": {
+    "exceljs": {
+      "uuid": "11.1.1"
+    },
+    "@azure/msal-node": "7.1.1"
   }
 }

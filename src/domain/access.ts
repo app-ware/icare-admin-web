@@ -39,7 +39,11 @@ export interface PortalActor extends Principal {
 }
 
 // These are feature grants, not numeric dealer-ID exceptions. Future modules stay disabled.
-export function centerGrants(isSuperAdmin: boolean, ownedKeys: readonly string[]): Grant[] {
+export function centerGrants(
+  isSuperAdmin: boolean,
+  ownedKeys: readonly string[],
+  reportKeys: readonly string[] = [],
+): Grant[] {
   const scope: Grant['scope'] = isSuperAdmin
     ? { kind: 'global' }
     : { kind: 'centers', keys: ownedKeys };
@@ -49,6 +53,18 @@ export function centerGrants(isSuperAdmin: boolean, ownedKeys: readonly string[]
     { permission: 'centers.create', scope: { kind: 'global' } },
     { permission: 'users.manage', scope },
   ];
+  const reportScope: Grant['scope'] = isSuperAdmin
+    ? { kind: 'global' }
+    : {
+        kind: 'centers',
+        keys: [
+          ...new Set([...ownedKeys, ...reportKeys.filter((key) => /^[1-9]\d*_(1|3)$/.test(key))]),
+        ],
+      };
+  grants.push(
+    { permission: 'reports.read', scope: reportScope },
+    { permission: 'reports.export', scope: reportScope },
+  );
   if (isSuperAdmin) grants.push({ permission: 'dealers.manage', scope: { kind: 'global' } });
   return grants;
 }

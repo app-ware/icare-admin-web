@@ -39,7 +39,7 @@ export const getCurrentPrincipal = cache(async (): Promise<PortalActor | null> =
     dealerId: identity.dealerId,
     active: true,
     expiresAt: session.expiresAt,
-    grants: centerGrants(identity.isSuperAdmin, ownedKeys),
+    grants: centerGrants(identity.isSuperAdmin, ownedKeys, identity.reportKeys),
     mode: session.mode,
     name: identity.name,
     username: identity.username,

@@ -10,6 +10,8 @@ const labels: Record<string, string> = {
   'centers.create': 'Create and manage your own drafts',
   'dealers.manage': 'Manage dealer accounts and center assignments',
   'users.manage': 'Manage existing users in your authorized centers',
+  'reports.read': 'Read activity in owned or report-granted centers',
+  'reports.export': 'Generate aggregate activity workbooks',
 };
 export function AccessPanel({
   actor,

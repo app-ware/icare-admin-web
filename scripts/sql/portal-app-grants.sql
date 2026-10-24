@@ -32,6 +32,9 @@ BEGIN TRY
     -- Hash/salt columns are used only server-side to derive the session stamp.
     GRANT SELECT ON OBJECT::dbo.Dealer_Centers (dealer_id, center_id, center_type)
         TO [icare_portal_app];
+    -- Page 7 gives Nursery/Lite report access only; it does not grant profile access.
+    GRANT SELECT ON OBJECT::dbo.Dealer_Page_Center_Access (dealer_id, center_id, center_type, page_id)
+        TO [icare_portal_app];
     -- Dealer administration uses fixed commands with a current active-admin check.
     -- Account deletion, password readback and token administration are not exposed.
     -- SQL Server INSERT grants are object-level, not column-level. Runtime
@@ -68,6 +71,14 @@ BEGIN TRY
     GRANT SELECT ON OBJECT::dbo.secCareCenterUser (UserID, center_id) TO [icare_portal_app];
     GRANT SELECT ON OBJECT::dbo.Sec_UserRoles (UserID, RoleID) TO [icare_portal_app];
     GRANT SELECT ON OBJECT::dbo.Sec_Roles (ID, Name, center_id) TO [icare_portal_app];
+    -- Aggregate activity reads only: no child names, contacts or credentials.
+    GRANT SELECT ON OBJECT::dbo.Class (class_id, center_id, class_name, deleted) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Class_Child (Class_ID, Child_ID, academic_year_id) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Child (child_id, parent_id, creation_date, is_demo, deleted) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Parent (parent_id, center_id, deleted) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Child_Transactions
+        (ID, center_id, child_id, transaction_date, transaction_code, child_is_active_on_restore) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Academic_Years (academic_year_id, academic_year_title) TO [icare_portal_app];
 
     USE [icare_school];
     CREATE USER [icare_portal_app] FOR LOGIN [icare_portal_app];
@@ -85,6 +96,13 @@ BEGIN TRY
     GRANT SELECT ON OBJECT::dbo.secCareCenterUser (UserID, center_id) TO [icare_portal_app];
     GRANT SELECT ON OBJECT::dbo.Sec_UserRoles (UserID, RoleID) TO [icare_portal_app];
     GRANT SELECT ON OBJECT::dbo.Sec_Roles (ID, Name, center_id) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Class (class_id, center_id, class_name, deleted) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Class_Child (Class_ID, Child_ID, academic_year_id) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Child (child_id, parent_id, is_demo, deleted) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Parent (parent_id, center_id, deleted) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Child_Transactions
+        (ID, center_id, child_id, transaction_date, transaction_code) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Academic_Years (academic_year_id, academic_year_title) TO [icare_portal_app];
     COMMIT TRANSACTION;
 END TRY
 BEGIN CATCH

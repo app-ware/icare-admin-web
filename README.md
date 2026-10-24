@@ -10,6 +10,8 @@ Next.js rebuild and a source-backed migration dossier for the legacy iCare admin
 
 [Center-user management](docs/11-center-user-management.md) adds scoped existing-user search, contact editing, secure sign-in status, local-role visibility and mapping diagnostics. User creation/password resets remain pending by the owner's decision. Open **Center users** or follow the shortcut from a center profile.
 
+[Activity and reports](docs/12-activity-and-reports.md) adds authorized monthly activity, class/demo breakdowns, School academic years, multi-center Excel workbooks and per-account generation history. Open **Activity & insights** or **Reports**. These are activation aggregates, with counting rules displayed; no invoice or Accounting/Logging operation is performed.
+
 ## Run the workspace
 
 Requires Node.js 22.17+ (supported range in package.json). Dependencies and lockfile are included.

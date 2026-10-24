@@ -1,5 +1,18 @@
 # Verification record
 
+## Activity and reports — 24 October 2026
+
+The owner requested activity/report workflows while keeping user creation, password resets, Accounting and Logging pending. [Chapter 12](12-activity-and-reports.md) records the exact counting policy, read scopes, aggregate exports and limits.
+
+- **30 unit/domain/security tests** pass. New cases cover exclusive dates, five/thirteen-day buckets, zero/unresolved activity, restores/conflicts, current demo totals, membership deduplication, formula-safe XLSX cells and stored report-grant revalidation.
+- **16 desktop/mobile browser cases** pass across the final suite and targeted reruns. New flows verify report-only access without profile/user access, period reload state, stale-response protection, recovery from metadata/history errors, multi-center XLSX downloads, per-account history, Origin/payload/batch denial and School academic years. Tests use the School combobox's accessible name and scope error assertions to application banners, excluding Next's empty route announcer.
+- Live reads passed across all five available Nursery centers, including empty results and a center with 2,001 eligible records. An absent actor with forged grants was denied. Both operational query variants passed system-compiler metadata checks; no School/Lite positive live fixture is available. [Sanitized evidence](generated/activity-sql-checks.json).
+- `icare.test` signed in through the real browser, loaded live class activity and downloaded a three-sheet workbook whose counts matched the API. No operational SQL records were changed. The only new persistent application metadata was its private generation receipt; no invoice tracker or Logging/Accounting call was made. The verification session was signed out.
+- The optimized production build/type checks, **36 output traces** and standalone privacy checks, anonymous page/API smoke checks (including activity/report routes), and production dependency audit passed. No known npm vulnerabilities were reported for the installed tree on the verification date.
+- Fictional desktop/mobile captures had no page errors or page-level overflow: [activity](preview-activity-desktop.png), [mobile activity](preview-activity-mobile.png), [reports](preview-reports-desktop.png), [mobile reports](preview-reports-mobile.png). Original 113 legacy fingerprints and seven pre-existing modified paths are preserved. The reviewed grant script was updated but not applied. The normal port-3000 development preview was restored.
+
+The historical sections below retain the results and limitations as of each prior increment. Historical activity/billing acceptance, timezone-policy decisions, production SQL deployment and durable export jobs remain incomplete; the delivered workbooks are activation aggregates with those rules stated explicitly.
+
 ## Existing center users — 24 October 2026
 
 The owner confirmed dealer management and requested center-user management, explicitly keeping center-user creation/password resets pending after the credential-path review. [Chapter 11](11-center-user-management.md) records delivered profiles, secure status, local roles and mapping visibility.
@@ -131,4 +144,4 @@ node scripts/verify-runtime.mjs
 npm run test:e2e
 ```
 
-Stop other development instances before browser checks. Tests use loopback 3100, an isolated .next-e2e output and a separate fictional store; the production smoke starts/stops loopback 3102. Restore the normal loopback 3000 preview afterward. These checks do not require SQL credentials. The normal development launcher supplies its private default storage path; production must configure a persistent path explicitly.
+Stop other development instances before browser checks. Tests use loopback 3101, an isolated .next-e2e output and a separate fictional store; the production smoke starts/stops loopback 3102. Run the build and browser checks separately. Restore the normal loopback 3000 preview afterward. These checks do not require SQL credentials. The normal development launcher supplies its private default storage path; production must configure a persistent path explicitly.

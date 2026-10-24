@@ -21,6 +21,7 @@ The subsequent authorized database inspection covers **Secure, Nursery and Schoo
 9. [Authentication and center management](08-authentication-and-centers.md): current light-blue UI, existing-dealer verifier, session/permission boundaries, center profiles/drafts, configuration and remaining live-integration limits.
 10. [Dealer administration](10-dealer-administration.md): administrator-only dealer creation, lifecycle, center assignments, session revocation and live rollback verification.
 11. [Existing center-user management](11-center-user-management.md): scoped rosters/profile edits, secure sign-in status, role/mapping visibility, protections and explicitly deferred credential operations.
+12. [Activity and reports](12-activity-and-reports.md): monthly class/demo aggregates, versioned counting rules, page-7 report scope, School academic years and aggregate XLSX generation/history.
 
 ## What has been verified
 

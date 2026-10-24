@@ -1,0 +1,80 @@
+{
+  "verifiedOn": "2026-10-24",
+  "compiler": {
+    "verifiedOn": "2026-10-24",
+    "method": "System compiler metadata only; business queries not executed by this probe.",
+    "repositorySha256": "5879a16f4d731427412254728f6c088c93a9fd7e5745c1e023b37590efeca16f",
+    "results": [
+      {
+        "type": 1,
+        "compiled": true,
+        "columns": [
+          "id",
+          "name"
+        ],
+        "sqlSha256": "c62f737b296e6ba4f2dcceed0309b93ab994418b59ac12a479faa22180567b6d"
+      },
+      {
+        "type": 4,
+        "compiled": true,
+        "columns": [
+          "id",
+          "name"
+        ],
+        "sqlSha256": "e9af47e11df312ea63c2e5b8b12291d77671ad7c213b16db551176039e183049"
+      }
+    ]
+  },
+  "scopedReads": {
+    "evidence": [
+      {
+        "centerId": 10003,
+        "type": 1,
+        "classes": 3,
+        "records": 2001,
+        "unresolved": 0
+      },
+      {
+        "centerId": 9999,
+        "type": 1,
+        "classes": 8,
+        "records": 0,
+        "unresolved": 0
+      },
+      {
+        "centerId": 10004,
+        "type": 1,
+        "classes": 3,
+        "records": 5,
+        "unresolved": 0
+      },
+      {
+        "centerId": 10009,
+        "type": 1,
+        "classes": 8,
+        "records": 5,
+        "unresolved": 0
+      },
+      {
+        "centerId": 10002,
+        "type": 1,
+        "classes": 80,
+        "records": 531,
+        "unresolved": 0
+      }
+    ],
+    "asOf": "2026-10-24",
+    "scopeDenial": true,
+    "childDetailsAbsent": true
+  },
+  "browser": {
+    "verifiedOn": "2026-10-24",
+    "existingDealerLogin": true,
+    "liveActivity": true,
+    "liveWorkbook": true,
+    "accessibleCenters": 5,
+    "childDetailsAbsent": true,
+    "pageErrors": 0,
+    "sqlBusinessWrites": false
+  }
+}
