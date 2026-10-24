@@ -1,0 +1,147 @@
+{
+  "role": "school",
+  "lookups": {
+    "input_types": [],
+    "dwell_values": [],
+    "geofence_values": []
+  },
+  "result_metadata": {
+    "iCareAdmin_getCenterChildren": [
+      {
+        "column_ordinal": 1,
+        "name": "child_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "child_name",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ],
+    "iCareAdmin_getCenterClassChildren": [
+      {
+        "column_ordinal": 1,
+        "name": "child_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "is_Demo",
+        "is_nullable": true,
+        "system_type_name": "bit",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 3,
+        "name": "child_name",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ],
+    "iCareAdmin_getCenterClassesData": [
+      {
+        "column_ordinal": 1,
+        "name": "center_name",
+        "is_nullable": false,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "class_name",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 3,
+        "name": "Student",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 4,
+        "name": "class_logo",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 5,
+        "name": "center_id",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 6,
+        "name": "class_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ],
+    "iCareAdmin_getChildLatestActivationTransactions": [
+      {
+        "column_ordinal": 1,
+        "name": "child_id",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "transaction_code",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 3,
+        "name": "transaction_date",
+        "is_nullable": true,
+        "system_type_name": "datetime",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 4,
+        "name": "trans_date",
+        "is_nullable": true,
+        "system_type_name": "varchar(11)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 5,
+        "name": "this_month",
+        "is_nullable": false,
+        "system_type_name": "varchar(1)",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ]
+  },
+  "metadata_errors": []
+}

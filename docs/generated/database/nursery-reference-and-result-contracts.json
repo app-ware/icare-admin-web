@@ -1,0 +1,271 @@
+{
+  "role": "nursery",
+  "lookups": {
+    "input_types": [],
+    "dwell_values": [],
+    "geofence_values": []
+  },
+  "result_metadata": {
+    "iCareAdmin_getCenterChildren": [
+      {
+        "column_ordinal": 1,
+        "name": "child_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "child_name",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ],
+    "iCareAdmin_getCenterClassChildren": [
+      {
+        "column_ordinal": 1,
+        "name": "child_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "is_Demo",
+        "is_nullable": true,
+        "system_type_name": "bit",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 3,
+        "name": "child_name",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ],
+    "iCareAdmin_getCenterClassesData": [
+      {
+        "column_ordinal": 1,
+        "name": "center_name",
+        "is_nullable": false,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "class_name",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 3,
+        "name": "Student",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 4,
+        "name": "class_logo",
+        "is_nullable": false,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 5,
+        "name": "center_id",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 6,
+        "name": "class_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ],
+    "iCareAdmin_getCenterCowPayApiSettings": [
+      {
+        "column_ordinal": 1,
+        "name": "center_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "center_type",
+        "is_nullable": true,
+        "system_type_name": "numeric(18,0)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 3,
+        "name": "merchant_code",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 4,
+        "name": "merchant_hash_key",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 5,
+        "name": "access_token",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 6,
+        "name": "staging_access_token",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 7,
+        "name": "is_enabled",
+        "is_nullable": true,
+        "system_type_name": "bit",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 8,
+        "name": "service_callback_url",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ],
+    "iCareAdmin_getChildLatestActivationTransactions": [
+      {
+        "column_ordinal": 1,
+        "name": "child_id",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "transaction_code",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 3,
+        "name": "transaction_date",
+        "is_nullable": true,
+        "system_type_name": "datetime",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 4,
+        "name": "trans_date",
+        "is_nullable": true,
+        "system_type_name": "varchar(11)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 5,
+        "name": "this_month",
+        "is_nullable": false,
+        "system_type_name": "varchar(1)",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ],
+    "iCareAdmin_getUserAccountingCentersList": [
+      {
+        "column_ordinal": 1,
+        "name": "center_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "center_type",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 3,
+        "name": "center_name",
+        "is_nullable": false,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 4,
+        "name": "admin_user_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 5,
+        "name": "admin_user_name",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(450)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 6,
+        "name": "is_active",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 7,
+        "name": "download_time",
+        "is_nullable": true,
+        "system_type_name": "datetime",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ]
+  },
+  "metadata_errors": []
+}

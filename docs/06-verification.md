@@ -1,0 +1,134 @@
+# Verification record
+
+## Existing center users — 24 October 2026
+
+The owner confirmed dealer management and requested center-user management, explicitly keeping center-user creation/password resets pending after the credential-path review. [Chapter 11](11-center-user-management.md) records delivered profiles, secure status, local roles and mapping visibility.
+
+- **24 unit/domain/security tests** and **12 desktop/mobile browser checks** passed. These include review/conflict recovery, center/type isolation, local-only users, read-only ambiguous mappings, protected accounts, last-linked-administrator protection and rejection of credential/role fields.
+- Live roster/detail reads passed across all five Nursery centers. Exact transaction commands passed profile/status updates and rejection cases, then rolled back; the original user matched afterward. Center-user credentials, roles and usernames were neither selected for readback nor changed.
+- The optimized build/type checks, **30 output traces**/standalone privacy check and production anonymous page/API smoke checks passed, including `/users` and center-user APIs.
+- `icare.test` successfully signed in through the real browser, displayed its live roster/mapping notice, and opened an enabled profile form. Creation returned 405 and credential fields were absent. No live user change was submitted by that browser check.
+- Desktop/mobile captures use fictional accounts and had no page errors. [Directory](preview-center-users-desktop.png), [mobile directory](preview-center-users-mobile.png), [profile editor](preview-center-user-editor-desktop.png), [mobile editor](preview-center-user-editor-mobile.png).
+- A stale generated development cache was archived/regenerated to resolve refresh loops. Browser checks and the final build then ran separately. Normal portal storage and live data were preserved. The reviewed production grant script was updated but not executed.
+
+## Owner-authorized test administrator — 24 October 2026
+
+At the owner's explicit request, `icare.test` was promoted to administrator on the confirmed development server through the dealer-management service. Its password, active state and logical center assignment were retained; prior sessions were revoked. A fresh browser sign-in verified the Dealers navigation, administrator list/detail/assignment APIs and enabled creation form. No additional accounts or center-profile changes were made by this verification. Earlier ordinary-dealer denial checks below remain historical evidence from before promotion.
+
+## Dealer administration — 24 October 2026
+
+The owner confirmed the test dealer works and authorized the next features. [Chapter 10](10-dealer-administration.md) records administrator-only dealer creation, lifecycle, role and center-assignment management.
+
+- All **21 unit/domain/security tests** and **10 desktop/mobile browser checks** passed. Browser fixtures now reset only their dedicated fictional test store before each run; normal portal storage and live SQL are preserved.
+- The exact live transaction commands passed creation/password verification, assignment/status updates and duplicate/stale/unauthorized/self-lockout/missing-center denial checks. All fixtures were rolled back, and existing account/mapping snapshots matched. No extra permanent accounts or center changes were made.
+- The optimized build/type checks, **26-trace**/standalone privacy verification and production anonymous route/API checks passed, including the new dealer routes.
+- The real ordinary test dealer successfully signed in again, retained its assigned-center access, and was denied dealer administration through both page and API checks. Its role and assignments were not changed.
+- Desktop/mobile directory and editor captures were visually inspected with no page errors. [Desktop directory](preview-dealers-desktop.png), [mobile directory](preview-dealers-mobile.png), [desktop editor](preview-dealer-editor-desktop.png), [mobile editor](preview-dealer-editor-mobile.png).
+- Original legacy source fingerprints and the seven pre-existing modified paths were preserved. Source/document comparison against known legacy credentials/Maps keys passed. The reviewed restricted-account grant script was updated but not executed.
+
+## Test dealer — 24 October 2026
+
+At the owner's explicit request, a new development-only test dealer was created in Secure using the existing password-hashing function, with a new salt and generated password. The account is active, not a super administrator, and owns one existing Nursery center. No existing account or center profile was changed; Accounting/Logging were not used.
+
+An Edge browser successfully signed in through the actual login form. Its center directory returned exactly the assigned center, profile detail was readable, editing was allowed, and another existing center returned 403. The verification session was logged out afterward. The generated credentials and verification artifacts are stored only in ignored private local files; no password is included in this record. Real profile mutation remains untested.
+
+## Development connection — 24 October 2026
+
+The owner confirmed the active legacy configuration as the development server. Private configuration now enables existing dealer sign-in and real center profile editing in local development. [Chapter 09](09-live-connection-setup.md) explains the explicit development exception and production requirements.
+
+- Node SQL connections to Secure, Nursery and School reported encrypted sessions. Aggregate checks found five Nursery centers and no School centers.
+- The actual verifier denied nonexistent credentials. An absent actor with forged service-layer grants received no directory records and could not read/update Nursery, Lite or School details. No real dealer session was fabricated and no business records changed.
+- The live sign-in page was checked in Edge: sign-in enabled, SQL-backed invalid credentials returned 401 with the expected message, password cleared, anonymous center access denied and no page errors.
+- All 17 unit/security/domain tests and eight desktop/mobile browser tests passed. The optimized production build, 22-trace/standalone privacy check and production route/API smoke check passed.
+- All 113 indexed legacy fingerprints still matched; the source/document secret comparison passed. Private development credentials remain under ignored `.local` files and are excluded from deployment output.
+- A successful existing-dealer login and a real SQL profile save require the owner's browser credentials and remain unverified by the agent. Live center provisioning, Accounting and Logging remain pending.
+
+Connection-only evidence: [redacted runtime checks](generated/live-connection-checks.json). The following sections retain the historical 21 October implementation/audit results.
+
+## Phase-one implementation — 21 October 2026
+
+The owner resumed implementation after the database audit. [Chapter 08](08-authentication-and-centers.md) describes the delivered authentication, sessions, scoped center management and light-blue UI. The historical preparation/inspection sections below remain evidence of those earlier stages.
+
+| Check                          | Current result                                                                                                                                                                                                                                        |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Unit/domain/security           | 15 passed: session hashing, expiry/revocation, limits, owned drafts, revisions, cross-center/type denial, validation and Origin/database gates                                                                                                        |
+| Desktop/mobile browsers        | 8 passed on installed Edge/Chromium mobile emulation: protected routes, logout replay, filters, persistent profile edits, stale-save rejection, draft resume/publication, scoped dealer access, other-session revocation and keyboard drawer behavior |
+| Production build/type checking | Next.js optimized compilation and TypeScript checks passed; all protected routes remain dynamic                                                                                                                                                       |
+| Production access smoke        | Signed-out pages redirect; private APIs return 401; production demo entry disabled; no fictional center records in protected responses                                                                                                                |
+| Build privacy                  | Server output traces and standalone package exclude private application storage, SQLite data, env files and legacy connection configurations                                                                                                          |
+| SQL contract compilation       | Seven statements described through SQL Server system metadata with no compiler errors; statements not executed and no business records read/written                                                                                                   |
+| Legacy integrity               | Original 113 source fingerprints and seven pre-existing modified paths preserved; no legacy modifications; 92 preparation files scanned with no known legacy SQL-password/Maps-key matches                                                            |
+
+Visual review also checks the sign-in, desktop/mobile overview, directory and access page captures. Screenshots preserve the caret to avoid introducing DOM-style changes before hydration. The dev launcher supplies the mutable SQLite storage path at runtime so Next does not trace/watch it as application source. Captures are [desktop](preview.png), [mobile](preview-mobile.png), [sign-in](preview-login.png), [centers](preview-centers.png) and [access](preview-access.png).
+
+Real dealer-account integration, restricted SQL permissions/TLS, SQL profile writes, deployment/restore, shared-store multi-host operation, MFA and full accessibility conformance remain unverified. No database mutations were used to test this implementation. Accounting/Logging remain pending.
+
+## Initial project-preparation checks
+
+| Check                                | Observed result                                                                                                                                                                                                        |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Reproducible source inventory        | 113 source/config/style/script files indexed; all 28 page/code-behind pairs; 59 database-access methods; 28 literal procedure names                                                                                    |
+| Type checking                        | `npm run typecheck` passed; final production build's TypeScript pass also succeeded                                                                                                                                    |
+| Domain / access / coverage           | `npm test`: 8 passed, 0 failed                                                                                                                                                                                         |
+| Production compilation               | `npm run build`: successful Next.js 16.4.2 optimized build                                                                                                                                                             |
+| Desktop browser flows                | 2 passed: directory search/filter/dialog/local creation/reset, module navigation, unavailable live API, viewport containment                                                                                           |
+| Mobile browser flows                 | 2 passed on Chromium/Edge with iPhone 13 emulation; same flows, responsive menu, no page-level horizontal overflow                                                                                                     |
+| Production mode guard                | `node scripts/verify-runtime.mjs` passed: overview/centers/payments show setup when preview disabled; no sample records in their HTML/React server responses                                                           |
+| Live boundary                        | Live centers endpoint returns 503 INTEGRATION_NOT_READY and no-store, even with the database-enable environment flag set true                                                                                          |
+| Dependency installation              | npm audit reported 0 known vulnerabilities for the installed 189-package tree after setup; this is time-specific, not a security certification                                                                         |
+| Source integrity / secret comparison | `scripts/verify-preparation.mjs` matched all indexed source fingerprints and found no copied legacy SQL passwords/Maps keys in preparation source/doc files; comparison excludes passwords shorter than six characters |
+| Legacy working copy                  | Original seven modified paths still present; no legacy changes made by this work                                                                                                                                       |
+
+Browser checks use local installed Microsoft Edge, not actual iOS Safari hardware. No claim of full cross-browser or WCAG conformance is made. Screenshots under ignored `test-results/` were inspected for layout. The supplied browser tests can regenerate them.
+
+Final dashboard captures are saved as `docs/preview.png` and `docs/preview-mobile.png` and were visually inspected. Dashboard layout width matched the viewport at 1440 px and 390 px, with no uncaught page errors in either capture.
+
+## Issues found and corrected during preview verification
+
+- Disabled form interaction until client hydration, so very early input is not overwritten by React initialization.
+- Confined the table's absolutely positioned hidden header label to its scroll container. It previously expanded the mobile layout viewport and displaced native dialogs.
+- Sized dialogs against the device viewport, used mobile input font sizes that avoid automatic zoom, and improved secondary text contrast.
+- Hid closed mobile navigation from focus/visibility; added Escape, focus return, focus containment, and inert background behavior for the open drawer.
+- Added page-level preview checks in addition to the layout check. A layout-only gate hid visible content while React server responses still included child sample records; the production smoke check now prevents this regression.
+
+## Read-only database follow-up
+
+The subsequent authorized inspection connected to active Secure/Nursery/School using existing configuration in memory. All metadata export queries completed without recorded errors. Inventoried 798 tables, 1,419 procedures, 253 functions, 285 views, two triggers and 62 table types; all 1,959 module definitions visible. The portal mapping contains 46 caller/function contracts and a 116-object static closure, with 66 relevant module review copies. Compiler result metadata was collected for 17 procedure instances; bounded non-personal references exposed the center-type/empty-lookup mismatch. No application stored procedure/function or customer-data query was executed.
+
+Accounting/Logging are absent from the configured active server; the owner confirmed both unavailable. All connections to the alternate production/local variants failed. No schema or runtime claims extend to those endpoints. [The database inspection](07-database-inspection.md) explains exact read-only controls, SQL privilege/TLS observations, findings and remaining inputs.
+
+Inspection tooling is separate from the web application. Follow-up validation completed:
+
+| Check                                | Result                                                                                                                                                                    |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Inspection script syntax             | All three PowerShell scripts parsed without errors; both changed JavaScript tools passed `node --check`                                                                   |
+| Evidence consistency                 | Totals, 46 mappings, 116-object closure, 66 review copies and 17 first-result descriptions matched exports; no recorded metadata errors                                   |
+| Contract distinctions                | Element_ID_List resolved as a type; only three absent reachable procedure paths, all School gateway/tracker; one generic School monthly-parameter mismatch                |
+| Integrity/security observations      | FK enabled/trust counts, empty references, center-type mismatch and observed session privilege/encryption matched source exports                                          |
+| SQL literal redaction                | Every quoted literal in the 66 public module review copies was either withheld or on the explicit harmless formatting/algorithm allowlist                                 |
+| Documentation links                  | 33 local file links resolved                                                                                                                                              |
+| Legacy integrity / secret comparison | All 113 source fingerprints matched; 64 preparation files scanned, including PowerShell/SQL; no copied legacy SQL passwords (six characters or longer) or Maps keys found |
+| Legacy working copy                  | Same seven pre-existing modified paths; legacy repository unchanged                                                                                                       |
+
+Application build/browser tests above belong to the initial preparation. They were not repeated for this analysis-only follow-up: no web application behavior changed, and no live feature was enabled. Secret comparison is bounded to known legacy values, not a comprehensive secret scanner. Full inspection commands and read-only constraints are in [chapter 07](07-database-inspection.md).
+
+## Verification limits
+
+The legacy application was not started under IIS, built with its original ASP.NET compiler or tested using live dealer accounts. Available stored-code definitions, compiler-described first result schemas, effective inspection-login privileges and observed session encryption were inspected; this does not prove runtime result values, real grant behavior or production parity. The separate `scripts/sql/discover-schema.sql` file was not executed. Accounting/Logging internals, deployed IIS/session settings, actual media trees, external callbacks, provider environments and historical activity accuracy remain unverified. No customer records, mutations or business procedures were exercised.
+
+The portal is not a full implementation of the legacy feature set. The historical null session boundary was replaced in phase one; its real dealer verifier/SQL adapters still need end-to-end acceptance with restricted TLS connections and authorized accounts. Live provisioning and later modules remain unavailable. The acceptance matrix is in [the delivery plan](05-delivery-plan.md).
+
+## Repeat checks
+
+```powershell
+npm run audit:legacy -- "D:/Data/Projects/Appware/Visual Studio/iCareAdmin-Web"
+node scripts/verify-preparation.mjs "D:/Data/Projects/Appware/Visual Studio/iCareAdmin-Web"
+npm run typecheck
+npm test
+npm run build
+npm run verify:build
+node scripts/verify-runtime.mjs
+npm run test:e2e
+```
+
+Stop other development instances before browser checks. Tests use loopback 3100, an isolated .next-e2e output and a separate fictional store; the production smoke starts/stops loopback 3102. Restore the normal loopback 3000 preview afterward. These checks do not require SQL credentials. The normal development launcher supplies its private default storage path; production must configure a persistent path explicitly.

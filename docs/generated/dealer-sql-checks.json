@@ -1,0 +1,15 @@
+{
+  "checkedOn": "2026-10-24",
+  "readCommands": true,
+  "creationAndLegacyAuthentication": true,
+  "duplicateUsernameDenied": true,
+  "updateAndAssignment": true,
+  "staleEditDenied": true,
+  "selfLockoutDenied": true,
+  "missingCenterDenied": true,
+  "storedActorRoleEnforced": true,
+  "rollbackPreservedExistingAccountsAndMappings": true,
+  "persistentDealerChanges": false,
+  "centerRecordsChanged": false,
+  "note": "Identity sequence values may advance after rolled-back inserts."
+}

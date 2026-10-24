@@ -1,0 +1,49 @@
+{
+  "checkedOn": "2026-10-24",
+  "environment": "owner-confirmed development server",
+  "checks": [
+    {
+      "role": "secure",
+      "catalog": "icare_secure",
+      "encrypted": "TRUE"
+    },
+    {
+      "role": "nursery",
+      "catalog": "icare",
+      "encrypted": "TRUE"
+    },
+    {
+      "role": "nursery",
+      "counts": [
+        {
+          "type": 1,
+          "center_count": 5
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "catalog": "icare_school",
+      "encrypted": "TRUE"
+    },
+    {
+      "role": "school",
+      "counts": []
+    },
+    {
+      "nonExistentLoginDenied": true,
+      "nonExistentDealerDenied": true
+    },
+    {
+      "absentActorDirectoryDenied": true,
+      "absentActorDetailsDenied": true,
+      "absentActorUpdatesDenied": true,
+      "businessRecordsChanged": false
+    }
+  ],
+  "liveLoginUi": "passed negative-credentials check",
+  "existingDealerSuccessLogin": "not tested without owner credentials",
+  "realProfileMutation": "not performed",
+  "accounting": "pending",
+  "logging": "pending"
+}

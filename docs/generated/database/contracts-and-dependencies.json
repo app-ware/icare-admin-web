@@ -1,0 +1,6821 @@
+{
+  "inspectedAtUtc": "2026-10-21T05:37:21.1680150Z",
+  "scope": "Configured active endpoint; system metadata and bounded non-personal reference reads; no application procedure executions or customer row reads.",
+  "databases": {
+    "secure": {
+      "environment": {
+        "database_name": "icare_secure",
+        "product_version": "13.0.5108.50",
+        "edition": "Standard Edition (64-bit)",
+        "compatibility_level": 130,
+        "collation_name": "SQL_Latin1_General_CP1_CI_AS",
+        "state_desc": "ONLINE",
+        "user_access_desc": "MULTI_USER",
+        "is_read_only": false,
+        "is_auto_close_on": false,
+        "is_auto_shrink_on": false,
+        "recovery_model_desc": "SIMPLE",
+        "snapshot_isolation_state_desc": "OFF",
+        "is_read_committed_snapshot_on": false,
+        "is_trustworthy_on": false,
+        "is_db_chaining_on": false,
+        "can_view_definition": 1,
+        "is_sysadmin": 1,
+        "is_db_owner": 1
+      },
+      "connection": {
+        "net_transport": "TCP",
+        "protocol_type": "TSQL",
+        "encrypt_option": "FALSE",
+        "auth_scheme": "SQL"
+      },
+      "tableCount": 21,
+      "moduleCount": 66,
+      "objects": 133,
+      "foreignKeyCount": 7,
+      "untrustedForeignKeyCount": 0,
+      "definitionUnavailable": []
+    },
+    "nursery": {
+      "environment": {
+        "database_name": "icare",
+        "product_version": "13.0.5108.50",
+        "edition": "Standard Edition (64-bit)",
+        "compatibility_level": 130,
+        "collation_name": "SQL_Latin1_General_CP1_CI_AS",
+        "state_desc": "ONLINE",
+        "user_access_desc": "MULTI_USER",
+        "is_read_only": false,
+        "is_auto_close_on": false,
+        "is_auto_shrink_on": false,
+        "recovery_model_desc": "SIMPLE",
+        "snapshot_isolation_state_desc": "OFF",
+        "is_read_committed_snapshot_on": false,
+        "is_trustworthy_on": false,
+        "is_db_chaining_on": false,
+        "can_view_definition": 1,
+        "is_sysadmin": 1,
+        "is_db_owner": 1
+      },
+      "connection": {
+        "net_transport": "TCP",
+        "protocol_type": "TSQL",
+        "encrypt_option": "FALSE",
+        "auth_scheme": "SQL"
+      },
+      "tableCount": 401,
+      "moduleCount": 1008,
+      "objects": 2209,
+      "foreignKeyCount": 214,
+      "untrustedForeignKeyCount": 0,
+      "definitionUnavailable": []
+    },
+    "school": {
+      "environment": {
+        "database_name": "icare_school",
+        "product_version": "13.0.5108.50",
+        "edition": "Standard Edition (64-bit)",
+        "compatibility_level": 130,
+        "collation_name": "SQL_Latin1_General_CP1_CI_AS",
+        "state_desc": "ONLINE",
+        "user_access_desc": "MULTI_USER",
+        "is_read_only": false,
+        "is_auto_close_on": false,
+        "is_auto_shrink_on": false,
+        "recovery_model_desc": "SIMPLE",
+        "snapshot_isolation_state_desc": "OFF",
+        "is_read_committed_snapshot_on": false,
+        "is_trustworthy_on": false,
+        "is_db_chaining_on": false,
+        "can_view_definition": 1,
+        "is_sysadmin": 1,
+        "is_db_owner": 1
+      },
+      "connection": {
+        "net_transport": "TCP",
+        "protocol_type": "TSQL",
+        "encrypt_option": "FALSE",
+        "auth_scheme": "SQL"
+      },
+      "tableCount": 376,
+      "moduleCount": 885,
+      "objects": 2075,
+      "foreignKeyCount": 318,
+      "untrustedForeignKeyCount": 46,
+      "definitionUnavailable": []
+    }
+  },
+  "contracts": [
+    {
+      "role": "logging",
+      "schema": "dbo",
+      "name": "record_adminWebErrorLog",
+      "caller": "logError",
+      "sourceLine": 10,
+      "sourceParameters": [
+        {
+          "name": "@className",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@functionName",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@lineNumber",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "input"
+        },
+        {
+          "name": "@errorText",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@additionalData",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        }
+      ],
+      "available": false,
+      "parameters": [],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": null
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "authenticateDealer",
+      "caller": "GetLoginUser",
+      "sourceLine": 102,
+      "sourceParameters": [
+        {
+          "name": "@userName",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@password",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@isAdmin",
+          "declaration": "SqlDbType.Bit, 4)",
+          "direction": "output"
+        },
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        },
+        {
+          "name": "@authenticationStatus",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "authenticateDealer",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@userName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 900,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "authenticateDealer",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@password",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 900,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "authenticateDealer",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "authenticateDealer",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@isAdmin",
+          "type_schema": "sys",
+          "type_name": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "authenticateDealer",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 5,
+          "name": "@authenticationStatus",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "0221d1160daabc98ce83bb6ce25591cd3a543265ccfa6d8c340f372c6b3c0c85"
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateDealer",
+      "caller": "updateDealer",
+      "sourceLine": 161,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@username",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@dealerName",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@password",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@email",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@isAdmin",
+          "declaration": "SqlDbType.Bit)",
+          "direction": "input"
+        },
+        {
+          "name": "@isActive",
+          "declaration": "SqlDbType.Bit)",
+          "direction": "input"
+        },
+        {
+          "name": "@updateStatus",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        },
+        {
+          "name": "@insertedID",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateDealer",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateDealer",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@username",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 900,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateDealer",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@dealerName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 900,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateDealer",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@password",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 900,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateDealer",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 5,
+          "name": "@email",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 900,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateDealer",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 6,
+          "name": "@isAdmin",
+          "type_schema": "sys",
+          "type_name": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateDealer",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 7,
+          "name": "@isActive",
+          "type_schema": "sys",
+          "type_name": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateDealer",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 8,
+          "name": "@insertedID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateDealer",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 9,
+          "name": "@updateStatus",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "12e4098a8e3b6deb5967c0c8c4522168884ce337841b33d1526af2d1c91d546a"
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_getDealersList",
+      "caller": "getDealers",
+      "sourceLine": 242,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getDealersList",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "df14ffcfdc76391fabc1505e7d500f8ef05936be36122e0f238665d926c64d6a"
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_getDealerCenters",
+      "caller": "getDealerCenters",
+      "sourceLine": 274,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getDealerCenters",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "dd614838e763fc118f9d42b5101b8a2c6cc379449beaeb5b8804cca46aea8f96"
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_getUserAccountingCentersList",
+      "caller": "GetDealerAcountingCentersList",
+      "sourceLine": 304,
+      "sourceParameters": [
+        {
+          "name": "@userID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@filterUserID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getUserAccountingCentersList",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@userID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getUserAccountingCentersList",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@filterUserID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "033f5e8071c04df47006cf373ce5e3dea4221106c83493cd29ab1f6cd529c210"
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterStatusesList",
+      "caller": "getDealerCenterStatusData",
+      "sourceLine": 364,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@filterDealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@filterStatusID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterStatusesList",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterStatusesList",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@filterDealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterStatusesList",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@filterStatusID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "04f3bf19b8a9b341879ed5ad77a5cca9dd93089f7aa7457dc368854480c4658d"
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterActivationStatus",
+      "caller": "updateCenterStatus",
+      "sourceLine": 396,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centerType",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@activationStatus",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@updateStatus",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterActivationStatus",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterActivationStatus",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterActivationStatus",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@centerType",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterActivationStatus",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@activationStatus",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterActivationStatus",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 5,
+          "name": "@updateStatus",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "7fb3237950bcd67c43e451ea2a864b80d16a4dbdcc9294a88ec10a2add182a48"
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCentersCowPayApiSettings",
+      "caller": "GetCentersApiSettings",
+      "sourceLine": 454,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@filterDealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCentersCowPayApiSettings",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCentersCowPayApiSettings",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@filterDealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "acb5638ab3860910e65e57a51716235b8f08bd79e25b2cf2c772f96ab6f2d27e"
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterCowPayApiSettings",
+      "caller": "updateCenterApiSettings",
+      "sourceLine": 486,
+      "sourceParameters": [
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centerType",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@merchantCode",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@merchantHashKey",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@accessToken",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@stagingAccessToken",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@isEnabled",
+          "declaration": "SqlDbType.Bit)",
+          "direction": "input"
+        },
+        {
+          "name": "RetVal",
+          "declaration": "SqlDbType.Int)",
+          "direction": "returnvalue"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterCowPayApiSettings",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterCowPayApiSettings",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@centerType",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterCowPayApiSettings",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@merchantCode",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterCowPayApiSettings",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@merchantHashKey",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterCowPayApiSettings",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 5,
+          "name": "@accessToken",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterCowPayApiSettings",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 6,
+          "name": "@stagingAccessToken",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterCowPayApiSettings",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 7,
+          "name": "@isEnabled",
+          "type_schema": "sys",
+          "type_name": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "285a811d90927056155e7a5815de75f316e5adf5644827577212974f1fa713a8"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterCowPayApiSettings",
+      "caller": "updateCenterApiSettings",
+      "sourceLine": 486,
+      "sourceParameters": [
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centerType",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@merchantCode",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@merchantHashKey",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@accessToken",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@stagingAccessToken",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@isEnabled",
+          "declaration": "SqlDbType.Bit)",
+          "direction": "input"
+        },
+        {
+          "name": "RetVal",
+          "declaration": "SqlDbType.Int)",
+          "direction": "returnvalue"
+        }
+      ],
+      "available": false,
+      "parameters": [],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": null
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterCowPayApiSettings",
+      "caller": "getCenterApiSettings",
+      "sourceLine": 527,
+      "sourceParameters": [
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterCowPayApiSettings",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "98dcd1bfc642b44a888c01de9312578ab255560f3e65967a49bc1dd8a200f6e8"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterCowPayApiSettings",
+      "caller": "getCenterApiSettings",
+      "sourceLine": 527,
+      "sourceParameters": [
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": false,
+      "parameters": [],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": null
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_getDealerCentersAlertMessage",
+      "caller": "GetCentersAlertMessage",
+      "sourceLine": 562,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@filterDealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@filterStatusID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getDealerCentersAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getDealerCentersAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@filterDealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getDealerCentersAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@filterStatusID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "25be760b996f6f637a2422d49c18254107ad4e14cb57d5bac4d6c595b1ec422f"
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterAlertMessage",
+      "caller": "updateCentersAlertMessage",
+      "sourceLine": 619,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@messageText",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@messageExpiryDate",
+          "declaration": "SqlDbType.Date)",
+          "direction": "input"
+        },
+        {
+          "name": "@centersList",
+          "declaration": "DataUtils.createCenterListDatatable(centerslist))",
+          "direction": "input"
+        },
+        {
+          "name": "RetVal",
+          "declaration": "SqlDbType.Int)",
+          "direction": "returnvalue"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@messageText",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 500,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@messageExpiryDate",
+          "type_schema": "sys",
+          "type_name": "date",
+          "max_length": 3,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@centersList",
+          "type_schema": "dbo",
+          "type_name": "Element_ID_List",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": true,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "d9b0337cb2f24c62865cb91a0019412429bde4800a9565d5c9c54df9b5da2e48"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterAlertMessage",
+      "caller": "updateCentersAlertMessage",
+      "sourceLine": 619,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@messageText",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@messageExpiryDate",
+          "declaration": "SqlDbType.Date)",
+          "direction": "input"
+        },
+        {
+          "name": "@centersList",
+          "declaration": "DataUtils.createCenterListDatatable(centerslist))",
+          "direction": "input"
+        },
+        {
+          "name": "RetVal",
+          "declaration": "SqlDbType.Int)",
+          "direction": "returnvalue"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@messageText",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 500,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@messageExpiryDate",
+          "type_schema": "sys",
+          "type_name": "date",
+          "max_length": 3,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@centersList",
+          "type_schema": "dbo",
+          "type_name": "Element_ID_List",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": true,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "d9b0337cb2f24c62865cb91a0019412429bde4800a9565d5c9c54df9b5da2e48"
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_resetCenterAlertMessage",
+      "caller": "resetAlertMessage",
+      "sourceLine": 689,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@updateStatus",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        },
+        {
+          "name": "@centersList",
+          "declaration": "DataUtils.createCenterListDatatable(centerslist))",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_resetCenterAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_resetCenterAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@centersList",
+          "type_schema": "dbo",
+          "type_name": "Element_ID_List",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": true,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_resetCenterAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@updateStatus",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "560d9d51fbe6829e1a4b1dbdab346b30fda42ba1e7f65a7fefab3fb6ab4ece76"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_resetCenterAlertMessage",
+      "caller": "resetAlertMessage",
+      "sourceLine": 689,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@updateStatus",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        },
+        {
+          "name": "@centersList",
+          "declaration": "DataUtils.createCenterListDatatable(centerslist))",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_resetCenterAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_resetCenterAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@centersList",
+          "type_schema": "dbo",
+          "type_name": "Element_ID_List",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": true,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_resetCenterAlertMessage",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@updateStatus",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "560d9d51fbe6829e1a4b1dbdab346b30fda42ba1e7f65a7fefab3fb6ab4ece76"
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_getChildLatestActivationTransactions",
+      "caller": "getLatestChildActivationTransactions",
+      "sourceLine": 833,
+      "sourceParameters": [
+        {
+          "name": "@childID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@requestMonth",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@requestYear",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getChildLatestActivationTransactions",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@childID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getChildLatestActivationTransactions",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@requestMonth",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getChildLatestActivationTransactions",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@requestYear",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "9215b4f80cc8e31d772046db8d61892b4e65877731ccd8daf7b601b91d4095f4"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_getChildLatestActivationTransactions",
+      "caller": "getLatestChildActivationTransactions",
+      "sourceLine": 833,
+      "sourceParameters": [
+        {
+          "name": "@childID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@requestMonth",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@requestYear",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getChildLatestActivationTransactions",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@childID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getChildLatestActivationTransactions",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@requestMonth",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getChildLatestActivationTransactions",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@requestYear",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "50701e6f5a5ed04772d6032ba2d608c5e76f9fed9108231fa6aeb32087f9bd5b"
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterClassChildren",
+      "caller": "getNurseryClassChildren",
+      "sourceLine": 1433,
+      "sourceParameters": [
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@classID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@requestMonth",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@requestYear",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@requestAll",
+          "declaration": "SqlDbType.Bit)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassChildren",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassChildren",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@classID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassChildren",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@requestMonth",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassChildren",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@requestYear",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassChildren",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 5,
+          "name": "@requestAll",
+          "type_schema": "sys",
+          "type_name": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "bb390cc6c116957781721f55e721978e2782e35b5753b945a0398e0cd4d3ecb0"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterClassChildren",
+      "caller": "getSchoolClassChildren",
+      "sourceLine": 1469,
+      "sourceParameters": [
+        {
+          "name": "@classID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@academicYearID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassChildren",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassChildren",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@classID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassChildren",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@academicYearID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "54b67651e3d0be8e88f87a387f77d1e502c62021c100d718526fc32385a1ccdc"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterClassesData",
+      "caller": "GetSchoolClasses",
+      "sourceLine": 1505,
+      "sourceParameters": [
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@academicYearID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassesData",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassesData",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@academicYearID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "5c9ca99702bf777c6710a2c4d2662fa6dd7af047eb23e5345d92694808a4096f"
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterClassesData",
+      "caller": "GetClasses",
+      "sourceLine": 1537,
+      "sourceParameters": [
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@requestMonth",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@requestYear",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@requestAll",
+          "declaration": "SqlDbType.Bit)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassesData",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassesData",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@requestMonth",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassesData",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@requestYear",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassesData",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@requestAll",
+          "type_schema": "sys",
+          "type_name": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "f3da4fc7b9b1997622da8eb1501a34da302864fa60864d03169ca0d5430e19f3"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterClassesData",
+      "caller": "GetClasses",
+      "sourceLine": 1537,
+      "sourceParameters": [
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@requestMonth",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@requestYear",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@requestAll",
+          "declaration": "SqlDbType.Bit)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassesData",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterClassesData",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@academicYearID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [
+        "@requestMonth",
+        "@requestYear",
+        "@requestAll"
+      ],
+      "definitionSha256": "5c9ca99702bf777c6710a2c4d2662fa6dd7af047eb23e5345d92694808a4096f"
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_addCenterUser",
+      "caller": "addUser",
+      "sourceLine": 1629,
+      "sourceParameters": [
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@userName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@password",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@firstName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@lastName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@email",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "RetVal",
+          "declaration": "SqlDbType.Int)",
+          "direction": "returnvalue"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCenterUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCenterUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@userName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCenterUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@password",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCenterUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@firstName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCenterUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 5,
+          "name": "@lastName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCenterUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 6,
+          "name": "@email",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCenterUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 7,
+          "name": "@updateStatus",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "666cc04fac36c5f6a597d9151924d7c69082582b54c318619aa3ba8312ff7808"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_addCenterUser",
+      "caller": "addUser",
+      "sourceLine": 1629,
+      "sourceParameters": [
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@userName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@password",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@firstName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@lastName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@email",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "RetVal",
+          "declaration": "SqlDbType.Int)",
+          "direction": "returnvalue"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCenterUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCenterUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@userName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCenterUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@password",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCenterUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@firstName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCenterUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 5,
+          "name": "@lastName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCenterUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 6,
+          "name": "@email",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCenterUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 7,
+          "name": "@updateStatus",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "666cc04fac36c5f6a597d9151924d7c69082582b54c318619aa3ba8312ff7808"
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterAdminUser",
+      "caller": "getAdminUser",
+      "sourceLine": 1664,
+      "sourceParameters": [
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centerType",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterAdminUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterAdminUser",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@centerType",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "1d7c389bc56e2e2fc495771812b6d24358f92ed16ea615f4fad1d519aa291096"
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterUserInfo",
+      "caller": "EditAdminUser",
+      "sourceLine": 1701,
+      "sourceParameters": [
+        {
+          "name": "@userID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@password",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@firstName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@lastName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@email",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@updateStatus",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterUserInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@userID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterUserInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@firstName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 200,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterUserInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@lastName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 200,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterUserInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@email",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 200,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterUserInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 5,
+          "name": "@password",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 900,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterUserInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 6,
+          "name": "@updateStatus",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "660760cd0d2fc31465194d4be555240a41c3457890f580c7361ed5c0590bf6bd"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterUserInfo",
+      "caller": "EditAdminUser",
+      "sourceLine": 1701,
+      "sourceParameters": [
+        {
+          "name": "@userID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@password",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@firstName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@lastName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@email",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@updateStatus",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterUserInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@userID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterUserInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@firstName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 200,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterUserInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@lastName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 200,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterUserInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@email",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 200,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterUserInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 5,
+          "name": "@password",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 900,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterUserInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 6,
+          "name": "@updateStatus",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "2ce00f139a4d47cda9885be65ff911fc836688cadd55420dfcb245bb8d799f75"
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCentersInvoiceTracker",
+      "caller": "updateCentersInvoicingTracker",
+      "sourceLine": 1748,
+      "sourceParameters": [
+        {
+          "name": "@userID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centersList",
+          "declaration": "DataUtils.createCenterListDatatable(centerslist))",
+          "direction": "input"
+        },
+        {
+          "name": "RetVal",
+          "declaration": "SqlDbType.Int)",
+          "direction": "returnvalue"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCentersInvoiceTracker",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@userID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCentersInvoiceTracker",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@centersList",
+          "type_schema": "dbo",
+          "type_name": "Element_ID_List",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": true,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "1c69e820613012de1762423a4731a97e24f8bbf8eb50b0813267c6761473fe73"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCentersInvoiceTracker",
+      "caller": "updateCentersInvoicingTracker",
+      "sourceLine": 1748,
+      "sourceParameters": [
+        {
+          "name": "@userID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centersList",
+          "declaration": "DataUtils.createCenterListDatatable(centerslist))",
+          "direction": "input"
+        },
+        {
+          "name": "RetVal",
+          "declaration": "SqlDbType.Int)",
+          "direction": "returnvalue"
+        }
+      ],
+      "available": false,
+      "parameters": [],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": null
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterInfo",
+      "caller": "EditCareCenter",
+      "sourceLine": 1817,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@name",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@email",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@mobile",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@website",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@address",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@manager",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@landline",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@description",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@inputType",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@updateStatus",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@name",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@email",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 5,
+          "name": "@landline",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 6,
+          "name": "@mobile",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 7,
+          "name": "@website",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 8,
+          "name": "@description",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 9,
+          "name": "@address",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 10,
+          "name": "@manager",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 11,
+          "name": "@inputType",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 12,
+          "name": "@updateStatus",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "10601c67023f2604dc226f1443dd391b111d29a36720b73fe4d7db2bc6a8626f"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterInfo",
+      "caller": "EditCareCenter",
+      "sourceLine": 1817,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@name",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@email",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@mobile",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@website",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@address",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@manager",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@landline",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@description",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@inputType",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@updateStatus",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@name",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@email",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 5,
+          "name": "@landline",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 6,
+          "name": "@mobile",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 7,
+          "name": "@website",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 8,
+          "name": "@description",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 9,
+          "name": "@address",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 10,
+          "name": "@manager",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 11,
+          "name": "@inputType",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_updateCenterInfo",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 12,
+          "name": "@updateStatus",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "38ec5fadf4cd3367b71ab2ad3e493323731ba3d9b208983865e23d741f580917"
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "spGenerateChildQrCode",
+      "caller": "generateChildQRCode",
+      "sourceLine": 1967,
+      "sourceParameters": [
+        {
+          "name": "@child_id",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@qrcode",
+          "declaration": "SqlDbType.NVarChar, 100)",
+          "direction": "output"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "spGenerateChildQrCode",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@child_id",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "spGenerateChildQrCode",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@qrcode",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "f5b53e0baac0ed2e632d535954d341e4c2466ebe957077ea30fa2f7a48714412"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "spGenerateChildQrCode",
+      "caller": "generateChildQRCode",
+      "sourceLine": 1967,
+      "sourceParameters": [
+        {
+          "name": "@child_id",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@qrcode",
+          "declaration": "SqlDbType.NVarChar, 100)",
+          "direction": "output"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "spGenerateChildQrCode",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@child_id",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "spGenerateChildQrCode",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@qrcode",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "7e6e32089e00db98d08327220b5e99dfa5252a46ecc210c2d246a19ccaafd301"
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_addCareCenter",
+      "caller": "addCareCenter",
+      "sourceLine": 1994,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@name",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@email",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@landline",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@mobile",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@website",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@domain",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@logo",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@photo",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@description",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@address",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@location",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@manager",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@type",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@currency",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        },
+        {
+          "name": "@updateStatus",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        },
+        {
+          "name": "@academicYearID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@userName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@password",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@firstName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@lastName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@userEmail",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@name",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@email",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@landline",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 5,
+          "name": "@mobile",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 6,
+          "name": "@website",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 7,
+          "name": "@domain",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 8,
+          "name": "@logo",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 9,
+          "name": "@photo",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 10,
+          "name": "@description",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 11,
+          "name": "@address",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 12,
+          "name": "@location",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 13,
+          "name": "@manager",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 14,
+          "name": "@type",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 15,
+          "name": "@currency",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 16,
+          "name": "@userName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 17,
+          "name": "@password",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 18,
+          "name": "@firstName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 19,
+          "name": "@lastName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 20,
+          "name": "@userEmail",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 21,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 22,
+          "name": "@updateStatus",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "f1bc3eb3eb2b3141b56aaf13824aef7baa7ed9e00c31015ecf40fcc763f146e2"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_addCareCenter",
+      "caller": "addCareCenter",
+      "sourceLine": 1994,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@name",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@email",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@landline",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@mobile",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@website",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@domain",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@logo",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@photo",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@description",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@address",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@location",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@manager",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@type",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@currency",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        },
+        {
+          "name": "@updateStatus",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        },
+        {
+          "name": "@academicYearID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@userName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@password",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@firstName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@lastName",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@userEmail",
+          "declaration": "SqlDbType.VarChar)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@name",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 3,
+          "name": "@email",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 4,
+          "name": "@landline",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 5,
+          "name": "@mobile",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 6,
+          "name": "@website",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 7,
+          "name": "@domain",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 8,
+          "name": "@logo",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 9,
+          "name": "@photo",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 10,
+          "name": "@description",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 11,
+          "name": "@address",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 12,
+          "name": "@location",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 13,
+          "name": "@manager",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 14,
+          "name": "@type",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 15,
+          "name": "@currency",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 16,
+          "name": "@academicYearID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 17,
+          "name": "@userName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 18,
+          "name": "@password",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 19,
+          "name": "@firstName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 20,
+          "name": "@lastName",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 21,
+          "name": "@userEmail",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 22,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_addCareCenter",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 23,
+          "name": "@updateStatus",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "1c9f9753d0df46f05d08c81d970b3c96327fc1254671880ba96b02518a057127"
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterChildren",
+      "caller": "getCenterChildrenList",
+      "sourceLine": 2081,
+      "sourceParameters": [
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterChildren",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterChildren",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "070713ef4875757cb4dcab04e83db702a97ead2b35d57445bdda6bfebf72f69e"
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterChildren",
+      "caller": "getCenterChildrenList",
+      "sourceLine": 2081,
+      "sourceParameters": [
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        }
+      ],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterChildren",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 1,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "iCareAdmin_getCenterChildren",
+          "type_desc": "SQL_STORED_PROCEDURE",
+          "parameter_id": 2,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "e82b4c2bfe1a632bee6d01e23ebee1e4d1a1c79d8d0dc7722959ec05762a215d"
+    },
+    {
+      "role": "accounting",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCentersPaymentsList",
+      "caller": "getAccountingData",
+      "sourceLine": 2138,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@paymentStatus",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centerType",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@dateStart",
+          "declaration": "SqlDbType.Date)",
+          "direction": "input"
+        },
+        {
+          "name": "@dateEnd",
+          "declaration": "SqlDbType.Date)",
+          "direction": "input"
+        }
+      ],
+      "available": false,
+      "parameters": [],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": null
+    },
+    {
+      "role": "accounting",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterPayment",
+      "caller": "updateCenterPayment",
+      "sourceLine": 2174,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centerType",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@centerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@paymentAmount",
+          "declaration": "SqlDbType.Float)",
+          "direction": "input"
+        },
+        {
+          "name": "@paymentMonth",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@paymentYear",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@paymentLink",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@paymentCurrency",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@paymentTitle",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@paymentDesc",
+          "declaration": "SqlDbType.NVarChar)",
+          "direction": "input"
+        },
+        {
+          "name": "@dueDate",
+          "declaration": "SqlDbType.Date)",
+          "direction": "input"
+        },
+        {
+          "name": "@paymentStatus",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@paymentID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@updateStatus",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        }
+      ],
+      "available": false,
+      "parameters": [],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": null
+    },
+    {
+      "role": "accounting",
+      "schema": "dbo",
+      "name": "iCareAdmin_deleteCenterPayment",
+      "caller": "deleteCenterPayment",
+      "sourceLine": 2223,
+      "sourceParameters": [
+        {
+          "name": "@dealerID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@paymentID",
+          "declaration": "SqlDbType.Int)",
+          "direction": "input"
+        },
+        {
+          "name": "@updateStatus",
+          "declaration": "SqlDbType.Int, 4)",
+          "direction": "output"
+        }
+      ],
+      "available": false,
+      "parameters": [],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": null
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "isDealerSuperAdmin",
+      "caller": "inline SQL function",
+      "sourceParameters": [],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "isDealerSuperAdmin",
+          "type_desc": "SQL_SCALAR_FUNCTION",
+          "parameter_id": 0,
+          "name": "",
+          "type_schema": "sys",
+          "type_name": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "isDealerSuperAdmin",
+          "type_desc": "SQL_SCALAR_FUNCTION",
+          "parameter_id": 1,
+          "name": "@dealerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "82f6cb82107840cf23702949bcbb34aa02c49cedaff394a9d4fd23e780b509f5"
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "isCenterDomainAvailable",
+      "caller": "inline SQL function",
+      "sourceParameters": [],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "isCenterDomainAvailable",
+          "type_desc": "SQL_SCALAR_FUNCTION",
+          "parameter_id": 0,
+          "name": "",
+          "type_schema": "sys",
+          "type_name": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "isCenterDomainAvailable",
+          "type_desc": "SQL_SCALAR_FUNCTION",
+          "parameter_id": 1,
+          "name": "@centerDomain",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 900,
+          "precision": 0,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "eafe33966521edfb04f791437b698a75d4254f9608b5c76d2152974a29b8d64f"
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "getCenterDomain",
+      "caller": "inline SQL function",
+      "sourceParameters": [],
+      "available": true,
+      "parameters": [
+        {
+          "schema_name": "dbo",
+          "object_name": "getCenterDomain",
+          "type_desc": "SQL_SCALAR_FUNCTION",
+          "parameter_id": 0,
+          "name": "",
+          "type_schema": "sys",
+          "type_name": "nvarchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "is_output": true,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "getCenterDomain",
+          "type_desc": "SQL_SCALAR_FUNCTION",
+          "parameter_id": 1,
+          "name": "@centerType",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "getCenterDomain",
+          "type_desc": "SQL_SCALAR_FUNCTION",
+          "parameter_id": 2,
+          "name": "@centerID",
+          "type_schema": "sys",
+          "type_name": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "is_output": false,
+          "is_readonly": false,
+          "has_default_value": false
+        }
+      ],
+      "unexpectedCallerParameters": [],
+      "definitionSha256": "58a2376664f120492f255e75f18b9ec976a1171f2c7cd60017600dd8f40307b2"
+    }
+  ],
+  "dependencyClosure": [
+    {
+      "role": "logging",
+      "schema": "dbo",
+      "name": "record_adminWebErrorLog",
+      "available": false,
+      "moduleDefinitionAvailable": false,
+      "objectType": null,
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "authenticateDealer",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealers",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "getHashedPassword",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateDealer",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealers",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "getHashedPassword",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_getDealersList",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealers",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_getDealerCenters",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealers",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "vwDealerCenters",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_getUserAccountingCentersList",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Center_Invoicing",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealer_Page_Center_Access",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealers",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "vwDealerCenters",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterStatusesList",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Center_Status",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Center_Status_Reference",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealer_Page_Center_Access",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "isDealerSuperAdmin",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "vwDealerCenters",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterActivationStatus",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Center_Status",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealer_Centers",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "isDealerSuperAdmin",
+          "externalServer": false
+        },
+        {
+          "role": "logging",
+          "schema": "dbo",
+          "name": "record_CenterActivationStatusUpdates",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCentersCowPayApiSettings",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Cowpay_Center_Api_Settings",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealers",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "getCenterQualifierString",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "vwDealerCenters",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterCowPayApiSettings",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Cowpay_Center_Api_Settings",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterCowPayApiSettings",
+      "available": false,
+      "moduleDefinitionAvailable": false,
+      "objectType": null,
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterCowPayApiSettings",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Cowpay_Center_Api_Settings",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterCowPayApiSettings",
+      "available": false,
+      "moduleDefinitionAvailable": false,
+      "objectType": null,
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_getDealerCentersAlertMessage",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Center_Alert_Message",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Center_Alert_Message",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Center_Status",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealer_Page_Center_Access",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealers",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "getCenterQualifierString",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "vwDealerCenters",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterAlertMessage",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Center_Alert_Message",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Element_ID_List",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "isDealerSuperAdmin",
+          "externalServer": false
+        },
+        {
+          "role": "logging",
+          "schema": "dbo",
+          "name": "record_centerAlertMessageUpdates",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterAlertMessage",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Center_Alert_Message",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Element_ID_List",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "isDealerSuperAdmin",
+          "externalServer": false
+        },
+        {
+          "role": "logging",
+          "schema": "dbo",
+          "name": "record_centerAlertMessageUpdates",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_resetCenterAlertMessage",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Center_Alert_Message",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Element_ID_List",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "isDealerSuperAdmin",
+          "externalServer": false
+        },
+        {
+          "role": "logging",
+          "schema": "dbo",
+          "name": "record_centerAlertMessageUpdates",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_resetCenterAlertMessage",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Center_Alert_Message",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Element_ID_List",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "isDealerSuperAdmin",
+          "externalServer": false
+        },
+        {
+          "role": "logging",
+          "schema": "dbo",
+          "name": "record_centerAlertMessageUpdates",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_getChildLatestActivationTransactions",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Child_Transactions",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "getMonthYearLastDate",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_getChildLatestActivationTransactions",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Child_Transactions",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "getMonthYearLastDate",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterClassChildren",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Child",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Class",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Class_Child",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "getMonthYearLastDate",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Parent",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterClassChildren",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Child",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Class",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Class_Child",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Parent",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterClassesData",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Child",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Class",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Class_Child",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Parent",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterClassesData",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Child",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Class",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Class_Child",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "getMonthYearLastDate",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Parent",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_addCenterUser",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "addNewCenterUser",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Sec_Roles",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Sec_UserRoles",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "sec_users",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "secCareCenterUser",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "System_Menus",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "System_Menus_New",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "System_Role_Menu",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "System_Role_Menu_Web",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_addCenterUser",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "addNewCenterUser",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Sec_Roles",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Sec_UserRoles",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "sec_users",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "secCareCenterUser",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "System_Menus",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "System_Menus_New",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "System_Role_Menu",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "System_Role_Menu_Web",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterAdminUser",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "vwCenterUsers",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterUserInfo",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "sec_users",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "updateUserPassword",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterUserInfo",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "sec_users",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "updateUserPassword",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCentersInvoiceTracker",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Center_Invoicing",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Element_ID_List",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCentersInvoiceTracker",
+      "available": false,
+      "moduleDefinitionAvailable": false,
+      "objectType": null,
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterInfo",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Center_Child_Input_Type",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterInfo",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Center_Child_Input_Type",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "spGenerateChildQrCode",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "child_inputs",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Getencyrptedqrcodevalue",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "qr_code",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "spGenerateChildQrCode",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "child_inputs",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Getencyrptedqrcodevalue",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "qr_code",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_addCareCenter",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Center_Child_Input_Type",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "iCareAdmin_addCenterUser",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "iCareAdmin_addCenterVariables",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Status",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_addCareCenter",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Active_Academic_Year",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Center_Academic_Year_Generated",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Center_Child_Input_Type",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "iCareAdmin_addCenterUser",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "iCareAdmin_addCenterVariables",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Status",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterChildren",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "vwChildClassParent",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCenterChildren",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Child",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Parent",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "accounting",
+      "schema": "dbo",
+      "name": "iCareAdmin_getCentersPaymentsList",
+      "available": false,
+      "moduleDefinitionAvailable": false,
+      "objectType": null,
+      "dependencies": []
+    },
+    {
+      "role": "accounting",
+      "schema": "dbo",
+      "name": "iCareAdmin_updateCenterPayment",
+      "available": false,
+      "moduleDefinitionAvailable": false,
+      "objectType": null,
+      "dependencies": []
+    },
+    {
+      "role": "accounting",
+      "schema": "dbo",
+      "name": "iCareAdmin_deleteCenterPayment",
+      "available": false,
+      "moduleDefinitionAvailable": false,
+      "objectType": null,
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "isDealerSuperAdmin",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_SCALAR_FUNCTION",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealers",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "isCenterDomainAvailable",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_SCALAR_FUNCTION",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Center_Domains",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "getCenterDomain",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_SCALAR_FUNCTION",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Center_Domains",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "Dealers",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "getHashedPassword",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_SCALAR_FUNCTION",
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "vwDealerCenters",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "VIEW",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Center_Status",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Currency",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealer_Centers",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealers",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Center_Invoicing",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "Dealer_Page_Center_Access",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "Center_Status",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "Center_Status_Reference",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "Dealer_Centers",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "logging",
+      "schema": "dbo",
+      "name": "record_CenterActivationStatusUpdates",
+      "available": false,
+      "moduleDefinitionAvailable": false,
+      "objectType": null,
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Cowpay_Center_Api_Settings",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "getCenterQualifierString",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_SCALAR_FUNCTION",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Care_Center",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Center_Alert_Message",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Center_Alert_Message",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Element_ID_List",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE_TYPE",
+      "dependencies": []
+    },
+    {
+      "role": "logging",
+      "schema": "dbo",
+      "name": "record_centerAlertMessageUpdates",
+      "available": false,
+      "moduleDefinitionAvailable": false,
+      "objectType": null,
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Care_Center",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Element_ID_List",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE_TYPE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Child_Transactions",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "getMonthYearLastDate",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_SCALAR_FUNCTION",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Child_Transactions",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "getMonthYearLastDate",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_SCALAR_FUNCTION",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Child",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Class",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Class_Child",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Parent",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Child",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Class",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Class_Child",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Parent",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "addNewCenterUser",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Center_Users",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "getHashedPassword",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Sec_Roles",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Sec_UserRoles",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "sec_users",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "secCareCenterUser",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "System_Menus",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "System_Menus_New",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "System_Role_Menu",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "System_Role_Menu_Web",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Sec_Roles",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Sec_UserRoles",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "sec_users",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "secCareCenterUser",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "System_Menus",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "System_Menus_New",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "System_Role_Menu",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "System_Role_Menu_Web",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "vwCenterUsers",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "VIEW",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Care_Center",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Center_Users",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "sec_users",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "sec_users",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "updateUserPassword",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Center_Users",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Child_Users",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "getHashedPassword",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Parent_Users",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Provider_Users",
+          "externalServer": false
+        },
+        {
+          "role": "logging",
+          "schema": "dbo",
+          "name": "record_userPasswordUpdate",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Temp_updateLocalCenterUserPassword",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Center_Child_Input_Type",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Center_Child_Input_Type",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "child_inputs",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Getencyrptedqrcodevalue",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_SCALAR_FUNCTION",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Child",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Parent",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "qr_code",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "child_inputs",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Getencyrptedqrcodevalue",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_SCALAR_FUNCTION",
+      "dependencies": [
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Child",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "Parent",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "qr_code",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "iCareAdmin_addCenterVariables",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Center_Domains",
+          "externalServer": false
+        },
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Dealer_Centers",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "Status",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Active_Academic_Year",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Center_Academic_Year_Generated",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "school",
+      "schema": "dbo",
+      "name": "Status",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "nursery",
+      "schema": "dbo",
+      "name": "vwChildClassParent",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "VIEW",
+      "dependencies": [
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Child",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Class",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Class_Child",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "Parent",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "Center_Domains",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "Currency",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "Center_Users",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "Child_Users",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "Parent_Users",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Parent_Users",
+          "externalServer": false
+        }
+      ]
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "Provider_Users",
+      "available": true,
+      "moduleDefinitionAvailable": false,
+      "objectType": "USER_TABLE",
+      "dependencies": []
+    },
+    {
+      "role": "logging",
+      "schema": "dbo",
+      "name": "record_userPasswordUpdate",
+      "available": false,
+      "moduleDefinitionAvailable": false,
+      "objectType": null,
+      "dependencies": []
+    },
+    {
+      "role": "secure",
+      "schema": "dbo",
+      "name": "Temp_updateLocalCenterUserPassword",
+      "available": true,
+      "moduleDefinitionAvailable": true,
+      "objectType": "SQL_STORED_PROCEDURE",
+      "dependencies": [
+        {
+          "role": "secure",
+          "schema": "dbo",
+          "name": "Center_Users",
+          "externalServer": false
+        },
+        {
+          "role": "nursery",
+          "schema": "dbo",
+          "name": "sec_users",
+          "externalServer": false
+        },
+        {
+          "role": "school",
+          "schema": "dbo",
+          "name": "sec_users",
+          "externalServer": false
+        }
+      ]
+    }
+  ]
+}

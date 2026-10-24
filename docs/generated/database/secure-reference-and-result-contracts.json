@@ -1,0 +1,437 @@
+{
+  "role": "secure",
+  "lookups": {
+    "admin_pages": [],
+    "center_types": [
+      {
+        "center_type_id": 1,
+        "center_type_title": "Nursery"
+      },
+      {
+        "center_type_id": 2,
+        "center_type_title": "School"
+      }
+    ],
+    "currencies": [
+      {
+        "currency_id": 1,
+        "currency_name": "LBP",
+        "currency_desc": "Lebanese Lira"
+      },
+      {
+        "currency_id": 2,
+        "currency_name": "USD",
+        "currency_desc": "United States Dollar"
+      }
+    ],
+    "statuses": []
+  },
+  "result_metadata": {
+    "authenticateDealer": [],
+    "iCareAdmin_getCenterAdminUser": [
+      {
+        "column_ordinal": 1,
+        "name": "center_user_id",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "username",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(450)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 3,
+        "name": "center_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 4,
+        "name": "center_type",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 5,
+        "name": "center_name",
+        "is_nullable": false,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 6,
+        "name": "is_admin",
+        "is_nullable": true,
+        "system_type_name": "bit",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 7,
+        "name": "Firstname",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(50)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 8,
+        "name": "Lastname",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(50)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 9,
+        "name": "Email",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(50)",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ],
+    "iCareAdmin_getCenterStatusesList": [
+      {
+        "column_ordinal": 1,
+        "name": "center_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "center_name",
+        "is_nullable": false,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 3,
+        "name": "center_type",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 4,
+        "name": "dealer_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 5,
+        "name": "dealer_name",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(450)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 6,
+        "name": "center_qualifier",
+        "is_nullable": false,
+        "system_type_name": "varchar(25)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 7,
+        "name": "activation_status",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 8,
+        "name": "status_title",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(100)",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ],
+    "iCareAdmin_getCentersCowPayApiSettings": [
+      {
+        "column_ordinal": 1,
+        "name": "dealer_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "dealer_name",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(450)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 3,
+        "name": "center_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 4,
+        "name": "center_name",
+        "is_nullable": false,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 5,
+        "name": "center_type",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 6,
+        "name": "is_configured",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 7,
+        "name": "is_enabled",
+        "is_nullable": false,
+        "system_type_name": "bit",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 8,
+        "name": "center_qualifier",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(100)",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ],
+    "iCareAdmin_getDealerCenters": [
+      {
+        "column_ordinal": 1,
+        "name": "center_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "center_name",
+        "is_nullable": false,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 3,
+        "name": "center_type",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 4,
+        "name": "center_qualifier",
+        "is_nullable": false,
+        "system_type_name": "varchar(25)",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ],
+    "iCareAdmin_getDealerCentersAlertMessage": [
+      {
+        "column_ordinal": 1,
+        "name": "dealer_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "dealer_name",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(450)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 3,
+        "name": "center_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 4,
+        "name": "center_name",
+        "is_nullable": false,
+        "system_type_name": "nvarchar(max)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 5,
+        "name": "center_type",
+        "is_nullable": true,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 6,
+        "name": "message_text",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(250)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 7,
+        "name": "alert_expiry_date",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(4000)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 8,
+        "name": "center_qualifier",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(100)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 9,
+        "name": "activation_status",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ],
+    "iCareAdmin_getDealersList": [
+      {
+        "column_ordinal": 1,
+        "name": "dealer_id",
+        "is_nullable": false,
+        "system_type_name": "int",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 2,
+        "name": "dealer_name",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(450)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 3,
+        "name": "username",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(450)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 4,
+        "name": "user_password",
+        "is_nullable": true,
+        "system_type_name": "binary(64)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 5,
+        "name": "password_salt",
+        "is_nullable": true,
+        "system_type_name": "uniqueidentifier",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 6,
+        "name": "user_email",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(200)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 7,
+        "name": "is_super_admin",
+        "is_nullable": true,
+        "system_type_name": "bit",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 8,
+        "name": "is_active",
+        "is_nullable": true,
+        "system_type_name": "bit",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 9,
+        "name": "access_token",
+        "is_nullable": true,
+        "system_type_name": "nvarchar(450)",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 10,
+        "name": "last_session",
+        "is_nullable": true,
+        "system_type_name": "datetime",
+        "error_number": null,
+        "error_type_desc": null
+      },
+      {
+        "column_ordinal": 11,
+        "name": "creation_date",
+        "is_nullable": true,
+        "system_type_name": "datetime",
+        "error_number": null,
+        "error_type_desc": null
+      }
+    ]
+  },
+  "metadata_errors": []
+}

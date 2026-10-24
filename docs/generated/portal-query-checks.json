@@ -1,0 +1,52 @@
+{
+  "verifiedAtUtc": "2026-10-24T10:59:09.8962915Z",
+  "method": "SQL Server system compiler metadata only; supplied application statements were not executed; no customer records or writes.",
+  "sourceSha256": {
+    "src/server/auth/dealers.ts": "e6304a92f2a80437ea4ebda38df1307813381f437753a242b86ff267b8f953e4",
+    "src/server/centers/repository.ts": "9baadcd1de25f5ed0c0b5877d0910478b3652001cff418e19ef4321773277051"
+  },
+  "checks": [
+    {
+      "name": "center-list-0",
+      "columns": 15,
+      "errors": [],
+      "status": "described"
+    },
+    {
+      "name": "center-list-1",
+      "columns": 15,
+      "errors": [],
+      "status": "described"
+    },
+    {
+      "name": "center-list-2",
+      "columns": 15,
+      "errors": [],
+      "status": "described"
+    },
+    {
+      "name": "center-detail",
+      "columns": 14,
+      "errors": [],
+      "status": "described"
+    },
+    {
+      "name": "dealer-state",
+      "columns": 5,
+      "errors": [],
+      "status": "described"
+    },
+    {
+      "name": "profile-update-icare",
+      "columns": 1,
+      "errors": [],
+      "status": "described"
+    },
+    {
+      "name": "profile-update-icare_school",
+      "columns": 1,
+      "errors": [],
+      "status": "described"
+    }
+  ]
+}
