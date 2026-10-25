@@ -1,0 +1,17 @@
+{
+  "checkedOn": "2026-10-25",
+  "checks": [
+    "Nursery/Lite/School publish and read-back; same batch never replays confirmed targets",
+    "owner-only publication, forged administrator denial and independent administrator-only reset",
+    "stale targets and invalid stored alerts fail without overwriting data",
+    "precommit receipt failure rolls SQL back; retry changes only the failed target",
+    "uncertain commit is visible; confirmed and unconfirmed targets are never blindly retried",
+    "administrator reset removes only the selected stored alerts",
+    "durable generations reject stale empty-state views after publish/reset cycles",
+    "all disposable rows removed; existing centers/alerts/accounts/mappings/references unchanged"
+  ],
+  "existingRowsUnchanged": true,
+  "persistentFixtureRows": false,
+  "usesLegacyLogger": false,
+  "note": "Identity sequences may advance; private acceptance receipts are separate from normal sessions and drafts."
+}

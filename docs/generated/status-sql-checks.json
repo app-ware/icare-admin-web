@@ -1,0 +1,19 @@
+{
+  "checkedOn": "2026-10-25",
+  "checks": [
+    "Nursery/Lite/School committed inserts, owner update, receipts and stale replay protection",
+    "forged role, inactive actor, revoked ownership and cross-type denial",
+    "missing page-9 reference left untouched; unowned actor cannot read/write",
+    "duplicate/null/unrecognized rows block all writes",
+    "SQL rollback restores exact revision; competing writer blocks and rejects stale revision",
+    "receipt outages before intent and after SQL update roll back status safely",
+    "lost commit acknowledgement yields unconfirmed outcome; reload recovers persisted state",
+    "confirmed SQL save remains successful when receipt confirmation fails",
+    "all fixture centers/dealers/statuses/mappings removed; existing rows unchanged"
+  ],
+  "page9FixtureAvailable": false,
+  "persistentFixtureRows": false,
+  "existingRowsUnchanged": true,
+  "usesLegacyLogger": false,
+  "note": "Rolled-back/deleted fixture inserts can advance identity sequences; acceptance receipts use a private dedicated SQLite file. Missing page references are not repaired."
+}

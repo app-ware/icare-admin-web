@@ -30,3 +30,11 @@ export const dealerWritesEnabled = () =>
   legacyConfigured() && process.env.ICARE_DEALER_WRITES_ENABLED === 'true';
 export const centerUserWritesEnabled = () =>
   legacyConfigured() && process.env.ICARE_CENTER_USER_WRITES_ENABLED === 'true';
+export const statusWritesEnabled = () =>
+  legacyConfigured() && process.env.ICARE_STATUS_WRITES_ENABLED === 'true';
+
+export const alertWritesEnabled = () =>
+  legacyConfigured() && process.env.ICARE_ALERT_WRITES_ENABLED === 'true';
+
+export const transportWritesEnabled = () =>
+  legacyConfigured() && process.env.ICARE_TRANSPORT_WRITES_ENABLED === 'true';

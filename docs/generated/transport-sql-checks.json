@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-10-25T06:31:51.535Z",
+  "developmentOnly": true,
+  "rolledBack": true,
+  "checks": [
+    "Missing live references and defaults stay explicit and cannot be saved",
+    "Type 1: lookup IDs, insert, readback, stale revision, default restoration and duplicate denial",
+    "Type 3: lookup IDs, insert, readback, stale revision, default restoration and duplicate denial",
+    "Type 4: lookup IDs, insert, readback, stale revision, default restoration and duplicate denial",
+    "Stored ownership and bus membership rechecked despite cached grants",
+    "All temporary centers, buses, account, choices and settings rolled back; original bus fingerprints unchanged"
+  ]
+}

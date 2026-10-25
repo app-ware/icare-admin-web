@@ -32,7 +32,7 @@ BEGIN TRY
     -- Hash/salt columns are used only server-side to derive the session stamp.
     GRANT SELECT ON OBJECT::dbo.Dealer_Centers (dealer_id, center_id, center_type)
         TO [icare_portal_app];
-    -- Page 7 gives Nursery/Lite report access only; it does not grant profile access.
+    -- Page 7 gives report access, page 8 alert reads, and page 9 status reads only.
     GRANT SELECT ON OBJECT::dbo.Dealer_Page_Center_Access (dealer_id, center_id, center_type, page_id)
         TO [icare_portal_app];
     -- Dealer administration uses fixed commands with a current active-admin check.
@@ -47,8 +47,11 @@ BEGIN TRY
     GRANT DELETE ON OBJECT::dbo.Dealer_Centers TO [icare_portal_app];
     GRANT SELECT ON OBJECT::dbo.Center_Domains (ID, center_id, center_type, center_domain)
         TO [icare_portal_app];
-    GRANT SELECT ON OBJECT::dbo.Center_Status (ID, center_id, center_type, activation_status)
+    GRANT SELECT ON OBJECT::dbo.Center_Status (ID, center_id, center_type, activation_status, update_time)
         TO [icare_portal_app];
+    -- Separate runtime status-write switch; fixed transactions recheck ownership.
+    GRANT INSERT ON OBJECT::dbo.Center_Status TO [icare_portal_app];
+    GRANT UPDATE ON OBJECT::dbo.Center_Status (activation_status, update_time) TO [icare_portal_app];
     -- Existing center-user management does not read credentials or change roles.
     GRANT SELECT ON OBJECT::dbo.Center_Users
         (ID, username, center_id, center_user_id, center_type, is_admin, is_super_admin, is_active)
@@ -65,6 +68,24 @@ BEGIN TRY
         (center_name, center_manager, center_email, center_mobile, center_land_line,
          center_website, center_address, center_description, center_location)
         TO [icare_portal_app];
+    -- Bus settings: separate disabled-by-default switch. No driver/child/location reads.
+    GRANT SELECT ON OBJECT::dbo.Bus_Type (bus_type_id,center_id,bus_name) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Bus_Settings
+        (bus_settings_id,bus_id,geofence_raduis,dwell_duration,passenger_input_type) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.DwellDuration_Values (dwell_duration_id,duration_value,duration_text) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.GeofenceRaduis_Values (geofence_raduis_id,raduis_value,raduis_text) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Input_Type (input_type_id,input_type_desc,is_enabled) TO [icare_portal_app];
+    GRANT INSERT ON OBJECT::dbo.Bus_Settings TO [icare_portal_app];
+    GRANT UPDATE ON OBJECT::dbo.Bus_Settings (geofence_raduis,dwell_duration,passenger_input_type) TO [icare_portal_app];
+    GRANT DELETE ON OBJECT::dbo.Bus_Settings TO [icare_portal_app];
+    -- Production procedure wrappers can further enforce the bus_id<>-1 boundary at SQL level.
+    -- Independent alert-write switch. Runtime locks/rechecks scope; no legacy logger calls.
+    GRANT SELECT ON OBJECT::dbo.Center_Alert_Message
+        (alert_message_id, center_id, dealer_id, message_text, alert_expiry_date, update_time) TO [icare_portal_app];
+    GRANT INSERT ON OBJECT::dbo.Center_Alert_Message TO [icare_portal_app];
+    GRANT UPDATE ON OBJECT::dbo.Center_Alert_Message
+        (dealer_id, message_text, alert_expiry_date, update_time) TO [icare_portal_app];
+    GRANT DELETE ON OBJECT::dbo.Center_Alert_Message TO [icare_portal_app];
     GRANT SELECT ON OBJECT::dbo.sec_users (ID, Username, Firstname, Lastname, Email, center_id)
         TO [icare_portal_app];
     GRANT UPDATE ON OBJECT::dbo.sec_users (Firstname, Lastname, Email) TO [icare_portal_app];
@@ -90,6 +111,24 @@ BEGIN TRY
         (center_name, center_manager, center_email, center_mobile, center_land_line,
          center_website, center_address, center_description, center_location)
         TO [icare_portal_app];
+    -- Bus settings: separate disabled-by-default switch. No driver/child/location reads.
+    GRANT SELECT ON OBJECT::dbo.Bus_Type (bus_type_id,center_id,bus_name) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Bus_Settings
+        (bus_settings_id,bus_id,geofence_raduis,dwell_duration,passenger_input_type) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.DwellDuration_Values (dwell_duration_id,duration_value,duration_text) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.GeofenceRaduis_Values (geofence_raduis_id,raduis_value,raduis_text) TO [icare_portal_app];
+    GRANT SELECT ON OBJECT::dbo.Input_Type (input_type_id,input_type_desc,is_enabled) TO [icare_portal_app];
+    GRANT INSERT ON OBJECT::dbo.Bus_Settings TO [icare_portal_app];
+    GRANT UPDATE ON OBJECT::dbo.Bus_Settings (geofence_raduis,dwell_duration,passenger_input_type) TO [icare_portal_app];
+    GRANT DELETE ON OBJECT::dbo.Bus_Settings TO [icare_portal_app];
+    -- Production procedure wrappers can further enforce the bus_id<>-1 boundary at SQL level.
+    -- Independent alert-write switch. Runtime locks/rechecks scope; no legacy logger calls.
+    GRANT SELECT ON OBJECT::dbo.Center_Alert_Message
+        (alert_message_id, center_id, dealer_id, message_text, alert_expiry_date, update_time) TO [icare_portal_app];
+    GRANT INSERT ON OBJECT::dbo.Center_Alert_Message TO [icare_portal_app];
+    GRANT UPDATE ON OBJECT::dbo.Center_Alert_Message
+        (dealer_id, message_text, alert_expiry_date, update_time) TO [icare_portal_app];
+    GRANT DELETE ON OBJECT::dbo.Center_Alert_Message TO [icare_portal_app];
     GRANT SELECT ON OBJECT::dbo.sec_users (ID, Username, Firstname, Lastname, Email, center_id)
         TO [icare_portal_app];
     GRANT UPDATE ON OBJECT::dbo.sec_users (Firstname, Lastname, Email) TO [icare_portal_app];

@@ -22,6 +22,13 @@ The subsequent authorized database inspection covers **Secure, Nursery and Schoo
 10. [Dealer administration](10-dealer-administration.md): administrator-only dealer creation, lifecycle, center assignments, session revocation and live rollback verification.
 11. [Existing center-user management](11-center-user-management.md): scoped rosters/profile edits, secure sign-in status, role/mapping visibility, protections and explicitly deferred credential operations.
 12. [Activity and reports](12-activity-and-reports.md): monthly class/demo aggregates, versioned counting rules, page-7 report scope, School academic years and aggregate XLSX generation/history.
+13. [Remaining features and delivery order](13-remaining-features.md): current legacy-parity gaps, partial workflows, dependencies, deferred work and production-readiness requirements as of 24 October 2026.
+
+14. [Center status](14-center-status.md): scoped activation reads, page-9 viewing, confirmed changes, revision protection, local receipts and a separate disabled live-write gate.
+
+15. [Alert messages](15-alert-messages.md): page-8 read scope, owner/admin publication, administrator resets, inclusive UTC expiry and owned per-center batch outcomes/retries.
+
+16. [Bus settings](16-bus-settings.md): scoped bus overrides, catalog defaults, validated lookup IDs, revision checks and missing-reference guards. Live bus writes remain disabled pending reference review and acceptance.
 
 ## What has been verified
 

@@ -8,6 +8,12 @@ Existing center-user profiles, secure sign-in status and mapping visibility are 
 
 [Chapter 12](12-activity-and-reports.md) delivers read-only activity, explicit legacy Excel ranges/exclusive dates, scoped class/demo summaries and bounded synchronous XLSX generation with own-account history. This does not complete historical business-output acceptance, durable background exports or the pending Accounting/Logging integrations. The owner reconfirmed user creation/password resets remain pending.
 
+[Chapter 13](13-remaining-features.md) summarizes the remaining feature gaps as of 24 October 2026 and suggests the next implementation order. Use it for current feature status; the phases below retain the broader delivery and acceptance framework.
+
+[Chapter 14](14-center-status.md) delivers center activation review and an isolated demo change workflow. Dev status reads/writes are enabled after owner-authorized disposable-fixture mutation/rollback/recovery acceptance on 25 October 2026; production remains subject to its own controls. Local receipts do not complete central Logging.
+
+[Chapter 15](15-alert-messages.md) adds scoped selected-center alert publication/reset, the owner-selected inclusive UTC expiry policy and durable per-center batch outcomes. Storage confirmation does not certify external client delivery.
+
 | Phase                        | Work                                                                                                                                    | Exit criteria                                                                                           |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | 0 — Evidence                 | Three catalogs inspected; obtain missing Accounting/Logging, reconcile reference seeds, approve grants/consumers, deployment/photo tree | Representative contracts/data, identity transition, activity rules and backup plan reviewed             |
@@ -67,3 +73,5 @@ Start with a small staff/center pilot. Gate writes per feature, monitor errors/a
 ## Current verification evidence
 
 See [verification record](06-verification.md) and [database inspection](07-database-inspection.md) for actual commands/results and limitations. Read-only SQL metadata/reference inspection was performed; no application procedure, mutation, exploit/security test, provider request, legacy IIS runtime test or real-data migration was performed.
+
+Bus settings delivery (25 October 2026): chapter 16 records scoped reads, demo editing, SQL transaction/revision guards and rollback acceptance. Dev lookup/default tables remain empty; no seeds were repaired and the independent live transport-write switch remains disabled.

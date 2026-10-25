@@ -1,0 +1,50 @@
+# Center alert messages
+
+Implemented **25 October 2026**. `/alerts` replaces `CenterAlertMessage.aspx` with scoped reads, selected-center publishing, previews, administrator resets and owned per-center batch results. The owner chose **through the selected date in UTC** for expiry. This is the new portal's calendar interpretation; display, caching and expiry enforcement by other iCare clients remain unverified.
+
+## Workflow
+
+- Search center name/domain/ID; filter center type, stored center activation, alert state and assigned dealer (administrator only). Filters remain in the URL. Missing activation records stay explicit instead of being silently treated as active.
+- Select up to 10 eligible centers across pages, choose publish/replace or reset, and review the exact message/date and target list. Current stored messages are included in the review. Plain text is limited to the audited 250 UTF-16 units; angle brackets and control characters are rejected. No HTML renderer or child/parent/contact lookup is used. The form asks users to omit credentials and child details.
+- Publishing stores a nonempty message and a valid calendar expiry date, today or later. An expiry equal to the current UTC date is current; it becomes expired on the following UTC date. Server validation repeats before each target write, including batches crossing midnight. The legacy SQL `DATE` remains a date rather than being converted through a browser timezone.
+- Reset deletes the selected center's stored alert. Expired alerts remain visible until replaced/reset; they are not deleted automatically. Duplicate or invalid stored records are view-only and require review.
+- Results distinguish confirmed saves/resets, failures and unconfirmed outcomes. Each center commits independently, so mixed Nursery/Lite/School batches can partially succeed. Retry reuses the reviewed payload and targets only pending/retryable failed entries, up to three attempts. Confirmed and unconfirmed entries are never automatically replayed. Conflicts require inspecting fresh data and reviewing a new change.
+- A batch ID stays in the URL so results survive refresh or an interrupted response. Batch content and results are private to the current dealer and identity mode, with a 24-hour logical expiry. This is preparation/storage confirmation, not client delivery or read confirmation.
+
+## Audited contracts and access
+
+The legacy list uses the Secure database to join centers with each operational `Center_Alert_Message`. Both Nursery/Lite (`icare`) and School (`icare_school`) use the audited fields `alert_message_id`, `center_id`, `dealer_id`, `message_text NVARCHAR(250)`, `alert_expiry_date DATE` and `update_time`. Runtime statements select fixed catalogs; requests cannot choose SQL objects or procedures. Center ID/type always travel together; School IDs never address Nursery/Lite rows.
+
+Legacy page 8 adds alert list access. It is mapped to **`alerts.read` only**. Publishing (`alerts.write`) requires current ownership or current administrator status. Reset (`alerts.reset`) remains administrator-only, matching the legacy reset procedure. No page-7 report grant, page-9 status grant, menu link or numeric dealer-ID exception can authorize an alert change. Sessions and named capabilities are checked at the service boundary; SQL rechecks active actors, ownership and reset privilege under transaction locks. Demo operations recheck the stored demo actor, assignments and independent page-8 fixture grants, and never select SQL repositories.
+
+The old update procedure calculates an administrator flag but does not enforce ownership of its target list. Both old publish/reset procedures also call unavailable Logging inside their operational database transaction. The new implementation does not execute those procedures. It uses fixed parameterized upsert/delete statements in a serializable transaction, with locked current actor, assignment and alert records, explicit revisions and exactly-one-row checks. The unrelated provisioning/reference inconsistencies are not repaired.
+
+## Batches, revisions and recovery
+
+SQLite adds separate fictional alerts/grants/versions, live per-center generations, and owned batch/target receipts outside the web root. A batch stores only its reviewed new text/date, composite targets/revisions, owner/mode, expiry, a payload fingerprint and per-target outcome/attempts. No credential or child columns are queried or stored. Each batch has a claim lease to prevent concurrent execution. An interrupted working entry becomes unconfirmed when its lease expires; it is not turned into an automatic retry.
+
+Demo changes and their target receipt are atomic. Live processing persists intent before SQL writes, then atomically stores a new center generation plus an unconfirmed receipt before attempting SQL commit. This generation survives alert deletion/reset and prevents an old empty-state view from becoming valid again after a portal publish/reset cycle. A generation may advance after a rolled-back/uncertain commit attempt; reloading is deliberately conservative. Other clients' unobserved delete/recreate cycles cannot be versioned by the portal without a shared database contract.
+
+SQL and SQLite do not share a transaction. Lost commit acknowledgement or a receipt-confirmation failure remains visible as unconfirmed even if SQL actually committed. The user must inspect current data before a new reviewed change. A failure before commit rolls SQL back and can be retried when safe. Local receipts are separate from the pending central Logging integration. Logical batch expiry does not claim physical deletion; deployment needs retention/backup/reconciliation policy and a shared replacement store before multiple hosts.
+
+Infrastructure limits: ten targets per batch, twenty new batches per actor/mode per minute, a five-minute claim lease, per-request SQL timeouts of five seconds and a check between targets that defers unattempted work after 45 seconds. An in-flight target may finish after that batch deadline. Failed retry attempts are capped at three. There is no background worker or promise of all-or-nothing cross-catalog delivery.
+
+## Configuration and verification
+
+`ICARE_ALERT_WRITES_ENABLED` is independent of center-profile, dealer, center-user and status writes and defaults to `false`. The private dev alert-write switch is now enabled after disposable-fixture SQL acceptance and authenticated desktop/mobile browser verification on 25 October 2026. Only the independent alert switch was added/enabled; the existing status and other feature flags were preserved. Production retains the validated TLS/restricted identity requirements. Reviewed column permissions were added to `scripts/sql/portal-app-grants.sql`; that script has not been applied or certified against a restricted production identity.
+
+`tests/alerts.test.ts` covers UTC date edges, strict payload/recipient limits, HTML/control rejection, page-8 isolation, composite scope, owner/admin policies, current stored identity, owned/mode-separated batches, idempotency, conflicts, partial outcomes, failed-only retries, atomic demo receipts, expired batches and interrupted-lease recovery. The 28-screen ownership coverage remains intact.
+
+The explicitly invoked `scripts/verify-alerts-development.ts` uses the exact development compatibility boundary and separate private acceptance receipts. It creates clearly marked, disposable center records and a credentialless ordinary dealer fixture; no usable account, initial center user, domain or filesystem asset is provisioned. [SQL acceptance evidence](generated/alerts-sql-checks.json) records committed writes/read-back across all three types, ownership/admin enforcement, stale/invalid-record rejection, rollback on receipt failure, failed-target retry, lost acknowledgement recovery, reset and reset-cycle generation protection. All fixture rows and trigger-created timezone history are removed, with existing centers/alerts/accounts/assignments/grants/references compared by server-side hashes. Identity sequences may advance; no reseeding or seed repair is performed. Positive page-8 scope is verified in isolated demo/domain fixtures rather than newly seeding the development reference table.
+
+To repeat SQL acceptance, stop concurrent business edits and run:
+
+```sh
+NODE_ENV=development node --conditions=react-server --import tsx scripts/verify-alerts-development.ts --development-only --run
+```
+
+`--prepare-browser-fixture` and `--cleanup-browser-fixture` form an explicit paired workflow for the final authenticated browser check. Cleanup checks the exact marker/IDs and expected fixture ownership. Existing alerts are not used as test recipients. Browser verification records desktop/mobile publication, stored-message preview, persisted batch results and administrator reset, with private screenshots under `.local/alerts-*.jpg`.
+
+Production cutover, external client behavior, central Logging, payments and deferred user creation/password resets remain outside this increment.
+
+Verification completed: all 36 domain/security tests, TypeScript, production build, build privacy (44 traces plus standalone output) and production anonymous-access smoke passed. Authenticated browser checks published to disposable Nursery/Lite/School centers, reloaded their owned results and reset all three at mobile width. The native expiry picker selected a valid calendar date. Operator demo checks confirmed an owned publication, disabled administrator reset, disabled selection of the page-8-only center and plain-text validation with recipients still visible. Result pages and the mobile review dialog fit their viewports. HTTP boundary checks returned the expected 401/403/404/422 responses for anonymous, cross-origin, cross-type, dealer-filter, cross-mode batch, actor-field and past-expiry requests; page-8 publication failed per target. Separate verification sessions were signed out. Browser fixtures were cleaned up and existing SQL fingerprints matched afterward. The fictional operator demo notice remains only in demo data.

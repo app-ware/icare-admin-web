@@ -14,6 +14,8 @@ export interface DealerIdentity {
   credentialStamp: string;
   ownedKeys: string[];
   reportKeys: string[];
+  statusKeys: string[];
+  alertKeys: string[];
 }
 export async function authenticateDealer(
   username: string,
@@ -40,7 +42,9 @@ export async function loadDealer(dealerId: number): Promise<DealerIdentity | nul
     FROM dbo.Dealers account WHERE dealer_id=@dealerId AND is_active=1
       AND NOT EXISTS(SELECT 1 FROM dbo.Dealers duplicate WHERE duplicate.username=account.username AND duplicate.is_active=1 AND duplicate.dealer_id<>account.dealer_id);
     SELECT DISTINCT center_id,center_type FROM dbo.Dealer_Centers WHERE dealer_id=@dealerId;
-    SELECT DISTINCT center_id,center_type FROM dbo.Dealer_Page_Center_Access WHERE dealer_id=@dealerId AND page_id=7 AND center_type IN(1,3);`);
+    SELECT DISTINCT center_id,center_type FROM dbo.Dealer_Page_Center_Access WHERE dealer_id=@dealerId AND page_id=7 AND center_type IN(1,3);
+    SELECT DISTINCT center_id,center_type FROM dbo.Dealer_Page_Center_Access WHERE dealer_id=@dealerId AND page_id=9;
+    SELECT DISTINCT center_id,center_type FROM dbo.Dealer_Page_Center_Access WHERE dealer_id=@dealerId AND page_id=8;`);
   const rows = result.recordsets as unknown as Record<string, unknown>[][];
   const row = rows[0]?.[0];
   if (!row || !row.credential_stamp) return null;
@@ -55,6 +59,14 @@ export async function loadDealer(dealerId: number): Promise<DealerIdentity | nul
     isSuperAdmin: row.is_super_admin === true,
     credentialStamp: String(row.credential_stamp),
     ownedKeys,
+    alertKeys: rows[4].flatMap((link) => {
+      const ref = centerRefSchema.safeParse({ id: link.center_id, type: link.center_type });
+      return ref.success ? [centerKey(ref.data)] : [];
+    }),
+    statusKeys: rows[3].flatMap((link) => {
+      const ref = centerRefSchema.safeParse({ id: link.center_id, type: link.center_type });
+      return ref.success ? [centerKey(ref.data)] : [];
+    }),
     reportKeys: rows[2].flatMap((link) => {
       const ref = centerRefSchema.safeParse({ id: link.center_id, type: link.center_type });
       return ref.success ? [centerKey(ref.data)] : [];
@@ -73,6 +85,14 @@ export function demoDealer(dealerId: number): DealerIdentity | null {
     isSuperAdmin: dealer.isSuperAdmin,
     credentialStamp: 'isolated-preview-v1',
     ownedKeys: dealer.centers.map(centerKey),
+    alertKeys: store.db
+      .prepare('SELECT center_id,center_type FROM preview_alert_grants WHERE dealer_id=?')
+      .all(dealerId)
+      .map((r) => `${r.center_id}_${r.center_type}`),
+    statusKeys: store.db
+      .prepare('SELECT center_id,center_type FROM preview_status_grants WHERE dealer_id=?')
+      .all(dealerId)
+      .map((r) => `${r.center_id}_${r.center_type}`),
     reportKeys: store.db
       .prepare('SELECT center_id,center_type FROM preview_report_grants WHERE dealer_id=?')
       .all(dealerId)

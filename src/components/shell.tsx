@@ -15,6 +15,9 @@ import {
   UsersRound,
   BarChart3,
   FileSpreadsheet,
+  Power,
+  BellRing,
+  Bus,
   X,
 } from 'lucide-react';
 import type { PortalActor } from '@/domain/access';
@@ -76,24 +79,33 @@ export function Shell({
     { href: '/users', label: 'Center users', Icon: UsersRound },
     { href: '/activity', label: 'Activity & insights', Icon: BarChart3 },
     { href: '/reports', label: 'Reports', Icon: FileSpreadsheet },
+    { href: '/status', label: 'Center status', Icon: Power },
+    { href: '/alerts', label: 'Alert messages', Icon: BellRing },
+    { href: '/transport', label: 'Bus settings', Icon: Bus },
     ...(actor.isSuperAdmin ? [{ href: '/dealers', label: 'Dealers', Icon: UsersRound }] : []),
     { href: '/access', label: 'Access & sessions', Icon: ShieldCheck },
   ];
-  const title = path.startsWith('/centers')
-    ? 'Care centers'
-    : path.startsWith('/activity')
-      ? 'Activity & insights'
-      : path.startsWith('/reports')
-        ? 'Reports'
-        : path.startsWith('/users')
-          ? 'Center users'
-          : path.startsWith('/dealers')
-            ? 'Dealers'
-            : path === '/access'
-              ? 'Access & sessions'
-              : path === '/'
-                ? 'Overview'
-                : 'Coming next';
+  const title = path.startsWith('/transport')
+    ? 'Bus settings'
+    : path.startsWith('/alerts')
+      ? 'Alert messages'
+      : path.startsWith('/status')
+        ? 'Center status'
+        : path.startsWith('/centers')
+          ? 'Care centers'
+          : path.startsWith('/activity')
+            ? 'Activity & insights'
+            : path.startsWith('/reports')
+              ? 'Reports'
+              : path.startsWith('/users')
+                ? 'Center users'
+                : path.startsWith('/dealers')
+                  ? 'Dealers'
+                  : path === '/access'
+                    ? 'Access & sessions'
+                    : path === '/'
+                      ? 'Overview'
+                      : 'Coming next';
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main-content">

@@ -40,6 +40,9 @@ try {
     '/users',
     '/activity',
     '/reports',
+    '/status',
+    '/alerts',
+    '/transport',
     '/access',
     '/payments',
   ]) {
@@ -53,6 +56,9 @@ try {
   assert.ok(!login.includes('Explore demo workspace'));
   for (const route of [
     '/api/centers',
+    '/api/transport',
+    '/api/transport/1/9999',
+    '/api/transport/1/9999/1',
     '/api/live/centers',
     '/api/auth/sessions',
     '/api/dealers',
@@ -65,6 +71,11 @@ try {
     '/api/activity/centers',
     '/api/activity/context',
     '/api/reports/exports',
+    '/api/status',
+    '/api/alerts',
+    '/api/alerts/1/9999',
+    '/api/alerts/batches/00000000-0000-4000-8000-000000000001',
+    '/api/status/1/9999',
   ]) {
     const response = await fetch(origin + route);
     assert.equal(response.status, 401);

@@ -35,6 +35,9 @@ export class PortalStore {
     if (file !== ':memory:') mkdirSync(dirname(resolve(file)), { recursive: true, mode: 0o700 });
     this.db = new DatabaseSync(file);
     this.db.exec(`PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;
+      CREATE TABLE IF NOT EXISTS preview_bus_settings (center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,bus_id INTEGER NOT NULL,values_json TEXT NOT NULL,PRIMARY KEY(center_id,center_type,bus_id));
+      CREATE TABLE IF NOT EXISTS bus_versions (mode TEXT NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,bus_id INTEGER NOT NULL,version INTEGER NOT NULL,PRIMARY KEY(mode,center_id,center_type,bus_id));
+      CREATE TABLE IF NOT EXISTS bus_operations (id TEXT PRIMARY KEY,mode TEXT NOT NULL,actor_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,bus_id INTEGER NOT NULL,action TEXT NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,completed_at INTEGER);
       CREATE TABLE IF NOT EXISTS sessions (hash TEXT PRIMARY KEY, id TEXT UNIQUE NOT NULL, dealer_id INTEGER NOT NULL, mode TEXT NOT NULL, credential_stamp TEXT NOT NULL, created_at INTEGER NOT NULL, last_seen INTEGER NOT NULL, expires_at INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS throttle (key TEXT PRIMARY KEY, attempts INTEGER NOT NULL, reset_at INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS preview_centers (id INTEGER NOT NULL, type INTEGER NOT NULL, domain TEXT NOT NULL UNIQUE, profile TEXT NOT NULL, active INTEGER, owner_id INTEGER NOT NULL, time_zone TEXT, PRIMARY KEY(id,type));
@@ -46,7 +49,17 @@ export class PortalStore {
       CREATE TABLE IF NOT EXISTS preview_center_users (id INTEGER PRIMARY KEY,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,local_id INTEGER,secure_id INTEGER,username TEXT NOT NULL,local_username TEXT NOT NULL,first_name TEXT NOT NULL,last_name TEXT NOT NULL,email TEXT NOT NULL,active INTEGER,is_admin INTEGER,is_super_admin INTEGER NOT NULL,issues TEXT NOT NULL,roles TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS center_user_operations (id TEXT PRIMARY KEY,mode TEXT NOT NULL,actor_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,user_key TEXT NOT NULL,action TEXT NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,completed_at INTEGER);
       CREATE TABLE IF NOT EXISTS preview_report_grants (dealer_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,PRIMARY KEY(dealer_id,center_id,center_type));
-      CREATE TABLE IF NOT EXISTS report_exports (id TEXT PRIMARY KEY,dealer_id INTEGER NOT NULL,mode TEXT NOT NULL,params TEXT NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,finished_at INTEGER,filename TEXT);`);
+      CREATE TABLE IF NOT EXISTS report_exports (id TEXT PRIMARY KEY,dealer_id INTEGER NOT NULL,mode TEXT NOT NULL,params TEXT NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,finished_at INTEGER,filename TEXT);
+      CREATE TABLE IF NOT EXISTS preview_status_grants (dealer_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,PRIMARY KEY(dealer_id,center_id,center_type));
+      CREATE TABLE IF NOT EXISTS preview_status_versions (center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,version INTEGER NOT NULL,PRIMARY KEY(center_id,center_type));
+      CREATE TABLE IF NOT EXISTS center_status_operations (id TEXT PRIMARY KEY,mode TEXT NOT NULL,actor_id INTEGER NOT NULL,actor_name TEXT NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,previous_code INTEGER,next_code INTEGER NOT NULL,reason TEXT NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,completed_at INTEGER);
+      CREATE INDEX IF NOT EXISTS center_status_history ON center_status_operations(mode,center_id,center_type,created_at);
+      CREATE TABLE IF NOT EXISTS preview_alert_grants (dealer_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,PRIMARY KEY(dealer_id,center_id,center_type));
+      CREATE TABLE IF NOT EXISTS preview_alerts (center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,message TEXT NOT NULL,expiry_date TEXT NOT NULL,updated_at TEXT NOT NULL,PRIMARY KEY(center_id,center_type));
+      CREATE TABLE IF NOT EXISTS live_alert_versions (center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,version INTEGER NOT NULL,PRIMARY KEY(center_id,center_type));
+      CREATE TABLE IF NOT EXISTS preview_alert_versions (center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,version INTEGER NOT NULL,PRIMARY KEY(center_id,center_type));
+      CREATE TABLE IF NOT EXISTS alert_batches (id TEXT PRIMARY KEY,actor_id INTEGER NOT NULL,mode TEXT NOT NULL,fingerprint TEXT NOT NULL,payload TEXT NOT NULL,created_at INTEGER NOT NULL,expires_at INTEGER NOT NULL,lease_until INTEGER NOT NULL);
+      CREATE TABLE IF NOT EXISTS alert_batch_targets (batch_id TEXT NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,revision TEXT NOT NULL,state TEXT NOT NULL,code TEXT,message TEXT,retryable INTEGER NOT NULL,attempts INTEGER NOT NULL,PRIMARY KEY(batch_id,center_id,center_type));`);
   }
   transaction<T>(action: () => T): T {
     this.db.exec('BEGIN IMMEDIATE');

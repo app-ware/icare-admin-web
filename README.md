@@ -12,6 +12,10 @@ Next.js rebuild and a source-backed migration dossier for the legacy iCare admin
 
 [Activity and reports](docs/12-activity-and-reports.md) adds authorized monthly activity, class/demo breakdowns, School academic years, multi-center Excel workbooks and per-account generation history. Open **Activity & insights** or **Reports**. These are activation aggregates, with counting rules displayed; no invoice or Accounting/Logging operation is performed.
 
+[Center status](docs/14-center-status.md) adds scoped activation review, filters, confirmed changes and portal history. Dev status changes are enabled after disposable SQL fixture/rollback/recovery acceptance. The independent write switch remains off by default for other environments.
+
+[Alert messages](docs/15-alert-messages.md) adds selected-center publishing, inclusive UTC expiry dates, administrator resets and private per-center batch results with safe retries. Dev publishing/reset is enabled after disposable SQL and browser acceptance. Open **Alert messages**.
+
 ## Run the workspace
 
 Requires Node.js 22.17+ (supported range in package.json). Dependencies and lockfile are included.
@@ -37,7 +41,7 @@ npm run verify:build
 npm run test:e2e
 ```
 
-Browser tests use installed Microsoft Edge on desktop and a Chromium mobile viewport. They use an isolated output directory and demo store at 127.0.0.1:3101 and stop that test server when done. No browser binary download is required.
+Browser tests use installed Chrome on macOS and Microsoft Edge elsewhere, on desktop and a Chromium mobile viewport. Set `ICARE_E2E_BROWSER_CHANNEL` to override the installed browser channel. They use an isolated output directory and demo store at 127.0.0.1:3101 and stop that test server when done. No browser binary download is required.
 
 ## Production build preview
 
@@ -62,3 +66,5 @@ The explicitly invoked PowerShell inspection scripts are separate from the web a
 ## Add future features
 
 Use `src/features/registry.ts` for module ownership and routes, `src/domain` for business types/permissions, and `src/server` for identity, services and database adapters. Follow [the architecture](docs/04-rebuild-architecture.md). Do not move database logic or secrets into browser components, or use UI visibility as access enforcement.
+
+Bus settings are available at `/transport`: owned-center buses, inherited defaults, reviewed overrides and separate demo persistence. Live bus writes remain disabled because dev reference tables/defaults are empty; see [the integration record](docs/16-bus-settings.md).

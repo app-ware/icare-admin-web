@@ -10,8 +10,14 @@ const labels: Record<string, string> = {
   'centers.create': 'Create and manage your own drafts',
   'dealers.manage': 'Manage dealer accounts and center assignments',
   'users.manage': 'Manage existing users in your authorized centers',
+  'transport.manage': 'Review and configure buses in owned centers when enabled',
   'reports.read': 'Read activity in owned or report-granted centers',
   'reports.export': 'Generate aggregate activity workbooks',
+  'alerts.read': 'Read alerts in owned or alert-granted centers',
+  'alerts.write': 'Publish alerts in owned centers when enabled',
+  'alerts.reset': 'Administrator reset of stored center alerts',
+  'status.read': 'Read status in owned or status-granted centers',
+  'status.manage': 'Change activation status in owned centers when enabled',
 };
 export function AccessPanel({
   actor,

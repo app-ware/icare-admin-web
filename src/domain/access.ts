@@ -6,11 +6,13 @@ export const permissions = [
   'centers.create',
   'users.manage',
   'dealers.manage',
+  'status.read',
   'status.manage',
   'payments.read',
   'payments.write',
   'reports.read',
   'reports.export',
+  'alerts.read',
   'alerts.write',
   'alerts.reset',
   'transport.manage',
@@ -38,11 +40,13 @@ export interface PortalActor extends Principal {
   sessionId: string;
 }
 
-// These are feature grants, not numeric dealer-ID exceptions. Future modules stay disabled.
+// Feature grants never depend on numeric dealer-ID exceptions. Pending modules stay denied.
 export function centerGrants(
   isSuperAdmin: boolean,
   ownedKeys: readonly string[],
   reportKeys: readonly string[] = [],
+  statusKeys: readonly string[] = [],
+  alertKeys: readonly string[] = [],
 ): Grant[] {
   const scope: Grant['scope'] = isSuperAdmin
     ? { kind: 'global' }
@@ -52,6 +56,21 @@ export function centerGrants(
     { permission: 'centers.write', scope },
     { permission: 'centers.create', scope: { kind: 'global' } },
     { permission: 'users.manage', scope },
+    { permission: 'transport.manage', scope },
+    { permission: 'status.manage', scope },
+    { permission: 'alerts.write', scope },
+    {
+      permission: 'alerts.read',
+      scope: isSuperAdmin
+        ? { kind: 'global' }
+        : { kind: 'centers', keys: [...new Set([...ownedKeys, ...alertKeys])] },
+    },
+    {
+      permission: 'status.read',
+      scope: isSuperAdmin
+        ? { kind: 'global' }
+        : { kind: 'centers', keys: [...new Set([...ownedKeys, ...statusKeys])] },
+    },
   ];
   const reportScope: Grant['scope'] = isSuperAdmin
     ? { kind: 'global' }
@@ -65,8 +84,22 @@ export function centerGrants(
     { permission: 'reports.read', scope: reportScope },
     { permission: 'reports.export', scope: reportScope },
   );
-  if (isSuperAdmin) grants.push({ permission: 'dealers.manage', scope: { kind: 'global' } });
+  if (isSuperAdmin)
+    grants.push(
+      { permission: 'dealers.manage', scope: { kind: 'global' } },
+      { permission: 'alerts.reset', scope: { kind: 'global' } },
+    );
   return grants;
+}
+function validPrincipal(principal: Principal | null): principal is Principal {
+  return Boolean(
+    principal?.active &&
+    principal.subject &&
+    Number.isInteger(principal.dealerId) &&
+    principal.dealerId > 0 &&
+    Number.isFinite(principal.expiresAt) &&
+    principal.expiresAt > Date.now(),
+  );
 }
 export function hasPermission(
   principal: Principal | null,
@@ -100,6 +133,11 @@ export class AccessDeniedError extends Error {
     super('Access denied');
     this.name = 'AccessDeniedError';
   }
+}
+export function assertCapability(principal: Principal | null, permission: Permission) {
+  // Directory access checks capability and identity; each returned resource still needs scope.
+  if (!validPrincipal(principal) || !principal.grants.some((g) => g.permission === permission))
+    throw new AccessDeniedError();
 }
 export function assertPermission(
   principal: Principal | null,

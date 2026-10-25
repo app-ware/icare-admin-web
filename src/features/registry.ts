@@ -123,7 +123,7 @@ export const modules = [
     id: 'alerts',
     label: 'Alert messages',
     group: 'Operations',
-    permission: 'alerts.write',
+    permission: 'alerts.read',
     description: 'Publish time-limited messages to one center or a selected group.',
     legacyPages: ['CenterAlertMessage.aspx'],
     workflows: [
@@ -135,26 +135,32 @@ export const modules = [
     acceptance: [
       'Reject an empty recipient list',
       'Show individual results for partial success',
-      'Use a defined expiry timezone and date policy',
+      'Use an inclusive UTC calendar expiry date',
+      'Keep page-8 grants read-only and reset administrator-only',
+      'Persist owned idempotent batch results and never replay confirmed or unconfirmed targets',
     ],
   },
   {
     id: 'status',
     label: 'Center status',
     group: 'Operations',
-    permission: 'status.manage',
-    description: 'Manage center availability with clear, audited controls.',
+    permission: 'status.read',
+    description:
+      'Review center activation and make scoped, revision-checked status changes with portal history.',
     legacyPages: ['CenterStatus.aspx', 'CenterCowPay.aspx'],
     workflows: [
       'Filter activation status and dealer',
       'Review the selected center',
       'Activate or deactivate with confirmation',
       'Track who changed status and when',
+      'Read existing page-9 status grants without granting write access',
     ],
     acceptance: [
       'Separate status from gateway enablement',
       'Recheck access when saving',
       'Handle concurrent status changes',
+      'Keep missing status explicit, block ambiguous records and use a separate status-write switch',
+      'Keep portal change receipts separate from the pending legacy Logging integration',
     ],
   },
   {
@@ -174,6 +180,8 @@ export const modules = [
       'Verify bus belongs to the center',
       'Read reference values and units from the correct database',
       'Label inherited defaults clearly',
+      'Reject duplicate settings, stale revisions and missing catalog choices; never edit global defaults',
+      'Keep live bus changes behind a separate write switch and local receipts separate from Logging',
     ],
   },
   {

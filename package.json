@@ -12,7 +12,7 @@
     "verify:build": "node scripts/verify-build-privacy.mjs",
     "start": "next start --hostname 127.0.0.1",
     "typecheck": "tsc --noEmit",
-    "test": "node --conditions=react-server --import tsx --test tests/access.test.ts tests/domain.test.ts tests/inventory.test.ts tests/portal.test.ts tests/sql-configuration.test.ts tests/dealers.test.ts tests/center-users.test.ts tests/activity.test.ts",
+    "test": "node --conditions=react-server --import tsx --test tests/access.test.ts tests/domain.test.ts tests/inventory.test.ts tests/portal.test.ts tests/sql-configuration.test.ts tests/dealers.test.ts tests/center-users.test.ts tests/activity.test.ts tests/status.test.ts tests/alerts.test.ts tests/transport.test.ts",
     "test:e2e": "playwright test",
     "audit:legacy": "node scripts/audit-legacy.mjs",
     "format": "prettier --write ."

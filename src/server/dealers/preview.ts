@@ -5,6 +5,20 @@ import { digest, type PortalStore } from '@/server/store';
 
 export function seedDealerPreview(store: PortalStore) {
   store.seedPreview();
+  if (!store.db.prepare("SELECT 1 FROM settings WHERE key='preview-alert-grants-seeded'").get())
+    store.transaction(() => {
+      store.db.prepare('INSERT OR IGNORE INTO preview_alert_grants VALUES (900002,104,3)').run();
+      store.db
+        .prepare("INSERT OR IGNORE INTO settings VALUES ('preview-alert-grants-seeded','1')")
+        .run();
+    });
+  if (!store.db.prepare("SELECT 1 FROM settings WHERE key='preview-status-grants-seeded'").get())
+    store.transaction(() => {
+      store.db.prepare('INSERT OR IGNORE INTO preview_status_grants VALUES (900002,104,3)').run();
+      store.db
+        .prepare("INSERT OR IGNORE INTO settings VALUES ('preview-status-grants-seeded','1')")
+        .run();
+    });
   if (!store.db.prepare("SELECT 1 FROM settings WHERE key='preview-report-grants-seeded'").get())
     store.transaction(() => {
       store.db.prepare('INSERT OR IGNORE INTO preview_report_grants VALUES (900002,104,3)').run();
