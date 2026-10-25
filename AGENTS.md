@@ -18,6 +18,15 @@ Read `docs/07-database-inspection.md` and `docs/08-authentication-and-centers.md
 - Run the relevant domain/security tests and build for behavioral changes. Use the desktop/mobile browser checks for affected flows; the preview must remain explicit about what is implemented.
 - User-facing messages and audit logs must not expose passwords, SQL credentials, provider tokens, connection errors, or child PII.
 
+## Project Git conventions
+
+Use these repository skills for future feature, fix, and maintenance work:
+
+- [icare-git-branch](.agents/skills/icare-git-branch/SKILL.md): branch preparation and names, defaulting to `codex/<type>/<scope>-<summary>`.
+- [icare-git-commit](.agents/skills/icare-git-commit/SKILL.md): commit titles in `<type>(<scope>): <imperative summary>` format and bodies covering `Why:`, `Changes:`, and `Validation:`.
+
+Read the branching skill before starting implementation and the commit skill before preparing a commit. Apply these conventions to new work; preserve existing branches, history, and unrelated working changes. These skills do not by themselves authorize commits, pushes, or merges.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 ## This is NOT the Next.js you know

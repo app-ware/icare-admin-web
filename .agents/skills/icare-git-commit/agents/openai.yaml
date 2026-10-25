@@ -1,0 +1,4 @@
+interface:
+  display_name: 'iCare Git Commits'
+  short_description: 'Write consistent iCare commit titles and descriptions'
+  default_prompt: 'Use $icare-git-commit to prepare a commit title and description for the current changes.'

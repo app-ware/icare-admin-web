@@ -1,0 +1,4 @@
+interface:
+  display_name: 'iCare Git Branching'
+  short_description: 'Name and prepare iCare feature and fix branches'
+  default_prompt: 'Use $icare-git-branch to prepare a branch for this iCare feature or fix.'
