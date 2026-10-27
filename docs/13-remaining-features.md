@@ -1,6 +1,6 @@
 # iCareadmin remaining features and delivery order
 
-Status: **24 October 2026**.
+Status: **27 October 2026**.
 
 The rebuild provides dealer sign-in, scoped center management, dealer administration, existing center-user management, activity and aggregate Excel reports. The remaining work is concentrated in operational modules, full center provisioning, credential workflows and production readiness.
 
@@ -13,6 +13,7 @@ The comparison baseline is the [audited legacy iCareadmin](01-current-system.md)
 | Access                | Existing dealer sign-in, current permissions, expiring/revocable sessions, logout and sign out other sessions.                                                                                                     |
 | Centers               | Scoped directory, search/filter/sort, profile/contact editing, manual coordinate updates and persistent owned creation drafts. Demo publication creates fictional centers only.                                    |
 | Dealers               | Administrator-only creation, profile changes, enable/disable, administrator roles and center assignments, with conflict and self/last-administrator protections.                                                   |
+| Center branding       | Validated logo/main-photo uploads, private owned previews, atomic publication and authenticated images in the new portal. Legacy image fields/URLs are unchanged. |
 | Alert messages        | Scoped publication/replacement, inclusive UTC dates, administrator reset, per-center outcomes and owned failed-target retries.                                                                                     |
 | Center status         | Scoped activation review, search/filter/sort, confirmation, conflict recovery and portal receipts. Dev changes are enabled after disposable SQL/browser acceptance; the independent switch defaults off elsewhere. |
 | Existing center users | Scoped rosters, name/email editing, role/mapping visibility and secure sign-in enable/disable. Secure status does not revoke legacy-client access or external sessions.                                            |
@@ -22,7 +23,7 @@ Implementation details: [centers and access](08-authentication-and-centers.md), 
 
 ## Operational workflows still pending
 
-The three routes below currently show pending pages. Their entries in the [feature registry](../src/features/registry.ts) describe intended workflows, not completed functionality.
+Bus settings are delivered with live writes gated. Payments and CowPay remain pending; the [feature registry](../src/features/registry.ts) records their intended workflows.
 
 | Feature                     | Remaining scope                                                                                                         | Dependency or boundary                                                                                                                      |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -37,7 +38,7 @@ Logging integration also remains pending because the Logging database is unavail
 | Area                          | Remaining work                                                                                                                                          | Current boundary                                                                                                                                                                      |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Live center creation          | Provision the operational and secure records, initial administrator and required filesystem assets; support retries and recovery after partial failure. | Live creation saves drafts only. Reference seeds conflict with routing; account and photo-tree contracts also need resolution. Do not repair seeds automatically.                     |
-| Branding                      | Upload/replace logos, center photos and watermarks, with validated image content/dimensions and safe storage/cleanup.                                   | No live branding upload workflow is implemented.                                                                                                                                      |
+| Branding | Logo/main-photo uploads are delivered in chapter 17 using owner-approved private portal storage. Watermarks, draft branding and legacy-client asset integration remain pending. | Existing legacy fields/files/public URLs are unchanged; production storage and asset consumer contracts require acceptance. |
 | Center settings and QR        | Change child input mode and generate QR codes/images with recoverable jobs.                                                                             | Profile saves do not change input mode or trigger QR generation. Domain, type, currency and timezone are also unchanged by profile saves; broader editing requires a policy decision. |
 | Map selection                 | Embedded draggable location picker.                                                                                                                     | Manual coordinate editing and an external map link already work.                                                                                                                      |
 | Center-user credentials       | Create users/initial administrators and provide a secure password change/reset workflow.                                                                | Explicitly deferred by the owner. Usernames and roles remain read-only; creation/reset work must account for other credential consumers.                                              |
@@ -51,7 +52,7 @@ Report acceptance must preserve the documented `activation-calendar-v1` policy u
 1. **Center status rollout:** dev mutation/rollback/recovery acceptance is complete and its independent write switch was enabled on 25 October 2026. Production identity/deployment and legacy-client enforcement acceptance remain separate.
 2. **Alerts rollout:** the new workflow is delivered; validate external client display/expiry/cache behavior and complete production controls.
 3. **Bus settings:** implemented in chapter 16; resolve dev lookup data and committed fixture acceptance before enabling live writes.
-4. **Branding and QR:** confirm the asset storage/URL contract, then implement safe uploads and recoverable QR generation.
+4. **Branding and QR:** private portal logo/main-photo uploads are delivered in chapter 17. Verify the legacy asset/URL contract before adding watermarks, draft branding, external client delivery or recoverable QR generation.
 5. **Live center provisioning:** proceed after reference-data, initial-account and filesystem dependencies are resolved and the owner resumes the deferred user-creation work.
 6. **Payments, CowPay and Logging:** proceed as their database/provider contracts and dependencies become available. Accounting and Logging remain deferred.
 

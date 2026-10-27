@@ -5,7 +5,7 @@ const config: NextConfig = {
   distDir: process.env.ICARE_NEXT_DIST_DIR || '.next',
   poweredByHeader: false,
   devIndicators: false,
-  serverExternalPackages: ['mssql', 'node:sqlite', 'exceljs'],
+  serverExternalPackages: ['mssql', 'node:sqlite', 'exceljs', 'sharp'],
   outputFileTracingExcludes: {
     '/*': ['./.local/**/*', './.env*', './docs/generated/database/**/*', './.next-e2e/**/*'],
   },

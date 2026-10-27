@@ -31,12 +31,14 @@ export const modules = [
     ],
     workflows: [
       'Find and filter authorized centers',
+      'Upload and review a private portal logo and main center photo before publishing',
       'Create a center with a guided profile, branding, location, and administrator review',
       'Edit profile, child input mode, photos, and coordinates',
       'Track provisioning and QR generation progress',
     ],
     acceptance: [
       'Keep center ID and type together',
+      'Decode and re-encode bounded images, preserve current branding until publish, and scope preview access by owner and mode',
       'Validate drafts and recover partial provisioning',
       'Confirm authorized actor before every update',
     ],

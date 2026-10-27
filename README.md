@@ -16,6 +16,8 @@ Next.js rebuild and a source-backed migration dossier for the legacy iCare admin
 
 [Alert messages](docs/15-alert-messages.md) adds selected-center publishing, inclusive UTC expiry dates, administrator resets and private per-center batch results with safe retries. Dev publishing/reset is enabled after disposable SQL and browser acceptance. Open **Alert messages**.
 
+[Center branding](docs/17-center-branding.md) adds private logo and main-photo uploads on each center detail page, with validated previews and atomic publication. The owner-approved dev switch is enabled. Existing iCare client image fields and URLs are unchanged.
+
 ## Run the workspace
 
 Requires Node.js 22.17+ (supported range in package.json). Dependencies and lockfile are included.

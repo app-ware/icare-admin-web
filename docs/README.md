@@ -30,6 +30,8 @@ The subsequent authorized database inspection covers **Secure, Nursery and Schoo
 
 16. [Bus settings](16-bus-settings.md): scoped bus overrides, catalog defaults, validated lookup IDs, revision checks and missing-reference guards. Live bus writes remain disabled pending reference review and acceptance.
 
+17. [Center branding](17-center-branding.md): validated logo/main-photo uploads, owned private previews, atomic publication and mode-separated private portal image delivery. Legacy client folders and URLs are unchanged.
+
 ## What has been verified
 
 - The code's execution paths, database selection, form handling, validation, known side effects, and access checks have been reviewed statically.

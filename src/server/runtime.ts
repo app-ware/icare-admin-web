@@ -38,3 +38,6 @@ export const alertWritesEnabled = () =>
 
 export const transportWritesEnabled = () =>
   legacyConfigured() && process.env.ICARE_TRANSPORT_WRITES_ENABLED === 'true';
+
+export const brandingWritesEnabled = () =>
+  legacyConfigured() && process.env.ICARE_BRANDING_WRITES_ENABLED === 'true';

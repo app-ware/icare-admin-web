@@ -7,6 +7,8 @@ type Session = { id: string; createdAt: number; lastSeen: number; expiresAt: num
 const labels: Record<string, string> = {
   'centers.read': 'View center profiles',
   'centers.write': 'Update center profiles',
+  'centers.branding.read': 'View private portal branding in your centers',
+  'centers.branding.write': 'Upload and publish private center logos and photos when enabled',
   'centers.create': 'Create and manage your own drafts',
   'dealers.manage': 'Manage dealer accounts and center assignments',
   'users.manage': 'Manage existing users in your authorized centers',

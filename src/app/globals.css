@@ -4977,3 +4977,17 @@ main#main-content {
 .bus-editor .panel-heading { flex-wrap:wrap; gap:12px; }.bus-editor h2,.bus-selector h2 { overflow-wrap:anywhere; }
 @media(max-width:1000px) { .bus-layout {grid-template-columns:1fr;} .bus-center-list {grid-template-columns:repeat(2,minmax(0,1fr));} }
 @media(max-width:560px) { .bus-centers,.bus-selector,.bus-editor {padding:18px;} .bus-fields,.bus-center-list {grid-template-columns:1fr;} .bus-editor .status-actions {align-items:stretch;} .bus-editor .status-actions .button {width:100%;} }
+
+.branding-panel {padding:28px;margin-top:24px;min-width:0;}
+.branding-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin:22px 0;}
+.branding-card {min-width:0;border:1px solid #dfe9f4;border-radius:15px;padding:20px;display:flex;flex-direction:column;gap:12px;}
+.branding-card h3 {margin:0;}.branding-card small {color:#68819d;line-height:1.6;}
+.branding-current,.branding-preview {background:#f7faff;border-radius:10px;padding:12px;min-width:0;}
+.branding-preview {display:grid;gap:12px;border:1px dashed #8cbbed;}
+.branding-image {display:block;max-width:100%;height:190px;width:100%;object-fit:contain;border-radius:8px;}
+.branding-photo {object-fit:contain;}.branding-placeholder {display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:160px;color:#748aa3;font-size:14px;text-align:center;}
+.branding-file {display:grid;gap:10px;font-size:14px;font-weight:600;}.branding-file span {display:flex;gap:7px;align-items:center;}
+.branding-file input {width:100%;min-width:0;font:inherit;font-size:12px;}
+.branding-file input::file-selector-button {border:1px solid #ccdded;background:#f4f8ff;color:#25547c;padding:9px 12px;margin-right:9px;border-radius:8px;cursor:pointer;}
+.center-avatar img {width:100%;height:100%;object-fit:contain;border-radius:inherit;background:white;}
+@media(max-width:640px){.branding-panel{padding:18px;}.branding-grid{grid-template-columns:1fr;gap:16px;}.branding-card{padding:16px;}.branding-panel .status-actions .button{width:100%;}.branding-panel .panel-heading{flex-wrap:wrap;gap:12px;}}

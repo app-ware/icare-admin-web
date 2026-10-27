@@ -3,6 +3,8 @@ import { centerKey, type CenterRef } from './centers';
 export const permissions = [
   'centers.read',
   'centers.write',
+  'centers.branding.read',
+  'centers.branding.write',
   'centers.create',
   'users.manage',
   'dealers.manage',
@@ -54,6 +56,8 @@ export function centerGrants(
   const grants: Grant[] = [
     { permission: 'centers.read', scope },
     { permission: 'centers.write', scope },
+    { permission: 'centers.branding.read', scope },
+    { permission: 'centers.branding.write', scope },
     { permission: 'centers.create', scope: { kind: 'global' } },
     { permission: 'users.manage', scope },
     { permission: 'transport.manage', scope },

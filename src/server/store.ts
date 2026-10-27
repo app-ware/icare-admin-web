@@ -35,6 +35,10 @@ export class PortalStore {
     if (file !== ':memory:') mkdirSync(dirname(resolve(file)), { recursive: true, mode: 0o700 });
     this.db = new DatabaseSync(file);
     this.db.exec(`PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;
+      CREATE TABLE IF NOT EXISTS branding_assets (id TEXT PRIMARY KEY,mode TEXT NOT NULL,actor_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,kind TEXT NOT NULL,mime TEXT NOT NULL,width INTEGER NOT NULL,height INTEGER NOT NULL,bytes INTEGER NOT NULL,data BLOB NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,expires_at INTEGER);
+      CREATE INDEX IF NOT EXISTS branding_asset_scope ON branding_assets(mode,center_id,center_type,state);
+      CREATE TABLE IF NOT EXISTS branding_slots (mode TEXT NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,kind TEXT NOT NULL,asset_id TEXT NOT NULL,version INTEGER NOT NULL,PRIMARY KEY(mode,center_id,center_type,kind));
+      CREATE TABLE IF NOT EXISTS branding_operations (id TEXT PRIMARY KEY,mode TEXT NOT NULL,actor_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,previous_assets TEXT NOT NULL,next_assets TEXT NOT NULL,created_at INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS preview_bus_settings (center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,bus_id INTEGER NOT NULL,values_json TEXT NOT NULL,PRIMARY KEY(center_id,center_type,bus_id));
       CREATE TABLE IF NOT EXISTS bus_versions (mode TEXT NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,bus_id INTEGER NOT NULL,version INTEGER NOT NULL,PRIMARY KEY(mode,center_id,center_type,bus_id));
       CREATE TABLE IF NOT EXISTS bus_operations (id TEXT PRIMARY KEY,mode TEXT NOT NULL,actor_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,bus_id INTEGER NOT NULL,action TEXT NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,completed_at INTEGER);

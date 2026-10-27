@@ -19,6 +19,7 @@ import { centerTypeLabels } from '@/domain/centers';
 import type { ManagedCenter } from '@/domain/management';
 import { api, RequestError } from '@/lib/client';
 import { ProfileFields, readProfileForm } from './profile-fields';
+import { BrandingPanel } from './branding-panel';
 export function CenterDetail({
   initial,
   mode,
@@ -33,6 +34,7 @@ export function CenterDetail({
   const [error, setError] = useState('');
   const [conflict, setConflict] = useState(false);
   const [notice, setNotice] = useState('');
+  const [logo, setLogo] = useState<string | null>(null);
   useEffect(() => {
     if (!dirty) return;
     const warn = (e: BeforeUnloadEvent) => {
@@ -94,7 +96,7 @@ export function CenterDetail({
       </Link>
       <div className="center-detail-heading">
         <span className={`center-avatar large type-${center.type}`}>
-          {profile.name.slice(0, 1)}
+          {logo ? <img src={logo} alt={`${profile.name} logo`} /> : profile.name.slice(0, 1)}
         </span>
         <div>
           <div className="detail-kicker">
@@ -270,12 +272,13 @@ export function CenterDetail({
             <span className="eyebrow">COMING NEXT</span>
             <h3>More of your center, connected.</h3>
             <p>
-              Branding, administrator accounts and daily operations will be added in the next
+              Watermarks, QR generation and administrator account creation remain planned for later
               phases.
             </p>
           </section>
         </aside>
       </div>
+      <BrandingPanel center={{ id: center.id, type: center.type }} onLogo={setLogo} />
     </>
   );
 }
