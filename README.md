@@ -18,6 +18,8 @@ Next.js rebuild and a source-backed migration dossier for the legacy iCare admin
 
 [Center branding](docs/17-center-branding.md) adds private logo and main-photo uploads on each center detail page, with validated previews and atomic publication. The owner-approved dev switch is enabled. Existing iCare client image fields and URLs are unchanged.
 
+[Creation draft branding](docs/18-draft-branding.md) adds both uploads to the center creation wizard, with save/resume, revision protection and atomic demo creation. Live center provisioning remains pending.
+
 ## Run the workspace
 
 Requires Node.js 22.17+ (supported range in package.json). Dependencies and lockfile are included.
@@ -27,7 +29,7 @@ npm ci
 npm run dev
 ```
 
-Open [the sign-in page](http://127.0.0.1:3000/login). Choose **Explore demo workspace** to try the dashboard, center directory, profile editor, four-step draft wizard and access/session controls with fictional data. Demo changes persist on the server across refreshes. Switch the demo role to test a center operator's limited scope.
+Open [the sign-in page](http://127.0.0.1:3000/login). Choose **Explore demo workspace** to try the dashboard, center directory, profile editor, five-step draft wizard with logo/photo uploads and access/session controls with fictional data. Demo changes persist on the server across refreshes. Switch the demo role to test a center operator's limited scope.
 
 The owner-confirmed development SQL server is now configured privately for existing dealer sign-in and real center profile management. Sign in with your dealer credentials to use real data; the demo button continues to open fictional data separately. [Development connection setup](docs/09-live-connection-setup.md) records its local compatibility settings and verification limits.
 

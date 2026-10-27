@@ -13,6 +13,7 @@ import {
   type ManagedCenter,
 } from '@/domain/management';
 import { PortalError } from './http';
+import { BRANDING_RETENTION_MS, type BrandingAsset } from '@/domain/branding';
 
 export const IDLE_MS = 30 * 60_000;
 export const ABSOLUTE_MS = 8 * 60 * 60_000;
@@ -35,6 +36,8 @@ export class PortalStore {
     if (file !== ':memory:') mkdirSync(dirname(resolve(file)), { recursive: true, mode: 0o700 });
     this.db = new DatabaseSync(file);
     this.db.exec(`PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;
+      CREATE TABLE IF NOT EXISTS draft_images (id TEXT PRIMARY KEY,mode TEXT NOT NULL,dealer_id INTEGER NOT NULL,draft_id TEXT NOT NULL,kind TEXT NOT NULL,mime TEXT NOT NULL,width INTEGER NOT NULL,height INTEGER NOT NULL,bytes INTEGER NOT NULL,data BLOB NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,expires_at INTEGER);
+      CREATE INDEX IF NOT EXISTS draft_image_scope ON draft_images(mode,dealer_id,draft_id,state);
       CREATE TABLE IF NOT EXISTS branding_assets (id TEXT PRIMARY KEY,mode TEXT NOT NULL,actor_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,kind TEXT NOT NULL,mime TEXT NOT NULL,width INTEGER NOT NULL,height INTEGER NOT NULL,bytes INTEGER NOT NULL,data BLOB NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,expires_at INTEGER);
       CREATE INDEX IF NOT EXISTS branding_asset_scope ON branding_assets(mode,center_id,center_type,state);
       CREATE TABLE IF NOT EXISTS branding_slots (mode TEXT NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,kind TEXT NOT NULL,asset_id TEXT NOT NULL,version INTEGER NOT NULL,PRIMARY KEY(mode,center_id,center_type,kind));
@@ -216,11 +219,39 @@ export class PortalStore {
         data: JSON.parse(String(r.data)),
         revision: Number(r.revision),
         updatedAt: Number(r.updated_at),
+        branding: this.draftBranding(dealerId, mode, String(r.id)),
         published:
           r.published_id === null
             ? null
             : { id: Number(r.published_id), type: Number(r.published_type) as 1 | 3 | 4 },
       }));
+  }
+  draftBranding(
+    dealerId: number,
+    mode: SessionRecord['mode'],
+    draftId: string,
+  ): SavedDraft['branding'] {
+    const result: SavedDraft['branding'] = { logo: null, photo: null };
+    const rows = this.db
+      .prepare(
+        `SELECT a.id,a.kind,a.mime,a.width,a.height,a.bytes,a.created_at FROM draft_images a JOIN drafts d ON d.id=a.draft_id AND d.dealer_id=a.dealer_id AND d.mode=a.mode WHERE d.id=? AND d.dealer_id=? AND d.mode=? AND d.published_id IS NULL AND a.state='saved' AND ((a.kind='logo' AND json_extract(d.data,'$.branding.logo')=a.id) OR (a.kind='photo' AND json_extract(d.data,'$.branding.photo')=a.id))`,
+      )
+      .all(draftId, dealerId, mode);
+    for (const r of rows) {
+      const kind = r.kind as 'logo' | 'photo';
+      result[kind] = {
+        id: String(r.id),
+        kind,
+        url: `/api/center-drafts/${draftId}/branding/assets/${r.id}`,
+        mime: r.mime as BrandingAsset['mime'],
+        width: Number(r.width),
+        height: Number(r.height),
+        bytes: Number(r.bytes),
+        createdAt: Number(r.created_at),
+        expiresAt: null,
+      };
+    }
+    return result;
   }
   saveDraft(
     dealerId: number,
@@ -228,35 +259,111 @@ export class PortalStore {
     data: CenterDraftData,
     id?: string,
     revision?: number,
+    guard?: () => void,
   ) {
-    const draftId = id ?? randomUUID();
-    if (id) {
-      const changed = this.db
-        .prepare(
-          'UPDATE drafts SET data=?,revision=revision+1,updated_at=? WHERE id=? AND dealer_id=? AND mode=? AND revision=? AND published_id IS NULL',
-        )
-        .run(JSON.stringify(data), Date.now(), id, dealerId, mode, revision ?? 0);
-      if (!changed.changes)
+    return this.transaction(() => {
+      guard?.();
+      const draftId = id ?? randomUUID();
+      const before = id
+        ? this.db
+            .prepare(
+              'SELECT data FROM drafts WHERE id=? AND dealer_id=? AND mode=? AND revision=? AND published_id IS NULL',
+            )
+            .get(id, dealerId, mode, revision ?? 0)
+        : null;
+      if (id && !before)
         throw new PortalError(
           409,
           'DRAFT_CONFLICT',
-          'This draft is unavailable or changed. Refresh your drafts.',
+          'This draft is unavailable or changed. Reload the saved draft.',
         );
-    } else
+      const previous = before ? (JSON.parse(String(before.data)) as CenterDraftData) : null;
+      const branding = data.branding ?? previous?.branding;
+      for (const kind of ['logo', 'photo'] as const) {
+        const assetId = branding?.[kind];
+        if (!assetId) continue;
+        const asset = this.db
+          .prepare(
+            "SELECT id FROM draft_images WHERE id=? AND mode=? AND dealer_id=? AND draft_id=? AND kind=? AND (state='saved' OR (state='staged' AND expires_at>?))",
+          )
+          .get(assetId, mode, dealerId, draftId, kind, Date.now());
+        if (!asset)
+          throw new PortalError(
+            409,
+            'DRAFT_IMAGE_UNAVAILABLE',
+            'A draft image expired or is unavailable. Choose that image again.',
+          );
+      }
+      const nextData = branding ? { ...data, branding } : data;
+      for (const kind of ['logo', 'photo'] as const) {
+        const oldId = previous?.branding?.[kind],
+          nextId = branding?.[kind];
+        if (oldId && oldId !== nextId)
+          this.db
+            .prepare(
+              "UPDATE draft_images SET state='retired',expires_at=? WHERE id=? AND mode=? AND dealer_id=? AND draft_id=?",
+            )
+            .run(Date.now() + BRANDING_RETENTION_MS, oldId, mode, dealerId, draftId);
+        if (nextId)
+          this.db
+            .prepare("UPDATE draft_images SET state='saved',expires_at=NULL WHERE id=?")
+            .run(nextId);
+      }
+      if (id) {
+        const changed = this.db
+          .prepare(
+            'UPDATE drafts SET data=?,revision=revision+1,updated_at=? WHERE id=? AND dealer_id=? AND mode=? AND revision=? AND published_id IS NULL',
+          )
+          .run(JSON.stringify(nextData), Date.now(), id, dealerId, mode, revision ?? 0);
+        if (!changed.changes)
+          throw new PortalError(
+            409,
+            'DRAFT_CONFLICT',
+            'This draft is unavailable or changed. Refresh your drafts.',
+          );
+      } else
+        this.db
+          .prepare('INSERT INTO drafts VALUES (?,?,?,?,1,?,NULL,NULL)')
+          .run(draftId, dealerId, mode, JSON.stringify(nextData), Date.now());
+      return this.drafts(dealerId, mode).find((d) => d.id === draftId)!;
+    });
+  }
+  deleteDraft(
+    dealerId: number,
+    mode: SessionRecord['mode'],
+    id: string,
+    revision?: number,
+    guard?: () => void,
+  ) {
+    return this.transaction(() => {
+      guard?.();
+      const current = this.db
+        .prepare(
+          'SELECT revision FROM drafts WHERE id=? AND dealer_id=? AND mode=? AND published_id IS NULL',
+        )
+        .get(id, dealerId, mode);
+      if (!current) throw new PortalError(404, 'NOT_FOUND', 'Draft not found.');
+      if (revision !== undefined && Number(current.revision) !== revision)
+        throw new PortalError(
+          409,
+          'DRAFT_CONFLICT',
+          'This draft changed. Refresh your drafts before deleting.',
+        );
+      const result = this.db
+        .prepare(
+          'DELETE FROM drafts WHERE id=? AND dealer_id=? AND mode=? AND published_id IS NULL',
+        )
+        .run(id, dealerId, mode);
+      if (!result.changes) throw new PortalError(404, 'NOT_FOUND', 'Draft not found.');
       this.db
-        .prepare('INSERT INTO drafts VALUES (?,?,?,?,1,?,NULL,NULL)')
-        .run(draftId, dealerId, mode, JSON.stringify(data), Date.now());
-    return this.drafts(dealerId, mode).find((d) => d.id === draftId)!;
+        .prepare('DELETE FROM draft_images WHERE draft_id=? AND dealer_id=? AND mode=?')
+        .run(id, dealerId, mode);
+    });
   }
-  deleteDraft(dealerId: number, mode: SessionRecord['mode'], id: string) {
-    const result = this.db
-      .prepare('DELETE FROM drafts WHERE id=? AND dealer_id=? AND mode=? AND published_id IS NULL')
-      .run(id, dealerId, mode);
-    if (!result.changes) throw new PortalError(404, 'NOT_FOUND', 'Draft not found.');
-  }
-  publishPreview(dealerId: number, id: string, revision: number): CenterRef {
+  publishPreview(dealerId: number, id: string, revision: number, guard?: () => void): CenterRef {
     this.seedPreview();
     return this.transaction(() => {
+      guard?.();
       const row = this.db
         .prepare("SELECT * FROM drafts WHERE id=? AND dealer_id=? AND mode='preview'")
         .get(id, dealerId);
@@ -283,6 +390,42 @@ export class PortalStore {
       this.db
         .prepare('INSERT OR IGNORE INTO preview_dealer_centers VALUES (?,?,?)')
         .run(dealerId, next, data.type);
+      const imageIds: { logo?: string; photo?: string } = {};
+      for (const kind of ['logo', 'photo'] as const) {
+        const imageId = data.branding?.[kind];
+        if (!imageId) continue;
+        const newId = randomUUID();
+        const copied = this.db
+          .prepare(
+            `INSERT INTO branding_assets SELECT ?,'preview',dealer_id,?,?,kind,mime,width,height,bytes,data,'published',?,NULL FROM draft_images WHERE id=? AND draft_id=? AND dealer_id=? AND mode='preview' AND kind=? AND state='saved'`,
+          )
+          .run(newId, next, data.type, Date.now(), imageId, id, dealerId, kind);
+        if (copied.changes !== 1)
+          throw new PortalError(
+            409,
+            'DRAFT_IMAGE_UNAVAILABLE',
+            'A saved draft image is unavailable. Reload the draft.',
+          );
+        this.db
+          .prepare("INSERT INTO branding_slots VALUES('preview',?,?,?,?,1)")
+          .run(next, data.type, kind, newId);
+        imageIds[kind] = newId;
+      }
+      if (imageIds.logo || imageIds.photo)
+        this.db
+          .prepare("INSERT INTO branding_operations VALUES(?,'preview',?,?,?,?,?,?)")
+          .run(
+            randomUUID(),
+            dealerId,
+            next,
+            data.type,
+            JSON.stringify({ logo: null, photo: null }),
+            JSON.stringify(imageIds),
+            Date.now(),
+          );
+      this.db
+        .prepare("DELETE FROM draft_images WHERE draft_id=? AND dealer_id=? AND mode='preview'")
+        .run(id, dealerId);
       this.db
         .prepare('UPDATE drafts SET published_id=?,published_type=?,updated_at=? WHERE id=?')
         .run(next, data.type, Date.now(), id);

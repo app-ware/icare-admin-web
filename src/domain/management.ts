@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { coordinatesSchema, centerRefSchema } from './centers';
+import type { BrandingAsset } from './branding';
 
 export const profileSchema = z
   .object({
@@ -31,6 +32,10 @@ export const draftSchema = z
       .toLowerCase()
       .regex(/^[a-z0-9]{2,50}$/, 'Use 2–50 letters or numbers.'),
     profile: profileSchema,
+    branding: z
+      .object({ logo: z.uuid().optional(), photo: z.uuid().optional() })
+      .strict()
+      .optional(),
   })
   .strict();
 export type CenterDraftData = z.infer<typeof draftSchema>;
@@ -71,6 +76,7 @@ export interface SavedDraft {
   revision: number;
   updatedAt: number;
   published: { id: number; type: 1 | 3 | 4 } | null;
+  branding: { logo: BrandingAsset | null; photo: BrandingAsset | null };
 }
 export const emptyProfile: CenterProfile = {
   name: '',

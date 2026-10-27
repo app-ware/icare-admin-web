@@ -32,6 +32,8 @@ The subsequent authorized database inspection covers **Secure, Nursery and Schoo
 
 17. [Center branding](17-center-branding.md): validated logo/main-photo uploads, owned private previews, atomic publication and mode-separated private portal image delivery. Legacy client folders and URLs are unchanged.
 
+18. [Creation draft branding](18-draft-branding.md): logo/main-photo uploads in the five-step wizard, owned saved attachments and atomic transfer during demo creation. Live provisioning remains pending.
+
 ## What has been verified
 
 - The code's execution paths, database selection, form handling, validation, known side effects, and access checks have been reviewed statically.

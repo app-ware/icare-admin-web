@@ -144,6 +144,9 @@ test('creation drafts survive reload and publish only into the demo workspace', 
   await page.getByRole('dialog').getByRole('button', { name: 'Continue', exact: true }).click();
   await expect(page.getByLabel('Latitude', { exact: true })).toHaveValue('-33.9');
   await page.getByRole('dialog').getByRole('button', { name: 'Continue', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Branding', exact: true })).toBeVisible();
+  await expect(page.getByLabel('Choose draft logo', { exact: true })).toBeEnabled();
+  await page.getByRole('dialog').getByRole('button', { name: 'Continue', exact: true }).click();
   await expect(page.getByRole('dialog')).toContainText('School');
   await noOverflow(page);
   await page.screenshot({

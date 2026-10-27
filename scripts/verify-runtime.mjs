@@ -56,6 +56,10 @@ try {
   assert.ok(!login.includes('Explore demo workspace'));
   for (const route of [
     '/api/centers',
+    '/api/center-drafts',
+    '/api/center-drafts/00000000-0000-4000-8000-000000000001',
+    '/api/center-drafts/00000000-0000-4000-8000-000000000001/branding',
+    '/api/center-drafts/00000000-0000-4000-8000-000000000001/branding/assets/00000000-0000-4000-8000-000000000002',
     '/api/centers/1/9999/branding',
     '/api/centers/1/9999/branding/assets/00000000-0000-4000-8000-000000000001',
     '/api/transport',

@@ -2231,7 +2231,7 @@ main#main-content {
   list-style: none;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   margin: 0 0 27px;
   border-bottom: 1px solid #e5edf7;
   padding-bottom: 21px;

@@ -97,7 +97,7 @@ export function CenterDirectory({
   async function removeDraft(draft: SavedDraft) {
     if (!window.confirm(`Delete the draft for ${draft.data.profile.name}?`)) return;
     try {
-      await api(`/api/center-drafts/${draft.id}`, 'DELETE');
+      await api(`/api/center-drafts/${draft.id}`, 'DELETE', { revision: draft.revision });
       setNonce((n) => n + 1);
     } catch (e) {
       setDraftError(e instanceof Error ? e.message : 'Unable to delete draft.');

@@ -8,6 +8,7 @@ import sharp from 'sharp';
 import sql from 'mssql';
 import { centerGrants, type PortalActor } from '../src/domain/access';
 import { centerKey, type CenterRef } from '../src/domain/centers';
+import { emptyProfile, type SavedDraft } from '../src/domain/management';
 let stage = 'development guards';
 async function main() {
   assert.equal(process.env.NODE_ENV, 'development');
@@ -112,6 +113,64 @@ async function main() {
       })
         .png()
         .toBuffer();
+      const drafts = await import('../src/server/drafts/repository');
+      const ownedDrafts: SavedDraft[] = [];
+      for (const ref of refs) {
+        stage = `type ${ref.type} owned draft images`;
+        const initial = await drafts.saveDraft(owner, {
+          type: ref.type,
+          domain: `draft${randomUUID().replaceAll('-', '')}`,
+          profile: { ...emptyProfile, name: 'Fictional acceptance draft' },
+        });
+        const logo = await drafts.stageDraftImage(
+          owner,
+          initial.id,
+          'logo',
+          bytes,
+          'image/png',
+          'png',
+        );
+        const photo = await drafts.stageDraftImage(
+          owner,
+          initial.id,
+          'photo',
+          bytes,
+          'image/png',
+          'png',
+        );
+        const saved = await drafts.saveDraft(
+          owner,
+          { ...initial.data, branding: { logo: logo.id, photo: photo.id } },
+          initial.id,
+          initial.revision,
+        );
+        assert.equal((await drafts.getDraft(owner, saved.id)).branding.logo?.id, logo.id);
+        await assert.rejects(() => drafts.readDraftImage(admin, saved.id, logo.id), {
+          code: 'DRAFT_NOT_FOUND',
+        });
+        await assert.rejects(() => drafts.publishDraft(owner, saved.id, saved.revision), {
+          code: 'PROVISIONING_PENDING',
+        });
+        process.env.ICARE_BRANDING_WRITES_ENABLED = 'false';
+        try {
+          assert.equal((await drafts.getDraftBranding(owner, saved.id)).canManage, false);
+          await assert.rejects(
+            () =>
+              drafts.saveDraft(owner, { ...saved.data, branding: {} }, saved.id, saved.revision),
+            { code: 'BRANDING_WRITES_DISABLED' },
+          );
+          await assert.rejects(() => drafts.deleteDraft(owner, saved.id, saved.revision), {
+            code: 'BRANDING_WRITES_DISABLED',
+          });
+          assert.equal((await drafts.getDraft(owner, saved.id)).revision, saved.revision);
+        } finally {
+          process.env.ICARE_BRANDING_WRITES_ENABLED = 'true';
+        }
+        ownedDrafts.push(saved);
+        checks.push(
+          `Type ${ref.type}: private draft upload/save/resume, uploader isolation, independent gate and live provisioning denial`,
+        );
+      }
       for (const ref of refs) {
         stage = `type ${ref.type} private branding`;
         const initial = await getBranding(owner, ref),
@@ -159,6 +218,9 @@ async function main() {
       await assert.rejects(() => readBrandingImage(owner, ref, image.id), {
         code: 'IMAGE_NOT_FOUND',
       });
+      await assert.rejects(() =>
+        drafts.readDraftImage(owner, ownedDrafts[0].id, ownedDrafts[0].branding.logo!.id),
+      );
       await request()
         .input('actor', sql.Int, owner.dealerId)
         .query(
@@ -173,6 +235,13 @@ async function main() {
       });
       checks.push(
         'Current SQL account status, ownership and forged administrator claims fail closed',
+      );
+      for (const draft of ownedDrafts) {
+        assert.equal((await drafts.getDraft(owner, draft.id)).revision, draft.revision);
+        await drafts.deleteDraft(owner, draft.id, draft.revision);
+      }
+      checks.push(
+        'Drafts remain private to their active owner independently of existing-center assignments; draft media deleted with owned drafts',
       );
     } finally {
       stage = 'marker-guarded cleanup';

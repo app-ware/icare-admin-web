@@ -1,5 +1,17 @@
 # Verification record
 
+## Creation-wizard branding — 27 October 2026
+
+[Chapter 18](18-draft-branding.md) adds logo/main-photo uploads to owned center drafts using the previously chosen private portal storage.
+
+- **50 domain/security tests pass**, including six new draft groups for atomic profile/image saves, stale revisions, owner/admin/mode/draft/kind isolation, expiry and saved retention, deletion, inactive accounts, all three demo center types, publication rollback/idempotency and shared upload quotas.
+- Disposable dev SQL acceptance passes for Nursery/Lite/School draft upload/save/resume, administrator isolation, inactive-account denial, the independent write switch (including image-bearing draft deletion) and live provisioning denial. Original rows and legacy image fields retained matching fingerprints; marked fixtures were removed. [Redacted evidence](generated/branding-sql-checks.json).
+- HTTP acceptance passes for anonymous/cross-origin denial, strict payload/query schemas, cross-actor/draft denial, authenticated image headers, save/resume, stale saves/deletions and saved-image discard protection. Separate demo API sessions and their temporary drafts were removed afterward.
+- Desktop and 390×844 mobile browser checks verify both image uploads, save/reload/resume, review, no horizontal overflow and successful transfer into a fictional demo center. Both resulting center images decoded successfully. Step navigation now resets the dialog scroll position. Browser checks used fictional demo images only; no real SQL center was created.
+- The optimized production build and TypeScript checks pass. Privacy scanning covers **54 traces** plus standalone files with no private SQLite/env/legacy configuration inclusion. Production access smoke includes the new draft metadata/image routes: anonymous requests deny access and production demo entry stays disabled.
+
+Live center creation, initial administrator creation, QR/watermarks, legacy image consumer integration and production/shared-storage acceptance remain pending. No credential or legacy image/folder changes were made.
+
 ## Activity and reports — 24 October 2026
 
 The owner requested activity/report workflows while keeping user creation, password resets, Accounting and Logging pending. [Chapter 12](12-activity-and-reports.md) records the exact counting policy, read scopes, aggregate exports and limits.

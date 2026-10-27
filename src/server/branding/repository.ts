@@ -27,6 +27,7 @@ import { getStore, digest } from '@/server/store';
 import { brandingWritesEnabled } from '@/server/runtime';
 import { PortalError } from '@/server/http';
 import { normalizeImage } from './images';
+import { consumeBrandingUploadLimit, purgeExpiredBrandingPreviews } from './limits';
 type Row = Record<string, unknown>;
 type Permission = 'centers.branding.read' | 'centers.branding.write';
 const available = (actor: PortalActor) => actor.mode === 'preview' || brandingWritesEnabled();
@@ -133,20 +134,11 @@ export async function prepareBrandingUpload(actor: PortalActor, ref: CenterRef) 
   await scoped(actor, ref, 'centers.branding.write', (actual) => {
     assertWrites(actual);
   });
-  const store = getStore();
-  if (
-    !store.consumeLimit(`branding:${actor.mode}:${actor.dealerId}`, 20, 60 * 60_000) ||
-    !store.consumeLimit('branding:global', 60, 60_000)
-  )
-    throw new PortalError(429, 'UPLOAD_RATE_LIMIT', 'Too many image uploads. Try again later.');
+  consumeBrandingUploadLimit(actor);
 }
 // Expiry cleanup is limited to this mode/center, and can never remove a current image.
 function purge(actor: PortalActor, ref: CenterRef) {
-  getStore()
-    .db.prepare(
-      "DELETE FROM branding_assets WHERE mode=? AND actor_id=? AND state='staged' AND expires_at<=? AND NOT EXISTS(SELECT 1 FROM branding_slots s WHERE s.asset_id=branding_assets.id)",
-    )
-    .run(actor.mode, actor.dealerId, Date.now());
+  purgeExpiredBrandingPreviews(actor);
   getStore()
     .db.prepare(
       "DELETE FROM branding_assets WHERE mode=? AND center_id=? AND center_type=? AND state<>'published' AND expires_at<=? AND NOT EXISTS(SELECT 1 FROM branding_slots s WHERE s.asset_id=branding_assets.id)",
@@ -172,16 +164,18 @@ export async function stageBranding(
     const store = getStore();
     const staged = store.db
       .prepare(
-        "SELECT COUNT(*) AS n FROM branding_assets WHERE mode=? AND actor_id=? AND state='staged'",
+        "SELECT (SELECT COUNT(*) FROM branding_assets WHERE mode=? AND actor_id=? AND state='staged')+(SELECT COUNT(*) FROM draft_images WHERE mode=? AND dealer_id=? AND state='staged') AS n",
       )
-      .get(actual.mode, actual.dealerId);
+      .get(actual.mode, actual.dealerId, actual.mode, actual.dealerId);
     const center = store.db
       .prepare(
         'SELECT COALESCE(SUM(bytes),0) AS bytes FROM branding_assets WHERE mode=? AND center_id=? AND center_type=?',
       )
       .get(actual.mode, ref.id, ref.type);
     const total = store.db
-      .prepare('SELECT COALESCE(SUM(bytes),0) AS bytes FROM branding_assets')
+      .prepare(
+        'SELECT (SELECT COALESCE(SUM(bytes),0) FROM branding_assets)+(SELECT COALESCE(SUM(bytes),0) FROM draft_images) AS bytes',
+      )
       .get();
     if (
       Number(staged?.n) >= 4 ||

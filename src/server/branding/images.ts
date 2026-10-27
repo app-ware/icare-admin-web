@@ -9,17 +9,20 @@ import {
 } from '@/domain/branding';
 import { PortalError } from '@/server/http';
 
-let decoding = 0;
-let uploads = 0;
+// Center and draft routes share a process budget, including across dev module reloads.
+const imageRuntime = globalThis as typeof globalThis & {
+  icareImageBudget?: { decoding: number; uploads: number };
+};
+const budget = (imageRuntime.icareImageBudget ??= { decoding: 0, uploads: 0 });
 export function reserveImageUpload() {
-  if (uploads >= 2)
+  if (budget.uploads >= 2)
     throw new PortalError(429, 'IMAGE_UPLOAD_BUSY', 'Image uploads are busy. Try again shortly.');
-  uploads++;
+  budget.uploads++;
   let released = false;
   return () => {
     if (!released) {
       released = true;
-      uploads--;
+      budget.uploads--;
     }
   };
 }
@@ -81,13 +84,13 @@ export async function normalizeImage(
     !{ png: ['png'], jpeg: ['jpg', 'jpeg'], webp: ['webp'] }[type].includes(extension.toLowerCase())
   )
     throw invalid();
-  if (decoding >= 2)
+  if (budget.decoding >= 2)
     throw new PortalError(
       429,
       'IMAGE_PROCESSOR_BUSY',
       'Image processing is busy. Try again shortly.',
     );
-  decoding++;
+  budget.decoding++;
   try {
     const image = sharp(bytes, { limitInputPixels: IMAGE_MAX_PIXELS, failOn: 'warning' }).timeout({
       seconds: 5,
@@ -128,6 +131,6 @@ export async function normalizeImage(
     if (error instanceof PortalError) throw error;
     throw invalid();
   } finally {
-    decoding--;
+    budget.decoding--;
   }
 }
