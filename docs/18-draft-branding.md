@@ -1,6 +1,6 @@
 # Logo and photo uploads in center creation
 
-Delivered on 27 October 2026 under **Care centers → New center draft → Branding**. The five-step wizard now saves a private logo and main photo with an owned draft, resumes them after reload and displays them in the final review. It uses the private portal storage chosen for [center branding](17-center-branding.md). Watermarks, QR generation, initial administrator creation and live provisioning remain pending.
+Delivered on 27 October 2026 under **Care centers → New center draft → Branding**. The five-step wizard now saves a private logo and main photo with an owned draft, resumes them after reload and displays them in the final review. It uses the private portal storage chosen for [center branding](17-center-branding.md). [Chapter 19](19-watermark-uploads.md) adds watermark uploads. QR generation, initial administrator creation and live provisioning remain pending.
 
 ## Workflow
 

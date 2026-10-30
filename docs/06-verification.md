@@ -1,5 +1,17 @@
 # Verification record
 
+## Private watermark uploads — 30 October 2026
+
+[Chapter 19](19-watermark-uploads.md) adds optional PNG watermarks to center branding and creation drafts.
+
+- **54 domain/security tests pass**, including four new watermark groups covering exact independent dimensions, PNG/forged-format rejection, alpha preservation, metadata stripping, private ownership, image-kind isolation, old-client preservation, stale mutations, atomic replacement/removal rollback, retained revisions after removal and demo transfer/retry for all three center types.
+- Disposable dev SQL acceptance passes for all three image slots, watermark publication/removal, current owner/admin checks, private previews, write gates, inactive/revoked access and draft isolation across Nursery/Lite/School. Profile-only drafts remain writable with an empty watermark while image writes are disabled. Fixture identities have a bounded five-minute lifetime for the expanded checks. Marked SQL fixtures were removed; original records and legacy image fields retained matching fingerprints. [Redacted evidence](generated/branding-sql-checks.json).
+- HTTP checks pass for watermark filenames/private cache headers, dimension errors, anonymous/other-actor/cross-origin denial, strict query payloads, stale removal, draft save/resume, omitted-field compatibility, saved-image discard denial and explicit-null removal. Temporary API drafts and separate demo sessions were removed afterward.
+- Desktop browser checks pass for invalid dimensions, transparent previews, reviewed publication and unchanged logo/photo slots. At 390×844, cancellation preserved the current watermark, confirmed removal cleared it, and draft save/reload/resume retained a decoded 1024×1024 watermark. A fictional School center created through the wizard received its saved watermark. Mobile page width was 390 px and dialog width 356 px. No real center/account was created or real center image changed during browser checks.
+- Production compilation and TypeScript pass. Build privacy passes across **54 traces** and standalone output; production access smoke passes with anonymous APIs denied and demo entry disabled. No private environment, SQLite or legacy connection file was included in build output.
+
+Watermarks are stored in private portal media only. QR generation, overlays, child-record processing, legacy file/URL integration, live center provisioning and central Logging remain pending.
+
 ## Creation-wizard branding — 27 October 2026
 
 [Chapter 18](18-draft-branding.md) adds logo/main-photo uploads to owned center drafts using the previously chosen private portal storage.

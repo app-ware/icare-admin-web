@@ -20,7 +20,7 @@ export function purgeExpiredBrandingPreviews(actor: PortalActor) {
     .run(actor.mode, actor.dealerId, now);
   store.db
     .prepare(
-      "DELETE FROM draft_images WHERE mode=? AND dealer_id=? AND state='staged' AND expires_at<=? AND NOT EXISTS(SELECT 1 FROM drafts d WHERE d.id=draft_images.draft_id AND d.mode=draft_images.mode AND d.dealer_id=draft_images.dealer_id AND (json_extract(d.data,'$.branding.logo')=draft_images.id OR json_extract(d.data,'$.branding.photo')=draft_images.id))",
+      "DELETE FROM draft_images WHERE mode=? AND dealer_id=? AND state='staged' AND expires_at<=? AND NOT EXISTS(SELECT 1 FROM drafts d WHERE d.id=draft_images.draft_id AND d.mode=draft_images.mode AND d.dealer_id=draft_images.dealer_id AND (json_extract(d.data,'$.branding.logo')=draft_images.id OR json_extract(d.data,'$.branding.photo')=draft_images.id OR json_extract(d.data,'$.branding.watermark')=draft_images.id))",
     )
     .run(actor.mode, actor.dealerId, now);
 }

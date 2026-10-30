@@ -11,7 +11,7 @@ export async function GET(_request: Request, context: Context) {
       headers: {
         'Content-Type': image.mime,
         'Content-Length': String(image.data.length),
-        'Content-Disposition': `inline; filename="draft-${image.kind === 'logo' ? 'logo.png' : 'photo.jpg'}"`,
+        'Content-Disposition': `inline; filename="draft-${image.kind === 'photo' ? 'photo.jpg' : image.kind === 'watermark' ? 'watermark.png' : 'logo.png'}"`,
         'Cache-Control': 'private, no-store',
         Vary: 'Cookie',
         'X-Content-Type-Options': 'nosniff',

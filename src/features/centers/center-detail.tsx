@@ -271,10 +271,7 @@ export function CenterDetail({
           <section className="detail-note">
             <span className="eyebrow">COMING NEXT</span>
             <h3>More of your center, connected.</h3>
-            <p>
-              Watermarks, QR generation and administrator account creation remain planned for later
-              phases.
-            </p>
+            <p>QR generation and administrator account creation remain planned for later phases.</p>
           </section>
         </aside>
       </div>

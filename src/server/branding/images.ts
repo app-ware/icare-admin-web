@@ -79,6 +79,15 @@ export async function normalizeImage(
         ? 'webp'
         : null;
   if (
+    kind === 'watermark' &&
+    (type !== 'png' || mime !== 'image/png' || extension.toLowerCase() !== 'png')
+  )
+    throw new PortalError(
+      422,
+      'INVALID_WATERMARK',
+      'Use a still PNG watermark at exactly 1024 × 1024 pixels.',
+    );
+  if (
     !type ||
     mime !== `image/${type}` ||
     !{ png: ['png'], jpeg: ['jpg', 'jpeg'], webp: ['webp'] }[type].includes(extension.toLowerCase())
@@ -106,6 +115,15 @@ export async function normalizeImage(
       meta.width * meta.height > IMAGE_MAX_PIXELS
     )
       throw invalid();
+    if (
+      kind === 'watermark' &&
+      (meta.width !== IMAGE_OUTPUT_DIMENSION || meta.height !== IMAGE_OUTPUT_DIMENSION)
+    )
+      throw new PortalError(
+        422,
+        'INVALID_WATERMARK',
+        'Use a still PNG watermark at exactly 1024 × 1024 pixels.',
+      );
     const pipeline = image
       .autoOrient()
       .resize(IMAGE_OUTPUT_DIMENSION, IMAGE_OUTPUT_DIMENSION, {
@@ -115,7 +133,7 @@ export async function normalizeImage(
       .toColourspace('srgb');
     // Default Sharp output strips EXIF/GPS and other source metadata. Originals are never stored.
     const { data, info } = await (
-      kind === 'logo'
+      kind !== 'photo'
         ? pipeline.png({ compressionLevel: 6 })
         : pipeline.flatten({ background: '#ffffff' }).jpeg({ quality: 85 })
     ).toBuffer({ resolveWithObject: true });
@@ -124,7 +142,7 @@ export async function normalizeImage(
       data,
       width: info.width,
       height: info.height,
-      mime: (kind === 'logo' ? 'image/png' : 'image/jpeg') as 'image/png' | 'image/jpeg',
+      mime: (kind !== 'photo' ? 'image/png' : 'image/jpeg') as 'image/png' | 'image/jpeg',
       bytes: data.length,
     };
   } catch (error) {

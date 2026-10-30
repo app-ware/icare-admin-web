@@ -4991,3 +4991,11 @@ main#main-content {
 .branding-file input::file-selector-button {border:1px solid #ccdded;background:#f4f8ff;color:#25547c;padding:9px 12px;margin-right:9px;border-radius:8px;cursor:pointer;}
 .center-avatar img {width:100%;height:100%;object-fit:contain;border-radius:inherit;background:white;}
 @media(max-width:640px){.branding-panel{padding:18px;}.branding-grid{grid-template-columns:1fr;gap:16px;}.branding-card{padding:16px;}.branding-panel .status-actions .button{width:100%;}.branding-panel .panel-heading{flex-wrap:wrap;gap:12px;}}
+
+/* Checkerboard makes transparent watermark artwork visible on light and dark pixels. */
+.branding-watermark {
+  background-color: #fff;
+  background-image: linear-gradient(45deg, #e2eaf2 25%, transparent 25%), linear-gradient(-45deg, #e2eaf2 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e2eaf2 75%), linear-gradient(-45deg, transparent 75%, #e2eaf2 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+}

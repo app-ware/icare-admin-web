@@ -23,7 +23,7 @@ async function main() {
   process.env.ICARE_BRANDING_WRITES_ENABLED = 'true';
   const { getPool, closePools } = await import('../src/server/db/pools');
   const { getStore } = await import('../src/server/store');
-  const { getBranding, stageBranding, publishBranding, readBrandingImage } =
+  const { getBranding, stageBranding, publishBranding, readBrandingImage, discardBranding } =
     await import('../src/server/branding/repository');
   const pool = await getPool('secure'),
     marker = `Portal branding acceptance ${randomUUID()}`,
@@ -96,7 +96,7 @@ async function main() {
         name: 'Fixture',
         username: 'fixture',
         active: true,
-        expiresAt: Date.now() + 60000,
+        expiresAt: Date.now() + 5 * 60000,
         isSuperAdmin: false,
         sessionId: 'acceptance',
         grants: centerGrants(false, refs.map(centerKey)),
@@ -113,8 +113,40 @@ async function main() {
       })
         .png()
         .toBuffer();
+      const watermarkBytes = await sharp({
+        create: {
+          width: 1024,
+          height: 1024,
+          channels: 4,
+          background: { r: 40, g: 100, b: 180, alpha: 0.5 },
+        },
+      })
+        .png()
+        .toBuffer();
       const drafts = await import('../src/server/drafts/repository');
       const ownedDrafts: SavedDraft[] = [];
+      process.env.ICARE_BRANDING_WRITES_ENABLED = 'false';
+      try {
+        const plain = await drafts.saveDraft(owner, {
+          type: 1,
+          domain: `plain${randomUUID().replaceAll('-', '')}`,
+          profile: { ...emptyProfile, name: 'Fictional profile-only draft' },
+          branding: { watermark: null },
+        });
+        const updated = await drafts.saveDraft(
+          owner,
+          { ...plain.data, profile: { ...plain.data.profile, name: 'Fictional profile edit' } },
+          plain.id,
+          plain.revision,
+        );
+        assert.equal(updated.branding.watermark, null);
+        await drafts.deleteDraft(owner, updated.id, updated.revision);
+      } finally {
+        process.env.ICARE_BRANDING_WRITES_ENABLED = 'true';
+      }
+      checks.push(
+        'Profile-only drafts with an empty watermark remain writable while branding changes are disabled',
+      );
       for (const ref of refs) {
         stage = `type ${ref.type} owned draft images`;
         const initial = await drafts.saveDraft(owner, {
@@ -138,14 +170,25 @@ async function main() {
           'image/png',
           'png',
         );
+        const watermark = await drafts.stageDraftImage(
+          owner,
+          initial.id,
+          'watermark',
+          watermarkBytes,
+          'image/png',
+          'png',
+        );
         const saved = await drafts.saveDraft(
           owner,
-          { ...initial.data, branding: { logo: logo.id, photo: photo.id } },
+          {
+            ...initial.data,
+            branding: { logo: logo.id, photo: photo.id, watermark: watermark.id },
+          },
           initial.id,
           initial.revision,
         );
-        assert.equal((await drafts.getDraft(owner, saved.id)).branding.logo?.id, logo.id);
-        await assert.rejects(() => drafts.readDraftImage(admin, saved.id, logo.id), {
+        assert.equal((await drafts.getDraft(owner, saved.id)).branding.watermark?.id, watermark.id);
+        await assert.rejects(() => drafts.readDraftImage(admin, saved.id, watermark.id), {
           code: 'DRAFT_NOT_FOUND',
         });
         await assert.rejects(() => drafts.publishDraft(owner, saved.id, saved.revision), {
@@ -162,13 +205,23 @@ async function main() {
           await assert.rejects(() => drafts.deleteDraft(owner, saved.id, saved.revision), {
             code: 'BRANDING_WRITES_DISABLED',
           });
+          await assert.rejects(
+            () =>
+              drafts.saveDraft(
+                owner,
+                { ...saved.data, branding: { ...saved.data.branding, watermark: null } },
+                saved.id,
+                saved.revision,
+              ),
+            { code: 'BRANDING_WRITES_DISABLED' },
+          );
           assert.equal((await drafts.getDraft(owner, saved.id)).revision, saved.revision);
         } finally {
           process.env.ICARE_BRANDING_WRITES_ENABLED = 'true';
         }
         ownedDrafts.push(saved);
         checks.push(
-          `Type ${ref.type}: private draft upload/save/resume, uploader isolation, independent gate and live provisioning denial`,
+          `Type ${ref.type}: private logo/photo/watermark draft save/resume, uploader isolation, independent gate and live provisioning denial`,
         );
       }
       for (const ref of refs) {
@@ -179,13 +232,26 @@ async function main() {
         await assert.rejects(() => readBrandingImage(admin, ref, logo.id), {
           code: 'IMAGE_NOT_FOUND',
         });
+        const watermark = await stageBranding(
+          owner,
+          ref,
+          'watermark',
+          watermarkBytes,
+          'image/png',
+          'png',
+        );
+        await assert.rejects(() => readBrandingImage(admin, ref, watermark.id), {
+          code: 'IMAGE_NOT_FOUND',
+        });
         assert.equal((await getBranding(owner, ref)).logo, null);
         const saved = await publishBranding(owner, ref, {
           revision: initial.revision,
           logo: logo.id,
           photo: photo.id,
+          watermark: watermark.id,
         });
         assert.equal(saved.logo?.id, logo.id);
+        assert.equal((await readBrandingImage(admin, ref, watermark.id)).mime, 'image/png');
         assert.equal((await readBrandingImage(admin, ref, photo.id)).mime, 'image/jpeg');
         const next = await stageBranding(owner, ref, 'logo', bytes, 'image/png', 'png');
         await assert.rejects(
@@ -205,8 +271,31 @@ async function main() {
         }
         assert.equal((await getBranding(owner, ref)).revision, saved.revision);
         assert.ok((await readBrandingImage(owner, ref, logo.id)).data.length);
+        const removed = await publishBranding(owner, ref, {
+          revision: saved.revision,
+          watermark: null,
+        });
+        assert.equal(removed.watermark, null);
+        assert.equal(removed.logo?.id, logo.id);
+        await assert.rejects(() => readBrandingImage(admin, ref, watermark.id), {
+          code: 'IMAGE_NOT_FOUND',
+        });
+        await assert.rejects(
+          () => publishBranding(owner, ref, { revision: saved.revision, watermark: null }),
+          { code: 'BRANDING_CONFLICT' },
+        );
+        process.env.ICARE_BRANDING_WRITES_ENABLED = 'false';
+        try {
+          await assert.rejects(
+            () => publishBranding(owner, ref, { revision: removed.revision, watermark: null }),
+            { code: 'BRANDING_WRITES_DISABLED' },
+          );
+        } finally {
+          process.env.ICARE_BRANDING_WRITES_ENABLED = 'true';
+        }
+        await discardBranding(owner, ref, next.id);
         checks.push(
-          `Type ${ref.type}: owner upload, private preview, atomic publication, admin read, stale save and receipt rollback`,
+          `Type ${ref.type}: owner logo/photo/watermark upload, private preview, atomic publication/removal, admin read, stale save, write gate and receipt rollback`,
         );
       }
       stage = 'stored access revocation';
@@ -312,6 +401,12 @@ main().catch((e) => {
     code: e?.code,
     number: e?.number,
     line: e?.lineNumber,
+    assertionAt:
+      typeof e?.stack === 'string'
+        ? e.stack.match(/verify-branding-development\.ts:\d+:\d+/)?.[0]
+        : undefined,
+    actualCode: e?.actual?.code,
+    expectedCode: e?.expected?.code,
   });
   process.exitCode = 1;
 });

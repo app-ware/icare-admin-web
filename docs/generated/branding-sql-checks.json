@@ -1,15 +1,16 @@
 {
-  "checkedAt": "2026-10-27T17:40:35.757Z",
+  "checkedAt": "2026-10-30T04:23:13.482Z",
   "privatePortalStorage": true,
   "existingRowsUnchanged": true,
   "persistentSqlFixtureRows": false,
   "checks": [
-    "Type 1: private draft upload/save/resume, uploader isolation, independent gate and live provisioning denial",
-    "Type 3: private draft upload/save/resume, uploader isolation, independent gate and live provisioning denial",
-    "Type 4: private draft upload/save/resume, uploader isolation, independent gate and live provisioning denial",
-    "Type 1: owner upload, private preview, atomic publication, admin read, stale save and receipt rollback",
-    "Type 3: owner upload, private preview, atomic publication, admin read, stale save and receipt rollback",
-    "Type 4: owner upload, private preview, atomic publication, admin read, stale save and receipt rollback",
+    "Profile-only drafts with an empty watermark remain writable while branding changes are disabled",
+    "Type 1: private logo/photo/watermark draft save/resume, uploader isolation, independent gate and live provisioning denial",
+    "Type 3: private logo/photo/watermark draft save/resume, uploader isolation, independent gate and live provisioning denial",
+    "Type 4: private logo/photo/watermark draft save/resume, uploader isolation, independent gate and live provisioning denial",
+    "Type 1: owner logo/photo/watermark upload, private preview, atomic publication/removal, admin read, stale save, write gate and receipt rollback",
+    "Type 3: owner logo/photo/watermark upload, private preview, atomic publication/removal, admin read, stale save, write gate and receipt rollback",
+    "Type 4: owner logo/photo/watermark upload, private preview, atomic publication/removal, admin read, stale save, write gate and receipt rollback",
     "Current SQL account status, ownership and forged administrator claims fail closed",
     "Drafts remain private to their active owner independently of existing-center assignments; draft media deleted with owned drafts",
     "Disposable SQL rows removed; all original centers, legacy branding fields, accounts, mappings and timezone history unchanged"

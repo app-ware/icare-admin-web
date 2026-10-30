@@ -1,6 +1,6 @@
 # Center logo and main photo uploads
 
-Delivered on 27 October 2026 under **Care centers → center details → Center branding**. The owner explicitly selected **private portal storage** instead of integration with the existing iCare photo folder. This increment provides one logo and one main center photo, matching the audited legacy screen; it is not a photo gallery. [Chapter 18](18-draft-branding.md) adds creation-wizard uploads and shared quotas. Watermarks and QR generation remain pending.
+Delivered on 27 October 2026 under **Care centers → center details → Center branding**. The owner explicitly selected **private portal storage** instead of integration with the existing iCare photo folder. This increment provides one logo and one main center photo, matching the audited legacy screen; it is not a photo gallery. [Chapter 18](18-draft-branding.md) adds creation-wizard uploads and shared quotas. [Chapter 19](19-watermark-uploads.md) adds watermarks and reviewed removal. QR generation remains pending.
 
 ## User flow and storage boundary
 

@@ -13,7 +13,12 @@ import {
   type ManagedCenter,
 } from '@/domain/management';
 import { PortalError } from './http';
-import { BRANDING_RETENTION_MS, type BrandingAsset } from '@/domain/branding';
+import {
+  BRANDING_RETENTION_MS,
+  brandingKinds,
+  type BrandingAsset,
+  type BrandingKind,
+} from '@/domain/branding';
 
 export const IDLE_MS = 30 * 60_000;
 export const ABSOLUTE_MS = 8 * 60 * 60_000;
@@ -231,14 +236,14 @@ export class PortalStore {
     mode: SessionRecord['mode'],
     draftId: string,
   ): SavedDraft['branding'] {
-    const result: SavedDraft['branding'] = { logo: null, photo: null };
+    const result: SavedDraft['branding'] = { logo: null, photo: null, watermark: null };
     const rows = this.db
       .prepare(
-        `SELECT a.id,a.kind,a.mime,a.width,a.height,a.bytes,a.created_at FROM draft_images a JOIN drafts d ON d.id=a.draft_id AND d.dealer_id=a.dealer_id AND d.mode=a.mode WHERE d.id=? AND d.dealer_id=? AND d.mode=? AND d.published_id IS NULL AND a.state='saved' AND ((a.kind='logo' AND json_extract(d.data,'$.branding.logo')=a.id) OR (a.kind='photo' AND json_extract(d.data,'$.branding.photo')=a.id))`,
+        `SELECT a.id,a.kind,a.mime,a.width,a.height,a.bytes,a.created_at FROM draft_images a JOIN drafts d ON d.id=a.draft_id AND d.dealer_id=a.dealer_id AND d.mode=a.mode WHERE d.id=? AND d.dealer_id=? AND d.mode=? AND d.published_id IS NULL AND a.state='saved' AND ((a.kind='logo' AND json_extract(d.data,'$.branding.logo')=a.id) OR (a.kind='photo' AND json_extract(d.data,'$.branding.photo')=a.id) OR (a.kind='watermark' AND json_extract(d.data,'$.branding.watermark')=a.id))`,
       )
       .all(draftId, dealerId, mode);
     for (const r of rows) {
-      const kind = r.kind as 'logo' | 'photo';
+      const kind = r.kind as BrandingKind;
       result[kind] = {
         id: String(r.id),
         kind,
@@ -278,8 +283,18 @@ export class PortalStore {
           'This draft is unavailable or changed. Reload the saved draft.',
         );
       const previous = before ? (JSON.parse(String(before.data)) as CenterDraftData) : null;
-      const branding = data.branding ?? previous?.branding;
-      for (const kind of ['logo', 'photo'] as const) {
+      // Older two-slot clients must preserve a saved watermark when they omit its field.
+      const branding =
+        data.branding === undefined
+          ? previous?.branding
+          : {
+              ...data.branding,
+              watermark:
+                data.branding.watermark === undefined
+                  ? previous?.branding?.watermark
+                  : data.branding.watermark,
+            };
+      for (const kind of brandingKinds) {
         const assetId = branding?.[kind];
         if (!assetId) continue;
         const asset = this.db
@@ -295,7 +310,7 @@ export class PortalStore {
           );
       }
       const nextData = branding ? { ...data, branding } : data;
-      for (const kind of ['logo', 'photo'] as const) {
+      for (const kind of brandingKinds) {
         const oldId = previous?.branding?.[kind],
           nextId = branding?.[kind];
         if (oldId && oldId !== nextId)
@@ -390,8 +405,8 @@ export class PortalStore {
       this.db
         .prepare('INSERT OR IGNORE INTO preview_dealer_centers VALUES (?,?,?)')
         .run(dealerId, next, data.type);
-      const imageIds: { logo?: string; photo?: string } = {};
-      for (const kind of ['logo', 'photo'] as const) {
+      const imageIds: Partial<Record<BrandingKind, string>> = {};
+      for (const kind of brandingKinds) {
         const imageId = data.branding?.[kind];
         if (!imageId) continue;
         const newId = randomUUID();
@@ -411,7 +426,7 @@ export class PortalStore {
           .run(next, data.type, kind, newId);
         imageIds[kind] = newId;
       }
-      if (imageIds.logo || imageIds.photo)
+      if (brandingKinds.some((k) => imageIds[k]))
         this.db
           .prepare("INSERT INTO branding_operations VALUES(?,'preview',?,?,?,?,?,?)")
           .run(
@@ -419,7 +434,7 @@ export class PortalStore {
             dealerId,
             next,
             data.type,
-            JSON.stringify({ logo: null, photo: null }),
+            JSON.stringify({ logo: null, photo: null, watermark: null }),
             JSON.stringify(imageIds),
             Date.now(),
           );

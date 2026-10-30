@@ -1,7 +1,13 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { ImagePlus, Upload } from 'lucide-react';
-import { IMAGE_MAX_BYTES, type BrandingAsset, type BrandingKind } from '@/domain/branding';
+import {
+  IMAGE_MAX_BYTES,
+  brandingKinds,
+  brandingLabels,
+  type BrandingAsset,
+  type BrandingKind,
+} from '@/domain/branding';
 import type { SavedDraft } from '@/domain/management';
 import { api, RequestError } from '@/lib/client';
 export type DraftImages = SavedDraft['branding'];
@@ -126,15 +132,21 @@ export function DraftBrandingFields({
         </p>
       )}
       <div className="branding-grid">
-        {(['logo', 'photo'] as const).map((kind) => (
+        {brandingKinds.map((kind) => (
           <div className="branding-card" key={kind}>
-            <h4>{kind === 'logo' ? 'Logo' : 'Center photo'}</h4>
+            <h4>{brandingLabels[kind]}</h4>
+            {kind === 'watermark' && (
+              <small>
+                PNG only · exactly 1024 × 1024 pixels. Transparency is preserved. Stored for future
+                use; QR generation is not enabled.
+              </small>
+            )}
             {images[kind] ? (
               <>
                 <img
                   className={`branding-image branding-${kind}`}
                   src={images[kind]!.url}
-                  alt={`Draft ${kind === 'logo' ? 'logo' : 'center photo'}`}
+                  alt={`Draft ${brandingLabels[kind].toLowerCase()}`}
                 />
                 <small>
                   {images[kind]!.id === draft.branding[kind]?.id
@@ -148,24 +160,28 @@ export function DraftBrandingFields({
                   disabled={!allowed || Boolean(busy)}
                   onClick={() => remove(kind)}
                 >
-                  Remove {kind === 'logo' ? 'logo' : 'center photo'}
+                  Remove {brandingLabels[kind].toLowerCase()}
                 </button>
               </>
             ) : (
               <div className="branding-placeholder">
                 <ImagePlus size={26} />
-                <span>No {kind === 'logo' ? 'logo' : 'center photo'} selected</span>
+                <span>No {brandingLabels[kind].toLowerCase()} selected</span>
               </div>
             )}
             <label className="branding-file">
               <span>
                 <Upload size={15} />
-                Choose draft {kind === 'logo' ? 'logo' : 'center photo'}
+                Choose draft {brandingLabels[kind].toLowerCase()}
               </span>
               <input
-                aria-label={`Choose draft ${kind === 'logo' ? 'logo' : 'center photo'}`}
+                aria-label={`Choose draft ${brandingLabels[kind].toLowerCase()}`}
                 type="file"
-                accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp"
+                accept={
+                  kind === 'watermark'
+                    ? 'image/png,.png'
+                    : 'image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp'
+                }
                 disabled={!allowed || Boolean(busy)}
                 onChange={(e) => {
                   const input = e.currentTarget,
@@ -178,13 +194,13 @@ export function DraftBrandingFields({
         ))}
       </div>
       <p className="field-hint">
-        JPEG, PNG or WebP · up to 5 MB, 16 megapixels and 8192 pixels per edge. Saved images fit
-        within 1024 × 1024. Animated images are not supported. Existing iCare client files and URLs
-        are unchanged.
+        Logo/photo: JPEG, PNG or WebP · up to 5 MB, 16 megapixels and 8192 pixels per edge. Saved
+        images fit within 1024 × 1024. Animated images are not supported. Existing iCare client
+        files and URLs are unchanged.
       </p>
       {busy && (
         <p role="status">
-          Validating {busy === 'logo' ? 'logo' : 'center photo'}…{' '}
+          Validating {brandingLabels[busy].toLowerCase()}…{' '}
           <button className="text-link" type="button" onClick={() => controller.current?.abort()}>
             Cancel upload
           </button>

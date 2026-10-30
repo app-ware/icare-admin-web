@@ -4,6 +4,8 @@ import { ImagePlus, Upload, Save, RefreshCw } from 'lucide-react';
 import { Dialog } from '@/components/dialog';
 import {
   IMAGE_MAX_BYTES,
+  brandingKinds,
+  brandingLabels,
   type BrandingAsset,
   type BrandingKind,
   type CenterBranding,
@@ -11,7 +13,7 @@ import {
 import type { CenterRef } from '@/domain/centers';
 import { api, RequestError } from '@/lib/client';
 
-const labels = { logo: 'Logo', photo: 'Center photo' };
+const labels = brandingLabels;
 type Previews = Partial<Record<BrandingKind, BrandingAsset>>;
 export function BrandingPanel({
   center,
@@ -23,6 +25,7 @@ export function BrandingPanel({
   const base = `/api/centers/${center.type}/${center.id}/branding`;
   const [current, setCurrent] = useState<CenterBranding | null>(null),
     [previews, setPreviews] = useState<Previews>({}),
+    [removeWatermark, setRemoveWatermark] = useState(false),
     [loading, setLoading] = useState(true),
     [busy, setBusy] = useState(''),
     [error, setError] = useState(''),
@@ -32,7 +35,7 @@ export function BrandingPanel({
     [broken, setBroken] = useState<Record<string, boolean>>({});
   const upload = useRef<AbortController | null>(null),
     inputs = useRef<Partial<Record<BrandingKind, HTMLInputElement>>>({});
-  const dirty = Boolean(previews.logo || previews.photo);
+  const dirty = Boolean(previews.logo || previews.photo || previews.watermark || removeWatermark);
   function loaded(data: CenterBranding) {
     setCurrent(data);
     onLogo(data.logo?.url ?? null);
@@ -77,6 +80,7 @@ export function BrandingPanel({
           Object.entries(old).filter(([kind, p]) => p.id !== data[kind as BrandingKind]?.id),
         ),
       );
+      setRemoveWatermark((old) => old && Boolean(data.watermark));
       setBroken({});
       setReloadRequired(false);
     } catch (e) {
@@ -122,6 +126,7 @@ export function BrandingPanel({
           data.error?.code ?? 'UPLOAD_FAILED',
         );
       if (controller.signal.aborted) return;
+      if (kind === 'watermark') setRemoveWatermark(false);
       const previous = previews[kind];
       setPreviews((old) => ({ ...old, [kind]: data as BrandingAsset }));
       setNotice(`${labels[kind]} preview is ready. Review and save to publish it.`);
@@ -141,7 +146,7 @@ export function BrandingPanel({
     setError('');
     setNotice('');
     try {
-      for (const key of (kind ? [kind] : ['logo', 'photo']) as BrandingKind[]) {
+      for (const key of kind ? [kind] : brandingKinds) {
         const p = previews[key];
         if (!p) continue;
         try {
@@ -155,12 +160,28 @@ export function BrandingPanel({
           return next;
         });
       }
-      setNotice('Unused previews discarded. The current images are unchanged.');
+      if (!kind || kind === 'watermark') setRemoveWatermark(false);
+      setNotice('Unsaved changes discarded. The current images are unchanged.');
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Unable to discard previews. Try again.');
     } finally {
       setBusy('');
     }
+  }
+  function markWatermarkRemoval() {
+    const pending = previews.watermark;
+    setPreviews((old) => {
+      const next = { ...old };
+      delete next.watermark;
+      return next;
+    });
+    if (pending) void api(pending.url, 'DELETE').catch(() => undefined);
+    setRemoveWatermark(Boolean(current?.watermark));
+    setNotice(
+      current?.watermark
+        ? 'Watermark removal is ready for review. Confirm branding changes to apply it.'
+        : 'Unsaved watermark preview discarded.',
+    );
   }
   async function publish() {
     if (!current) return;
@@ -170,10 +191,12 @@ export function BrandingPanel({
     try {
       const data = await api<CenterBranding>(base, 'PATCH', {
         revision: current.revision,
+        ...(removeWatermark ? { watermark: null } : {}),
         ...Object.fromEntries(Object.entries(previews).map(([kind, p]) => [kind, p.id])),
       });
       loaded(data);
       setPreviews({});
+      setRemoveWatermark(false);
       setReview(false);
       setNotice('Portal branding saved.');
       setReloadRequired(false);
@@ -208,7 +231,7 @@ export function BrandingPanel({
     <section className="panel branding-panel" aria-label="Center branding">
       <div className="panel-heading">
         <div>
-          <span className="eyebrow">LOGO & CENTER PHOTO</span>
+          <span className="eyebrow">LOGO, PHOTO & WATERMARK</span>
           <h2>Center branding</h2>
           <p>Add the images your team sees in this portal.</p>
         </div>
@@ -216,7 +239,8 @@ export function BrandingPanel({
       </div>
       <p className="inline-notice">
         These images are visible to people with access to this center in the new portal. Existing
-        iCare apps and their photo URLs are unchanged.
+        iCare apps and their photo URLs are unchanged. Watermark uploads do not generate or change
+        QR images.
       </p>
       {notice && (
         <div className="success-notice" role="status">
@@ -240,7 +264,7 @@ export function BrandingPanel({
             <p className="inline-notice">Branding changes are disabled for this environment.</p>
           )}
           <div className="branding-grid">
-            {(['logo', 'photo'] as const).map((kind) => (
+            {brandingKinds.map((kind) => (
               <article className="branding-card" key={kind} aria-label={`${labels[kind]} upload`}>
                 <h3>{labels[kind]}</h3>
                 <div className="branding-current">
@@ -268,6 +292,29 @@ export function BrandingPanel({
                     </button>
                   </div>
                 )}
+                {kind === 'watermark' && (
+                  <>
+                    <small>
+                      PNG only · exactly 1024 × 1024 pixels. Transparency is preserved. Stored for
+                      future use; QR generation is not enabled.
+                    </small>
+                    {removeWatermark && (
+                      <p className="inline-notice">
+                        Watermark will be removed when you confirm branding changes.
+                      </p>
+                    )}
+                    {(current.watermark || previews.watermark) && !removeWatermark && (
+                      <button
+                        type="button"
+                        className="text-link"
+                        disabled={!current.canManage || Boolean(busy) || reloadRequired}
+                        onClick={markWatermarkRemoval}
+                      >
+                        Remove watermark
+                      </button>
+                    )}
+                  </>
+                )}
                 <label className="branding-file">
                   <span>
                     <Upload size={16} />
@@ -279,7 +326,11 @@ export function BrandingPanel({
                     ref={(el) => {
                       inputs.current[kind] = el ?? undefined;
                     }}
-                    accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp"
+                    accept={
+                      kind === 'watermark'
+                        ? 'image/png,.png'
+                        : 'image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp'
+                    }
                     disabled={!current.canManage || Boolean(busy) || reloadRequired}
                     onChange={(e) => {
                       const file = e.target.files?.[0];
@@ -291,11 +342,11 @@ export function BrandingPanel({
             ))}
           </div>
           <p className="field-hint">
-            JPEG, PNG or WebP · up to 5 MB, 16 megapixels and 8192 pixels per edge. Images are saved
-            within 1024 × 1024 pixels, preserving proportions. Animated images are not supported.
-            Unused previews expire after 24 hours.
+            Logo/photo: JPEG, PNG or WebP · up to 5 MB, 16 megapixels and 8192 pixels per edge.
+            Images are saved within 1024 × 1024 pixels, preserving proportions. Animated images are
+            not supported. Unused previews expire after 24 hours.
           </p>
-          {(busy === 'logo' || busy === 'photo') && (
+          {(busy === 'logo' || busy === 'photo' || busy === 'watermark') && (
             <p role="status">
               Validating {labels[busy].toLowerCase()}…{' '}
               <button className="text-link" onClick={() => upload.current?.abort()}>
@@ -317,7 +368,7 @@ export function BrandingPanel({
               disabled={!dirty || Boolean(busy)}
               onClick={() => void discard()}
             >
-              Discard previews
+              Discard unsaved changes
             </button>
             <button
               className="button secondary"
@@ -338,17 +389,18 @@ export function BrandingPanel({
             if (!busy) setReview(false);
           }}
         >
-          <p>
-            Only the selected logo and center photo will change. The current images stay in place
-            until you confirm.
-          </p>
+          <p>Your selected branding changes take effect when you confirm.</p>
           <div className="branding-grid">
-            {(['logo', 'photo'] as const)
-              .filter((k) => previews[k])
+            {brandingKinds
+              .filter((k) => previews[k] || (k === 'watermark' && removeWatermark))
               .map((kind) => (
                 <div className="branding-card" key={kind}>
                   <h3>{labels[kind]}</h3>
-                  {image(previews[kind], `${labels[kind]} to publish`)}
+                  {kind === 'watermark' && removeWatermark ? (
+                    <p>The current watermark will be removed.</p>
+                  ) : (
+                    image(previews[kind], `${labels[kind]} to publish`)
+                  )}
                 </div>
               ))}
           </div>

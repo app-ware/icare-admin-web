@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Check, LoaderCircle, Save } from 'lucide-react';
 import { Dialog } from '@/components/dialog';
+import { brandingKinds, brandingLabels } from '@/domain/branding';
 import { centerTypeLabels, type CenterRef } from '@/domain/centers';
 import {
   draftSchema,
@@ -37,7 +38,9 @@ export function CenterWizard({
   const [pending, setPending] = useState(false);
   const [uploading, setUploading] = useState(false),
     [conflict, setConflict] = useState(false);
-  const [images, setImages] = useState<DraftImages>(draft?.branding ?? { logo: null, photo: null });
+  const [images, setImages] = useState<DraftImages>(
+    draft?.branding ?? { logo: null, photo: null, watermark: null },
+  );
   useEffect(() => {
     formRef.current?.closest('dialog')?.scrollTo({ top: 0 });
   }, [step]);
@@ -54,7 +57,7 @@ export function CenterWizard({
       (!dirty || window.confirm('Close without saving your latest changes?'))
     ) {
       void Promise.allSettled(
-        (['logo', 'photo'] as const)
+        brandingKinds
           .filter((k) => images[k] && images[k]?.id !== saved?.branding?.[k]?.id)
           .map((k) => api(images[k]!.url, 'DELETE')),
       );
@@ -85,7 +88,7 @@ export function CenterWizard({
         return;
       }
       void Promise.allSettled(
-        (['logo', 'photo'] as const)
+        brandingKinds
           .filter((k) => images[k] && images[k]?.id !== latest.branding[k]?.id)
           .map((k) => api(images[k]!.url, 'DELETE')),
       );
@@ -114,7 +117,11 @@ export function CenterWizard({
         type: values.has('type') ? Number(values.get('type')) : data.type,
         domain: values.has('domain') ? String(values.get('domain')) : data.domain,
         profile: readProfileForm(values, data.profile),
-        branding: { logo: images.logo?.id, photo: images.photo?.id },
+        branding: {
+          logo: images.logo?.id,
+          photo: images.photo?.id,
+          watermark: images.watermark?.id ?? null,
+        },
       });
       setData(next);
       if (intent === 'back') {
@@ -265,14 +272,14 @@ export function CenterWizard({
                 </dl>
               </div>
               <div className="branding-grid draft-image-review">
-                {(['logo', 'photo'] as const).map((kind) => (
+                {brandingKinds.map((kind) => (
                   <div className="branding-card" key={kind}>
-                    <h4>{kind === 'logo' ? 'Logo' : 'Center photo'}</h4>
+                    <h4>{brandingLabels[kind]}</h4>
                     {images[kind] ? (
                       <img
-                        className="branding-image"
+                        className={`branding-image branding-${kind}`}
                         src={images[kind]!.url}
-                        alt={`Review draft ${kind === 'logo' ? 'logo' : 'center photo'}`}
+                        alt={`Review draft ${brandingLabels[kind].toLowerCase()}`}
                       />
                     ) : (
                       <p>No image selected</p>

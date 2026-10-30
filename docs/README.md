@@ -34,6 +34,8 @@ The subsequent authorized database inspection covers **Secure, Nursery and Schoo
 
 18. [Creation draft branding](18-draft-branding.md): logo/main-photo uploads in the five-step wizard, owned saved attachments and atomic transfer during demo creation. Live provisioning remains pending.
 
+19. [Watermark uploads](19-watermark-uploads.md): private PNG watermarks on centers and creation drafts, exact dimensions, preserved transparency and reviewed revision-protected removal. QR generation remains pending.
+
 ## What has been verified
 
 - The code's execution paths, database selection, form handling, validation, known side effects, and access checks have been reviewed statically.

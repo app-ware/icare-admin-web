@@ -20,6 +20,8 @@ Next.js rebuild and a source-backed migration dossier for the legacy iCare admin
 
 [Creation draft branding](docs/18-draft-branding.md) adds both uploads to the center creation wizard, with save/resume, revision protection and atomic demo creation. Live center provisioning remains pending.
 
+[Watermark uploads](docs/19-watermark-uploads.md) adds an optional transparent PNG watermark to center branding and creation drafts, with exact 1024 × 1024 validation and reviewed replacement/removal. QR generation remains pending.
+
 ## Run the workspace
 
 Requires Node.js 22.17+ (supported range in package.json). Dependencies and lockfile are included.

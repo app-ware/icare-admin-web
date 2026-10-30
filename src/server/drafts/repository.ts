@@ -12,6 +12,7 @@ import { centerKey } from '@/domain/centers';
 import {
   BRANDING_STAGE_MS,
   brandingKindSchema,
+  brandingKinds,
   type BrandingAsset,
   type BrandingKind,
 } from '@/domain/branding';
@@ -114,7 +115,12 @@ export async function saveDraft(
       const old = id ? (JSON.parse(String(owned(actor, id).data)) as CenterDraftData) : null;
       if (
         input.branding !== undefined &&
-        (['logo', 'photo'] as const).some((k) => input.branding?.[k] !== old?.branding?.[k])
+        brandingKinds.some((k) =>
+          k === 'watermark'
+            ? input.branding?.watermark !== undefined &&
+              (input.branding.watermark ?? null) !== (old?.branding?.watermark ?? null)
+            : input.branding?.[k] !== old?.branding?.[k],
+        )
       )
         writes(actor);
     }),

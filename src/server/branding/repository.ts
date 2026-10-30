@@ -11,6 +11,7 @@ import {
 import { centerKey, type CenterRef } from '@/domain/centers';
 import {
   brandingKindSchema,
+  brandingKinds,
   brandingPublishSchema,
   brandingRefSchema,
   BRANDING_STAGE_MS,
@@ -105,21 +106,27 @@ function asset(row: Row, ref: CenterRef): BrandingAsset {
 function current(actor: PortalActor, ref: CenterRef): CenterBranding {
   const rows = getStore()
     .db.prepare(
-      'SELECT s.kind,s.version,a.id,a.mime,a.width,a.height,a.bytes,a.created_at,a.expires_at FROM branding_slots s JOIN branding_assets a ON a.id=s.asset_id AND a.mode=s.mode AND a.center_id=s.center_id AND a.center_type=s.center_type AND a.kind=s.kind WHERE s.mode=? AND s.center_id=? AND s.center_type=? ORDER BY s.kind',
+      'SELECT s.kind,s.version,a.id,a.mime,a.width,a.height,a.bytes,a.created_at,a.expires_at FROM branding_slots s LEFT JOIN branding_assets a ON a.id=s.asset_id AND a.mode=s.mode AND a.center_id=s.center_id AND a.center_type=s.center_type AND a.kind=s.kind WHERE s.mode=? AND s.center_id=? AND s.center_type=? ORDER BY s.kind',
     )
     .all(actor.mode, ref.id, ref.type);
   return {
     center: ref,
     storage: 'portal-private',
-    logo: rows.find((r) => r.kind === 'logo')
+    logo: rows.find((r) => r.kind === 'logo' && r.id)
       ? asset(
           rows.find((r) => r.kind === 'logo')!,
           ref,
         )
       : null,
-    photo: rows.find((r) => r.kind === 'photo')
+    photo: rows.find((r) => r.kind === 'photo' && r.id)
       ? asset(
           rows.find((r) => r.kind === 'photo')!,
+          ref,
+        )
+      : null,
+    watermark: rows.find((r) => r.kind === 'watermark' && r.id)
+      ? asset(
+          rows.find((r) => r.kind === 'watermark' && r.id)!,
           ref,
         )
       : null,
@@ -229,8 +236,12 @@ export async function publishBranding(actor: PortalActor, ref: CenterRef, value:
         'Branding changed while you were reviewing. Reload the current images before saving.',
       );
     const selected: Row[] = [];
-    for (const kind of ['logo', 'photo'] as const) {
+    for (const kind of brandingKinds) {
       const id = input[kind];
+      if (kind === 'watermark' && id === null) {
+        selected.push({ kind, id: null });
+        continue;
+      }
       if (!id) continue;
       const row = store.db
         .prepare(
@@ -251,18 +262,26 @@ export async function publishBranding(actor: PortalActor, ref: CenterRef, value:
           'SELECT asset_id FROM branding_slots WHERE mode=? AND center_id=? AND center_type=? AND kind=?',
         )
         .get(actual.mode, ref.id, ref.type, String(row.kind));
-      if (previous)
+      if (previous?.asset_id)
         store.db
           .prepare("UPDATE branding_assets SET state='retired',expires_at=? WHERE id=?")
           .run(Date.now() + BRANDING_RETENTION_MS, String(previous.asset_id));
-      store.db
-        .prepare("UPDATE branding_assets SET state='published',expires_at=NULL WHERE id=?")
-        .run(String(row.id));
+      if (row.id !== null)
+        store.db
+          .prepare("UPDATE branding_assets SET state='published',expires_at=NULL WHERE id=?")
+          .run(String(row.id));
+      // Keep a generation tombstone on removal so add/remove cannot restore an old revision.
       store.db
         .prepare(
           'INSERT INTO branding_slots VALUES(?,?,?,?,?,1) ON CONFLICT(mode,center_id,center_type,kind) DO UPDATE SET asset_id=excluded.asset_id,version=version+1',
         )
-        .run(actual.mode, ref.id, ref.type, String(row.kind), String(row.id));
+        .run(
+          actual.mode,
+          ref.id,
+          ref.type,
+          String(row.kind),
+          row.id === null ? '' : String(row.id),
+        );
     }
     const after = current(actual, ref);
     store.db
@@ -273,8 +292,8 @@ export async function publishBranding(actor: PortalActor, ref: CenterRef, value:
         actual.dealerId,
         ref.id,
         ref.type,
-        JSON.stringify({ logo: before.logo?.id ?? null, photo: before.photo?.id ?? null }),
-        JSON.stringify({ logo: after.logo?.id ?? null, photo: after.photo?.id ?? null }),
+        JSON.stringify(Object.fromEntries(brandingKinds.map((k) => [k, before[k]?.id ?? null]))),
+        JSON.stringify(Object.fromEntries(brandingKinds.map((k) => [k, after[k]?.id ?? null]))),
         Date.now(),
       );
     return after;
