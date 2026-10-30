@@ -240,7 +240,7 @@ export function BrandingPanel({
       <p className="inline-notice">
         These images are visible to people with access to this center in the new portal. Existing
         iCare apps and their photo URLs are unchanged. Watermark uploads do not generate or change
-        QR images.
+        existing QR images. Private demo QR jobs can use a published watermark below.
       </p>
       {notice && (
         <div className="success-notice" role="status">
@@ -296,7 +296,7 @@ export function BrandingPanel({
                   <>
                     <small>
                       PNG only · exactly 1024 × 1024 pixels. Transparency is preserved. Stored for
-                      future use; QR generation is not enabled.
+                      private demo QR jobs; live QR integration is pending.
                     </small>
                     {removeWatermark && (
                       <p className="inline-notice">

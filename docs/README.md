@@ -38,6 +38,8 @@ The subsequent authorized database inspection covers **Secure, Nursery and Schoo
 
 20. [Location picker](20-location-picker.md): optional interactive map with click/drag/keyboard selection and synchronized manual fields, explicit external loading and existing scoped saves. Production maps default off.
 
+21. [Input modes and demo QR jobs](21-input-mode-and-qr.md): scoped input settings, reviewed demo changes, resumable verified private QR images and watermarks. Live QR integration remains blocked; live mode writes default off.
+
 ## What has been verified
 
 - The code's execution paths, database selection, form handling, validation, known side effects, and access checks have been reviewed statically.

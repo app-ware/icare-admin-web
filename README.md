@@ -24,6 +24,8 @@ Next.js rebuild and a source-backed migration dossier for the legacy iCare admin
 
 [Location picker](docs/20-location-picker.md) adds optional click/drag/keyboard map selection to profiles and creation drafts, synchronized with manual coordinate entry. Development maps use OpenStreetMap after an explicit Load map choice; production defaults to manual entry until a provider is configured.
 
+[Input modes and QR jobs](docs/21-input-mode-and-qr.md) adds scoped settings and reviewed demo changes, resumable private QR preparation, watermarks and verified PNG downloads. Live QR generation awaits scanner/storage acceptance; live mode changes have a separate disabled switch.
+
 ## Run the workspace
 
 Requires Node.js 22.17+ (supported range in package.json). Dependencies and lockfile are included.

@@ -57,6 +57,9 @@ try {
   for (const route of [
     '/api/centers',
     '/api/maps/config',
+    '/api/centers/1/101/input-mode',
+    '/api/centers/1/101/input-mode/qr/00000000-0000-4000-8000-000000000001',
+    '/api/centers/1/101/input-mode/qr/00000000-0000-4000-8000-000000000001/images/00000000-0000-4000-8000-000000000002',
     '/api/center-drafts',
     '/api/center-drafts/00000000-0000-4000-8000-000000000001',
     '/api/center-drafts/00000000-0000-4000-8000-000000000001/branding',

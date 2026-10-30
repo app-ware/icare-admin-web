@@ -41,3 +41,6 @@ export const transportWritesEnabled = () =>
 
 export const brandingWritesEnabled = () =>
   legacyConfigured() && process.env.ICARE_BRANDING_WRITES_ENABLED === 'true';
+
+export const inputModeWritesEnabled = () =>
+  legacyConfigured() && process.env.ICARE_INPUT_MODE_WRITES_ENABLED === 'true';

@@ -20,6 +20,7 @@ import type { ManagedCenter } from '@/domain/management';
 import { api, RequestError } from '@/lib/client';
 import { ProfileFields, readProfileForm } from './profile-fields';
 import { BrandingPanel } from './branding-panel';
+import { InputModePanel } from './input-mode-panel';
 export function CenterDetail({
   initial,
   mode,
@@ -276,11 +277,14 @@ export function CenterDetail({
           <section className="detail-note">
             <span className="eyebrow">COMING NEXT</span>
             <h3>More of your center, connected.</h3>
-            <p>QR generation and administrator account creation remain planned for later phases.</p>
+            <p>
+              Live QR integration and administrator account creation require further acceptance.
+            </p>
           </section>
         </aside>
       </div>
       <BrandingPanel center={{ id: center.id, type: center.type }} onLogo={setLogo} />
+      <InputModePanel center={{ id: center.id, type: center.type }} />
     </>
   );
 }

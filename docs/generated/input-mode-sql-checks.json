@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-10-30T07:06:24.042Z",
+  "developmentOnly": true,
+  "rolledBack": true,
+  "checks": [
+    "Both dev input catalogs empty; no input-table triggers; no seed repair performed",
+    "Type 1: inherited choice, override insert/readback, stale/invalid/duplicate denial and default restoration; live QR blocked",
+    "Type 3: inherited choice, override insert/readback, stale/invalid/duplicate denial and default restoration; live QR blocked",
+    "Type 4: inherited choice, override insert/readback, stale/invalid/duplicate denial and default restoration; live QR blocked",
+    "Composite scope, stored membership/active dealer, separate write gate rechecked",
+    "All temporary references, settings, centers and credentialless actor rolled back; original fingerprints/counts unchanged; no child/QR rows read or written"
+  ]
+}

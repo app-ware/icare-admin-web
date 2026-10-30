@@ -38,6 +38,7 @@ export const modules = [
       'Edit profile, child input mode, photos, and coordinates',
       'Choose a location by map click, draggable pin or synchronized manual coordinates',
       'Track provisioning and QR generation progress',
+      'Review input-mode changes and prepare resumable private demo QR jobs',
     ],
     acceptance: [
       'Keep center ID and type together',
@@ -47,6 +48,7 @@ export const modules = [
       'Require both watermark dimensions to be 1024 pixels, preserve alpha and retain revisions after removal',
       'Load external tiles only after an explicit choice; map navigation never changes saved coordinates',
       'Confirm authorized actor before every update',
+      'Keep live QR blocked until scanner/storage acceptance; recheck job ownership and current center scope for every image',
     ],
   },
   {

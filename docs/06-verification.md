@@ -1,5 +1,18 @@
 # Verification record
 
+## Input modes and private demo QR jobs — 30 October 2026
+
+[Chapter 21](21-input-mode-and-qr.md) adds separate scoped input-mode settings and a complete fictional QR preparation/review workflow. Live QR generation remains blocked; the independent live mode-write switch remains off.
+
+- **66 domain/security tests pass**, including eight new groups for reference/inheritance guards, current scope/revisions/gates, independently decoded watermark output, owned idempotent jobs, interruption leases, failed-only retries, expiry/revocation/stale watermark, quotas and atomic mode/job/receipt rollback for Nursery/Lite/School.
+- [Disposable dev SQL acceptance](generated/input-mode-sql-checks.json) passes for all three center types: scoped reads, override insert/readback, default restoration, stale/invalid/duplicate denial, current stored ownership and disabled public write gate. Temporary choices, centers and a credentialless actor rolled back; original checked fingerprints/counts match. No live child/QR rows were read or written; no seeds repaired. SQL commit acceptance remains pending.
+- Demo HTTP checks pass for anonymous/Origin/composite-scope/query/extra-field denial, stale changes, QR-job ownership even against another administrator, idempotent create, resume, private PNG headers and explicit apply. The sample Nursery mode was restored and separate API verification sessions signed out. Next.js adds router variation headers alongside Cookie; the acceptance check validates Cookie membership rather than exact equality.
+- A separate real test-account HTTP session confirms scoped dev reads report empty input choices, live writes return the disabled code and QR creation returns the integration-pending code. No live setting or child/QR row was changed; the verification session was signed out.
+- Desktop browser checks on fictional School center 108 verify disabled confirmation before preparation, published watermark selection, pending job survival across reload, all three verified images, explicit apply and QR-mode persistence. At 390×844 the page width remains 390 px, cards are 322 px and all three 180 px images load while scrolling. Returning to the inherited mode through review/confirmation works on mobile. At 1280×900 three 291 px cards fit with no horizontal overflow. Existing watermark/profile data is unchanged; a private applied demo job remains available as an example.
+- Optimized production build and TypeScript pass. Build privacy passes for **59 traces** and standalone output. Production anonymous-access smoke covers settings, job and image reads; demo entry is disabled. The first sandboxed smoke attempt could not bind its loopback port; the permitted local-port run passes. Installation reports zero known vulnerabilities in the resulting 341-package tree.
+
+Real scanner/camera compatibility, shared legacy asset delivery, approved live lookup choices, SQL commit recovery and production/shared-worker readiness remain pending. Demo codes explicitly use `ICARE-DEMO` and are not live scan credentials.
+
 ## Interactive location picker — 30 October 2026
 
 [Chapter 20](20-location-picker.md) adds optional maps to center profile editing and creation drafts while preserving the existing server location contract.

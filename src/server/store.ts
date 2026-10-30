@@ -41,6 +41,13 @@ export class PortalStore {
     if (file !== ':memory:') mkdirSync(dirname(resolve(file)), { recursive: true, mode: 0o700 });
     this.db = new DatabaseSync(file);
     this.db.exec(`PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;
+      CREATE TABLE IF NOT EXISTS preview_input_modes (center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,input_type INTEGER NOT NULL,version INTEGER NOT NULL,PRIMARY KEY(center_id,center_type));
+      CREATE TABLE IF NOT EXISTS input_mode_versions (mode TEXT NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,version INTEGER NOT NULL,PRIMARY KEY(mode,center_id,center_type));
+      CREATE TABLE IF NOT EXISTS input_mode_operations (id TEXT PRIMARY KEY,mode TEXT NOT NULL,actor_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,previous_type INTEGER,next_type INTEGER,action TEXT NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL);
+      CREATE TABLE IF NOT EXISTS preview_qr_subjects (center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,ordinal INTEGER NOT NULL,token TEXT NOT NULL,PRIMARY KEY(center_id,center_type,ordinal));
+      CREATE TABLE IF NOT EXISTS qr_jobs (id TEXT PRIMARY KEY,mode TEXT NOT NULL,actor_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,request_id TEXT NOT NULL,fingerprint TEXT NOT NULL,revision TEXT NOT NULL,watermark_id TEXT,watermark_data BLOB,state TEXT NOT NULL,created_at INTEGER NOT NULL,expires_at INTEGER NOT NULL,UNIQUE(mode,actor_id,request_id));
+      CREATE INDEX IF NOT EXISTS qr_job_scope ON qr_jobs(mode,actor_id,center_id,center_type,created_at);
+      CREATE TABLE IF NOT EXISTS qr_items (id TEXT PRIMARY KEY,job_id TEXT NOT NULL,ordinal INTEGER NOT NULL,payload TEXT NOT NULL,state TEXT NOT NULL,data BLOB,lease TEXT,lease_until INTEGER,attempts INTEGER NOT NULL DEFAULT 0,UNIQUE(job_id,ordinal));
       CREATE TABLE IF NOT EXISTS draft_images (id TEXT PRIMARY KEY,mode TEXT NOT NULL,dealer_id INTEGER NOT NULL,draft_id TEXT NOT NULL,kind TEXT NOT NULL,mime TEXT NOT NULL,width INTEGER NOT NULL,height INTEGER NOT NULL,bytes INTEGER NOT NULL,data BLOB NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,expires_at INTEGER);
       CREATE INDEX IF NOT EXISTS draft_image_scope ON draft_images(mode,dealer_id,draft_id,state);
       CREATE TABLE IF NOT EXISTS branding_assets (id TEXT PRIMARY KEY,mode TEXT NOT NULL,actor_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,kind TEXT NOT NULL,mime TEXT NOT NULL,width INTEGER NOT NULL,height INTEGER NOT NULL,bytes INTEGER NOT NULL,data BLOB NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,expires_at INTEGER);
