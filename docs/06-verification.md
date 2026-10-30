@@ -1,5 +1,17 @@
 # Verification record
 
+## Interactive location picker — 30 October 2026
+
+[Chapter 20](20-location-picker.md) adds optional maps to center profile editing and creation drafts while preserving the existing server location contract.
+
+- **58 domain/security tests pass**, including four new groups for blank/partial/invalid coordinates, zero and negative hemispheres, precision, polar coverage, world-copy longitude wrapping, legacy longitude-first order, disabled production defaults, safe custom configuration, scoped profile saves/revisions and owned draft persistence/publication.
+- HTTP acceptance passes for anonymous map-configuration denial, no-store public provider metadata, rejected query injection, existing Origin/scope/revision/range guards, profile persistence, and temporary draft save/resume/clear. Separate API sessions were signed out, the fictional profile was restored and temporary API drafts were deleted. No live SQL mutation was required.
+- Desktop browser checks verify zero external tile images before Load map, successful OpenStreetMap tile loading and visible attribution, map click/pin drag updating both fields, manual field synchronization, polar coordinates retaining their value, and save/reload persistence. Keyboard panning kept Save disabled; Use map center selected a point and enabled Save. The existing native Cancel warning required the owner's dismissal when the browser API timed out; a fresh read confirmed the unconfirmed point was not saved.
+- At 390×844, the wizard map width was 290 px within a 356 px dialog and the page width remained 390 px. Selecting/clearing a pin worked. An explicit `0,0` selection survived Save draft, reload and resume; the resumed location step had no external tiles before another Load map choice. Browser edits used fictional demo centers/drafts only.
+- Optimized production compilation and TypeScript pass. Build privacy passes for **55 traces** and standalone output, with no private store/env/legacy configuration inclusion. Production anonymous-access smoke includes `/api/maps/config` and passes; demo entry remains disabled. npm installation reported zero known vulnerabilities for the resulting 310-package tree at implementation time.
+
+OpenStreetMap availability, production provider/privacy/capacity acceptance, real-device Safari and full accessibility conformance remain outside these local browser checks. Map failure notices/retry preserve manual entry; external maps default off in production.
+
 ## Private watermark uploads — 30 October 2026
 
 [Chapter 19](19-watermark-uploads.md) adds optional PNG watermarks to center branding and creation drafts.

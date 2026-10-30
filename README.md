@@ -22,6 +22,8 @@ Next.js rebuild and a source-backed migration dossier for the legacy iCare admin
 
 [Watermark uploads](docs/19-watermark-uploads.md) adds an optional transparent PNG watermark to center branding and creation drafts, with exact 1024 × 1024 validation and reviewed replacement/removal. QR generation remains pending.
 
+[Location picker](docs/20-location-picker.md) adds optional click/drag/keyboard map selection to profiles and creation drafts, synchronized with manual coordinate entry. Development maps use OpenStreetMap after an explicit Load map choice; production defaults to manual entry until a provider is configured.
+
 ## Run the workspace
 
 Requires Node.js 22.17+ (supported range in package.json). Dependencies and lockfile are included.

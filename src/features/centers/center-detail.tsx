@@ -154,7 +154,12 @@ export function CenterDetail({
           {editing ? (
             <form onSubmit={save} onChange={() => setDirty(true)}>
               <fieldset disabled={pending}>
-                <ProfileFields key={center.revision} profile={profile} />
+                <ProfileFields
+                  key={center.revision}
+                  profile={profile}
+                  onLocationChange={() => setDirty(true)}
+                  disabled={pending}
+                />
                 {center.invalidLocation && (
                   <p className="inline-notice">
                     Existing coordinates need review. Enter valid coordinates to replace them; blank

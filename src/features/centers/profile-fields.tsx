@@ -1,6 +1,7 @@
 'use client';
 import { useId } from 'react';
 import { profileSchema, type CenterProfile } from '@/domain/management';
+import { LocationFields } from './location-fields';
 export function readProfileForm(form: FormData, previous: CenterProfile): CenterProfile {
   const next = { ...previous };
   for (const key of [
@@ -27,9 +28,13 @@ export function readProfileForm(form: FormData, previous: CenterProfile): Center
 export function ProfileFields({
   profile,
   part = 'all',
+  onLocationChange,
+  disabled = false,
 }: {
   profile: CenterProfile;
   part?: 'all' | 'basics' | 'contact' | 'location';
+  onLocationChange?: () => void;
+  disabled?: boolean;
 }) {
   const id = useId();
   function input(
@@ -90,35 +95,11 @@ export function ProfileFields({
         </>
       )}
       {(part === 'all' || part === 'location') && (
-        <>
-          <div className="field">
-            <label htmlFor={`${id}-latitude`}>Latitude</label>
-            <input
-              id={`${id}-latitude`}
-              name="latitude"
-              type="number"
-              step="any"
-              min={-90}
-              max={90}
-              defaultValue={profile.location?.latitude ?? ''}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor={`${id}-longitude`}>Longitude</label>
-            <input
-              id={`${id}-longitude`}
-              name="longitude"
-              type="number"
-              step="any"
-              min={-180}
-              max={180}
-              defaultValue={profile.location?.longitude ?? ''}
-            />
-          </div>
-          <p className="field-hint full-width">
-            Use decimal coordinates. Leave both blank if a location is not available.
-          </p>
-        </>
+        <LocationFields
+          initial={profile.location}
+          onChange={onLocationChange}
+          disabled={disabled}
+        />
       )}
     </div>
   );

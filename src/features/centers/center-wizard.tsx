@@ -220,12 +220,12 @@ export function CenterWizard({
           {step === 1 && <ProfileFields profile={data.profile} part="contact" />}
           {step === 2 && (
             <>
-              <div className="location-illustration" aria-hidden="true">
-                <span>+</span>
-                <i />
-                <b>Center location</b>
-              </div>
-              <ProfileFields profile={data.profile} part="location" />
+              <ProfileFields
+                profile={data.profile}
+                part="location"
+                onLocationChange={() => setDirty(true)}
+                disabled={pending}
+              />
             </>
           )}
           {step === 3 &&

@@ -36,6 +36,8 @@ The subsequent authorized database inspection covers **Secure, Nursery and Schoo
 
 19. [Watermark uploads](19-watermark-uploads.md): private PNG watermarks on centers and creation drafts, exact dimensions, preserved transparency and reviewed revision-protected removal. QR generation remains pending.
 
+20. [Location picker](20-location-picker.md): optional interactive map with click/drag/keyboard selection and synchronized manual fields, explicit external loading and existing scoped saves. Production maps default off.
+
 ## What has been verified
 
 - The code's execution paths, database selection, form handling, validation, known side effects, and access checks have been reviewed statically.

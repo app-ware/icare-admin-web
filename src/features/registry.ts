@@ -36,6 +36,7 @@ export const modules = [
       'Save and resume an owned draft with its private logo and center photo',
       'Upload, review, replace and remove a private PNG watermark on centers and drafts',
       'Edit profile, child input mode, photos, and coordinates',
+      'Choose a location by map click, draggable pin or synchronized manual coordinates',
       'Track provisioning and QR generation progress',
     ],
     acceptance: [
@@ -44,6 +45,7 @@ export const modules = [
       'Validate drafts and recover partial provisioning',
       'Attach draft images with the profile revision; transfer images atomically on demo creation only',
       'Require both watermark dimensions to be 1024 pixels, preserve alpha and retain revisions after removal',
+      'Load external tiles only after an explicit choice; map navigation never changes saved coordinates',
       'Confirm authorized actor before every update',
     ],
   },
