@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-10-30T07:41:53.633Z",
+  "developmentOnly": true,
+  "rolledBack": true,
+  "checks": [
+    "Nursery/Lite ownership retained; School rejected; missing settings stay unconfigured with unknown enablement",
+    "Type 1: credential presence only, independent live/staging fields, blank shared key, null enablement, mismatched type and duplicate-row guards",
+    "Type 3: credential presence only, independent live/staging fields, blank shared key, null enablement, mismatched type and duplicate-row guards",
+    "Filtered totals/pagination, parameterized search, current stored ownership/active role and no cached administrator bypass verified",
+    "Temporary account/centers/fake credentials rolled back; original settings metadata fingerprints and center/account/link counts match; no provider calls or existing secret readback"
+  ]
+}

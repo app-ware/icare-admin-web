@@ -21,6 +21,7 @@ export const permissions = [
   'alerts.write',
   'alerts.reset',
   'transport.manage',
+  'integrations.read',
   'integrations.manage',
   'audit.read',
 ] as const;
@@ -67,6 +68,7 @@ export function centerGrants(
     { permission: 'centers.create', scope: { kind: 'global' } },
     { permission: 'users.manage', scope },
     { permission: 'transport.manage', scope },
+    { permission: 'integrations.read', scope },
     { permission: 'status.manage', scope },
     { permission: 'alerts.write', scope },
     {

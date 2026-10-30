@@ -18,6 +18,7 @@ import {
   Power,
   BellRing,
   Bus,
+  CreditCard,
   X,
 } from 'lucide-react';
 import type { PortalActor } from '@/domain/access';
@@ -82,30 +83,33 @@ export function Shell({
     { href: '/status', label: 'Center status', Icon: Power },
     { href: '/alerts', label: 'Alert messages', Icon: BellRing },
     { href: '/transport', label: 'Bus settings', Icon: Bus },
+    { href: '/integrations', label: 'CowPay readiness', Icon: CreditCard },
     ...(actor.isSuperAdmin ? [{ href: '/dealers', label: 'Dealers', Icon: UsersRound }] : []),
     { href: '/access', label: 'Access & sessions', Icon: ShieldCheck },
   ];
-  const title = path.startsWith('/transport')
-    ? 'Bus settings'
-    : path.startsWith('/alerts')
-      ? 'Alert messages'
-      : path.startsWith('/status')
-        ? 'Center status'
-        : path.startsWith('/centers')
-          ? 'Care centers'
-          : path.startsWith('/activity')
-            ? 'Activity & insights'
-            : path.startsWith('/reports')
-              ? 'Reports'
-              : path.startsWith('/users')
-                ? 'Center users'
-                : path.startsWith('/dealers')
-                  ? 'Dealers'
-                  : path === '/access'
-                    ? 'Access & sessions'
-                    : path === '/'
-                      ? 'Overview'
-                      : 'Coming next';
+  const title = path.startsWith('/integrations')
+    ? 'CowPay readiness'
+    : path.startsWith('/transport')
+      ? 'Bus settings'
+      : path.startsWith('/alerts')
+        ? 'Alert messages'
+        : path.startsWith('/status')
+          ? 'Center status'
+          : path.startsWith('/centers')
+            ? 'Care centers'
+            : path.startsWith('/activity')
+              ? 'Activity & insights'
+              : path.startsWith('/reports')
+                ? 'Reports'
+                : path.startsWith('/users')
+                  ? 'Center users'
+                  : path.startsWith('/dealers')
+                    ? 'Dealers'
+                    : path === '/access'
+                      ? 'Access & sessions'
+                      : path === '/'
+                        ? 'Overview'
+                        : 'Coming next';
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main-content">

@@ -5,6 +5,7 @@ import type { PortalActor } from '@/domain/access';
 import { api } from '@/lib/client';
 type Session = { id: string; createdAt: number; lastSeen: number; expiresAt: number };
 const labels: Record<string, string> = {
+  'integrations.read': 'Review CowPay setup without revealing credentials',
   'centers.read': 'View center profiles',
   'centers.write': 'Update center profiles',
   'centers.branding.read': 'View private portal branding in your centers',

@@ -45,6 +45,8 @@ try {
     '/transport',
     '/access',
     '/payments',
+    '/integrations',
+    '/integrations/1/101',
   ]) {
     const response = await fetch(origin + route, { redirect: 'manual' });
     assert.equal(response.status, 307);
@@ -57,6 +59,8 @@ try {
   for (const route of [
     '/api/centers',
     '/api/maps/config',
+    '/api/integrations/cowpay',
+    '/api/integrations/cowpay/1/101',
     '/api/centers/1/101/input-mode',
     '/api/centers/1/101/input-mode/qr/00000000-0000-4000-8000-000000000001',
     '/api/centers/1/101/input-mode/qr/00000000-0000-4000-8000-000000000001/images/00000000-0000-4000-8000-000000000002',

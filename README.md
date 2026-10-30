@@ -26,6 +26,8 @@ Next.js rebuild and a source-backed migration dossier for the legacy iCare admin
 
 [Input modes and QR jobs](docs/21-input-mode-and-qr.md) adds scoped settings and reviewed demo changes, resumable private QR preparation, watermarks and verified PNG downloads. Live QR generation awaits scanner/storage acceptance; live mode changes have a separate disabled switch.
 
+[CowPay readiness](docs/22-cowpay-readiness.md) adds a read-only Nursery/Lite setup directory and center review. It shows credential presence and separate live/staging completeness without returning secrets or making provider requests. Credential replacement and enablement remain pending.
+
 ## Run the workspace
 
 Requires Node.js 22.17+ (supported range in package.json). Dependencies and lockfile are included.
@@ -34,6 +36,8 @@ Requires Node.js 22.17+ (supported range in package.json). Dependencies and lock
 npm ci
 npm run dev
 ```
+
+Local development defaults to Webpack after repeated refreshes in the installed Turbopack preview. An explicit `npm run dev -- --turbopack` override remains available for investigation. Production builds keep their existing bundler default.
 
 Open [the sign-in page](http://127.0.0.1:3000/login). Choose **Explore demo workspace** to try the dashboard, center directory, profile editor, five-step draft wizard with logo/photo uploads and access/session controls with fictional data. Demo changes persist on the server across refreshes. Switch the demo role to test a center operator's limited scope.
 

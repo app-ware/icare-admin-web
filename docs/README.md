@@ -40,6 +40,8 @@ The subsequent authorized database inspection covers **Secure, Nursery and Schoo
 
 21. [Input modes and demo QR jobs](21-input-mode-and-qr.md): scoped input settings, reviewed demo changes, resumable verified private QR images and watermarks. Live QR integration remains blocked; live mode writes default off.
 
+22. [CowPay readiness](22-cowpay-readiness.md): scoped read-only Nursery/Lite setup status, independent live/staging field presence and explicitly reviewed callback metadata. Secret replacement, enablement and provider operations remain pending.
+
 ## What has been verified
 
 - The code's execution paths, database selection, form handling, validation, known side effects, and access checks have been reviewed statically.

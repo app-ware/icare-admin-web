@@ -5032,3 +5032,44 @@ main#main-content {
 .qr-image-card { display: grid; gap: 8px; justify-items: center; border: 1px solid #dbe6f2; border-radius: 12px; padding: 16px; min-width: 0; }
 .qr-image-card img { width: min(100%, 180px); height: auto; }
 @media (max-width: 640px) { .input-mode-panel { padding: 16px; } .input-mode-summary { flex-wrap: wrap; } }
+
+/* CowPay metadata review exposes presence only; setup editing remains separate. */
+.cowpay-boundary { display: flex; align-items: flex-start; gap: 12px; }
+.cowpay-boundary > svg { flex-shrink: 0; margin-top: 3px; }
+.cowpay-boundary p { margin: 0; }
+.cowpay-summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 24px 0; }
+.cowpay-stat { display: grid; gap: 12px; padding: 20px; }
+.cowpay-stat small { color: #617b96; }
+.cowpay-stat strong { font-size: 28px; color: #24527f; }
+.cowpay-directory { padding: 24px; min-width: 0; }
+.cowpay-filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: end; margin-bottom: 24px; }
+.cowpay-search { grid-column: span 2; }
+.cowpay-search-input { position: relative; }
+.cowpay-search-input svg { position: absolute; left: 12px; top: 15px; color: #617b96; }
+.cowpay-search-input input { padding-left: 38px; }
+.cowpay-loading { display: flex; gap: 12px; align-items: center; padding: 32px 0; }
+.cowpay-center-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 20px 0; }
+.cowpay-center-card { border: 1px solid #dbe6f2; padding: 20px; border-radius: 16px; min-width: 0; }
+.cowpay-card-heading { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.cowpay-center-card h2 { font-size: 20px; margin: 18px 0 4px; overflow-wrap: anywhere; }
+.cowpay-setup { display: block; font-size: 14px; color: #245e97; margin-top: 20px; }
+.cowpay-setup.state-review, .cowpay-setup.state-incomplete { color: #966024; }
+.cowpay-environment-list { margin: 20px 0; }
+.cowpay-environment-list > div { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #e4edf5; }
+.cowpay-environment-list dt { font-size: 14px; color: #617b96; }
+.cowpay-environment-list dd { font-size: 14px; font-weight: 600; margin: 0; text-align: right; }
+.cowpay-pagination, .cowpay-pagination > div { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.cowpay-pagination { margin-top: 24px; font-size: 13px; color: #617b96; }
+.cowpay-empty { padding: 44px 16px; text-align: center; color: #617b96; }
+.cowpay-empty h2 { color: #24527f; }
+.cowpay-review-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin: 24px 0; }
+.cowpay-review-panel { padding: 24px; min-width: 0; }
+.cowpay-review-panel h2 { font-size: 21px; }
+.cowpay-review-panel .inline-notice { overflow-wrap: anywhere; }
+.cowpay-environment-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.cowpay-environment-cards > div { background: #f4f8fd; border-radius: 12px; padding: 16px; }
+.cowpay-environment-cards h3 { font-size: 15px; margin: 0 0 8px; }
+.cowpay-environment-cards p { font-size: 13px; line-height: 1.6; margin: 0; }
+.cowpay-callback-url { display: block; overflow-wrap: anywhere; padding: 16px; border: 1px solid #dbe6f2; border-radius: 12px; margin: 16px 0; }
+@media (max-width: 1100px) { .cowpay-review-grid { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .cowpay-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } .cowpay-filters, .cowpay-center-grid { grid-template-columns: 1fr; } .cowpay-search { grid-column: auto; } .cowpay-directory, .cowpay-review-panel { padding: 16px; } .cowpay-stat { padding: 16px; } .cowpay-environment-list > div { flex-wrap: wrap; gap: 8px; } }

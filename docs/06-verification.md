@@ -1,5 +1,17 @@
 # Verification record
 
+## CowPay readiness — 30 October 2026
+
+[Chapter 22](22-cowpay-readiness.md) adds scoped read-only Nursery/Lite configuration status without returning merchant credentials or making provider calls.
+
+- **73 domain/security tests pass**, including seven new groups for independent live/staging field completeness, missing/unknown/duplicate/mismatched state, strict selectors, reviewed callback validation, owner/page/numeric-ID scope, pagination and current stored actor revocation. `integrations.manage` remains denied.
+- [Disposable dev SQL acceptance](generated/cowpay-sql-checks.json) passes for Nursery/Lite using credentialless actor fixtures and fake credential markers. Metadata DTOs exclude those values. Filters, later empty pages, null enablement, type mismatch, duplicate rows and current ownership are verified. All fixtures roll back; original settings metadata fingerprints and center/account/link counts match. Existing secret values were not returned. An initial aggregate form was corrected for SQL Server's outer-reference restriction before acceptance passed.
+- Demo and separate existing-account HTTP sessions verify scoped no-store reads, boolean/null-only credential presence, rejected School/arbitrary/duplicate selectors, parameterized search, independent readiness, filtered totals and denied POST/PATCH/DELETE. Saved fictional centers made the demo total differ from the fresh unit fixture; the HTTP pagination check uses the actual scoped total. Separate API verification sessions were signed out. Live reads show five Nursery centers with no stored settings and unknown enablement.
+- Browser acceptance verifies live search/details, persisted URL filters, browser Back, reload, reset and Lite empty state. Fictional staging-only detail reports the live token missing and staging fields complete; duplicate settings report Needs review without merging values. At 390×844 the page width remains 390 px, directory cards are 322 px, detail panels are 356 px and the detail page contains no credential input fields. At 1280×900 the two detail panels are 465 px with no horizontal overflow. No browser action changed gateway configuration.
+- Optimized production build and TypeScript pass. Build privacy passes for **63 traces** and standalone output. Production smoke denies anonymous directory/detail pages and APIs and keeps demo entry disabled. The installed Turbopack development preview repeatedly refreshed; Webpack remained stable with the same feature and data. The launcher now defaults to Webpack with explicit bundler overrides; production defaults and SQL security settings are unchanged.
+
+Provider credential validity, callback registration/delivery, School support, credential/enablement writes and production privilege review remain pending. Stored presence or enablement is not proof of working payments.
+
 ## Input modes and private demo QR jobs — 30 October 2026
 
 [Chapter 21](21-input-mode-and-qr.md) adds separate scoped input-mode settings and a complete fictional QR preparation/review workflow. Live QR generation remains blocked; the independent live mode-write switch remains off.

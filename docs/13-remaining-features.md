@@ -23,13 +23,13 @@ Implementation details: [centers and access](08-authentication-and-centers.md), 
 
 ## Operational workflows still pending
 
-Bus settings are delivered with live writes gated. Payments and CowPay remain pending; the [feature registry](../src/features/registry.ts) records their intended workflows.
+Bus settings are delivered with live writes gated. CowPay readiness is delivered read-only in chapter 22; credential replacement/enablement and payments remain pending; the [feature registry](../src/features/registry.ts) records their intended workflows.
 
 | Feature                     | Remaining scope                                                                                                         | Dependency or boundary                                                                                                                      |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | Bus settings (`/transport`) | Delivered scoped reads and demo override/default editor; guarded SQL adapter and rollback acceptance.                   | Live writes await reviewed lookup seeds and committed fixture acceptance; dev references are empty. See chapter 16.                         |
 | Payments (`/payments`)      | Read/add/edit/delete ledger entries; filter due dates/status; show exact per-currency totals.                           | Accounting database is unavailable. Inspect its contracts and agree precision, rounding, statuses and deletion rules before implementation. |
-| CowPay (`/integrations`)    | Configuration status, protected credential replacement, live/staging separation, enablement and callback configuration. | Confirm gateway contracts, credential consumers and callback ownership. Existing secrets must not be returned to the browser.               |
+| CowPay (`/integrations`)    | Chapter 22 delivers scoped setup/readiness reads. Credential replacement, enablement and provider registration remain pending. | Nursery/Lite only; boolean credential presence, independent live/staging completeness and reviewed callback metadata. No provider requests or secret readback. |
 
 Logging integration also remains pending because the Logging database is unavailable. Current SQLite operation and generation receipts do not provide a complete central business audit service.
 
@@ -54,7 +54,7 @@ Report acceptance must preserve the documented `activation-calendar-v1` policy u
 3. **Bus settings:** implemented in chapter 16; resolve dev lookup data and committed fixture acceptance before enabling live writes.
 4. **Branding and QR:** private portal logo/main-photo uploads are delivered in chapter 17. Verify the legacy asset/URL contract before adding external client delivery or live QR generation. Private recoverable demo QR jobs are delivered in chapter 21. Watermark storage/removal is delivered in chapter 19. Creation-wizard uploads are delivered in chapter 18.
 5. **Live center provisioning:** proceed after reference-data, initial-account and filesystem dependencies are resolved and the owner resumes the deferred user-creation work.
-6. **Payments, CowPay and Logging:** proceed as their database/provider contracts and dependencies become available. Accounting and Logging remain deferred.
+6. **Payments, CowPay and Logging:** CowPay readiness reads are delivered in chapter 22. Resume credential/enablement writes only after provider/consumer/callback review. Payments and central Logging await their databases and contracts.
 
 Historical report acceptance and deployment preparation can progress alongside this sequence. The order is a recommendation; documenting it does not resume user creation/password resets or authorize seed repairs, credential migrations or production cutover.
 
