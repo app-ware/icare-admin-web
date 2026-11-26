@@ -28,6 +28,8 @@ Next.js rebuild and a source-backed migration dossier for the legacy iCare admin
 
 [CowPay readiness](docs/22-cowpay-readiness.md) adds a read-only Nursery/Lite setup directory and center review. It shows credential presence and separate live/staging completeness without returning secrets or making provider requests. Credential replacement and enablement remain pending.
 
+[Saved report downloads](docs/23-report-saved-downloads.md) adds private copies for up to seven days within quotas, current-access re-downloads and paginated history. Download requests and client-reported byte receipts remain separate from confirmed device saves.
+
 ## Run the workspace
 
 Requires Node.js 22.17+ (supported range in package.json). Dependencies and lockfile are included.

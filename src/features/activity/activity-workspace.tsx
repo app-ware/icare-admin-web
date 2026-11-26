@@ -26,19 +26,13 @@ import {
   type ExportRequest,
 } from '@/domain/activity';
 import { api } from '@/lib/client';
+import type { ReportReceipt as Receipt, ReportHistory } from '@/domain/report-downloads';
 type Catalog = { items: ActivityCenter[]; total: number; page: number; pageSize: number };
 type Context = {
   asOf: string;
   center: ActivityCenter | null;
   academicYears: { id: number; title: string }[];
   dealers: { id: number; name: string }[];
-};
-type Receipt = {
-  id: string;
-  state: string;
-  createdAt: number;
-  filename: string | null;
-  request: ExportRequest;
 };
 export function ActivityWorkspace({ mode }: { mode: 'activity' | 'reports' }) {
   const [context, setContext] = useState<Context | null>(null),
@@ -63,11 +57,17 @@ export function ActivityWorkspace({ mode }: { mode: 'activity' | 'reports' }) {
   const [nonce, setNonce] = useState(0),
     [history, setHistory] = useState<Receipt[]>([]),
     [historyError, setHistoryError] = useState('');
+  const [historyPage, setHistoryPage] = useState(1),
+    [historyTotal, setHistoryTotal] = useState(0),
+    [historyLoading, setHistoryLoading] = useState(false);
+  const [historyNonce, setHistoryNonce] = useState(0);
   const initialized = useRef(false),
-    selectionVersion = useRef(0);
+    selectionVersion = useRef(0),
+    downloadController = useRef<AbortController | null>(null);
   useEffect(
     () => () => {
       selectionVersion.current++;
+      downloadController.current?.abort();
     },
     [],
   );
@@ -115,13 +115,27 @@ export function ActivityWorkspace({ mode }: { mode: 'activity' | 'reports' }) {
   useEffect(() => {
     const controller = new AbortController();
     setHistoryError('');
-    api<{ items: Receipt[] }>('/api/reports/exports', 'GET', undefined, controller.signal)
-      .then((data) => setHistory(data.items))
+    setHistoryLoading(true);
+    api<ReportHistory>(
+      `/api/reports/exports?page=${historyPage}`,
+      'GET',
+      undefined,
+      controller.signal,
+    )
+      .then((data) => {
+        if (!controller.signal.aborted) {
+          setHistory(data.items);
+          setHistoryTotal(data.total);
+        }
+      })
       .catch((e) => {
         if (!controller.signal.aborted) setHistoryError(e.message);
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setHistoryLoading(false);
       });
     return () => controller.abort();
-  }, [nonce]);
+  }, [nonce, historyPage, historyNonce]);
   useEffect(() => {
     if (mode !== 'activity' || !context || !catalog || initialized.current) return;
     initialized.current = true;
@@ -245,17 +259,24 @@ export function ActivityWorkspace({ mode }: { mode: 'activity' | 'reports' }) {
       return [...old, center];
     });
   }
-  async function download(request: ExportRequest) {
+  async function download(request?: ExportRequest, savedId?: string) {
+    if (downloadController.current) return;
+    const controller = new AbortController();
+    downloadController.current = controller;
     setExporting(true);
     setError('');
     setNotice('');
     try {
-      const response = await fetch('/api/reports/exports', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(request),
-      });
+      const response = await fetch(
+        savedId ? `/api/reports/exports/${savedId}/download` : '/api/reports/exports',
+        {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(savedId ? {} : request),
+          signal: controller.signal,
+        },
+      );
       if (!response.ok) {
         const body = await response.json();
         throw new Error(body.error?.message || 'Unable to generate the report.');
@@ -264,6 +285,12 @@ export function ActivityWorkspace({ mode }: { mode: 'activity' | 'reports' }) {
         throw new Error('The server did not return an Excel workbook.');
       const blob = await response.blob();
       if (!blob.size) throw new Error('The workbook is empty.');
+      const reportId = response.headers.get('X-Report-ID'),
+        attemptId = response.headers.get('X-Report-Attempt-ID');
+      if (!reportId || !attemptId || blob.size !== Number(response.headers.get('X-Report-Bytes')))
+        throw new Error(
+          'The complete workbook could not be verified. Refresh report history to recover its saved copy.',
+        );
       const filename =
         response.headers.get('content-disposition')?.match(/filename="([^"]+)"/)?.[1] ??
         'icare-activity.xlsx';
@@ -275,12 +302,29 @@ export function ActivityWorkspace({ mode }: { mode: 'activity' | 'reports' }) {
       link.click();
       link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-      setNotice('Workbook generated. Your download has started.');
+      let receiptRecorded = true;
+      try {
+        await api(
+          `/api/reports/exports/${reportId}/receipt`,
+          'POST',
+          { attemptId, bytes: blob.size },
+          controller.signal,
+        );
+      } catch {
+        receiptRecorded = false;
+      }
+      if (controller.signal.aborted) return;
+      setNotice(
+        `Workbook received by this page; device save is not confirmed. ${response.headers.get('X-Report-Retained') === 'true' ? 'A saved copy is available in report history.' : 'No saved copy was retained.'}${receiptRecorded ? '' : ' The browser receipt could not be recorded.'}`,
+      );
+      setHistoryPage(1);
       setNonce((n) => n + 1);
     } catch (e) {
+      if (controller.signal.aborted) return;
       setError(e instanceof Error ? e.message : 'Unable to generate the report.');
       setNonce((n) => n + 1);
     } finally {
+      downloadController.current = null;
       setExporting(false);
     }
   }
@@ -847,15 +891,27 @@ export function ActivityWorkspace({ mode }: { mode: 'activity' | 'reports' }) {
           <div>
             <h2>
               <History size={18} />
-              Recent report generations
+              Report history &amp; saved copies
             </h2>
             <p>
-              Your own requests. Generated means the workbook was prepared, not that a browser save
-              was confirmed.
+              Your own requests. Saved copies are private and kept for up to seven days within
+              storage limits. Generate again uses current data. Browser receipts are client-reported
+              and do not confirm a save to disk; download activity is retained for 30 days.
             </p>
           </div>
+          <button
+            type="button"
+            className="text-link"
+            disabled={historyLoading || exporting}
+            onClick={() => setHistoryNonce((n) => n + 1)}
+          >
+            <RefreshCw size={15} />
+            Refresh history
+          </button>
         </div>
-        {historyError ? (
+        {historyLoading ? (
+          <p role="status">Loading report history…</p>
+        ) : historyError ? (
           <p className="form-error" role="alert">
             {historyError}
           </p>
@@ -871,6 +927,29 @@ export function ActivityWorkspace({ mode }: { mode: 'activity' | 'reports' }) {
                   {item.request.centers.length === 1 ? 'center' : 'centers'}
                 </strong>
                 <small>{new Date(item.createdAt).toLocaleString()}</small>
+                <small>
+                  {item.request.centers[0]?.type === 4
+                    ? `School · academic year #${item.request.academicYearId}`
+                    : 'Nursery/Lite workbook'}
+                </small>
+                <small>
+                  {item.copy.state === 'available'
+                    ? `Saved until ${new Date(item.copy.expiresAt!).toLocaleString()}`
+                    : item.copy.state === 'expired'
+                      ? 'Saved copy expired'
+                      : item.copy.state === 'evicted'
+                        ? 'Saved copy removed for storage limits'
+                        : item.copy.state === 'capacity' || item.copy.state === 'size'
+                          ? 'No saved copy retained within limits'
+                          : 'No original copy retained'}
+                </small>
+                <small>
+                  {item.delivery.requests}{' '}
+                  {item.delivery.requests === 1 ? 'download request' : 'download requests'} ·{' '}
+                  {item.delivery.browserReceipts}{' '}
+                  {item.delivery.browserReceipts === 1 ? 'browser receipt' : 'browser receipts'}{' '}
+                  (last 30 days)
+                </small>
               </div>
               <span
                 className={`status-badge ${item.state === 'generated' ? 'active' : item.state === 'failed' ? 'inactive' : 'unknown'}`}
@@ -879,17 +958,60 @@ export function ActivityWorkspace({ mode }: { mode: 'activity' | 'reports' }) {
                   ? 'Generated'
                   : item.state === 'failed'
                     ? 'Failed'
-                    : 'Preparing'}
+                    : item.state === 'unconfirmed'
+                      ? 'Preparation unconfirmed'
+                      : 'Preparing'}
               </span>
-              <button
-                className="text-link"
-                disabled={exporting}
-                onClick={() => void download(item.request)}
-              >
-                Generate again
-              </button>
+              <div className="report-history-actions">
+                {item.copy.state === 'available' && (
+                  <button
+                    type="button"
+                    className="text-link"
+                    disabled={exporting || !item.copy.canDownload}
+                    onClick={() => void download(undefined, item.id)}
+                  >
+                    <Download size={15} />
+                    Download saved copy
+                  </button>
+                )}
+                {item.copy.state === 'available' && !item.copy.canDownload && (
+                  <small>Current report access is required.</small>
+                )}
+                <button
+                  className="text-link"
+                  disabled={exporting}
+                  onClick={() => void download(item.request)}
+                >
+                  Generate again
+                </button>
+              </div>
             </div>
           ))
+        )}
+        {historyTotal > 0 && (
+          <div className="report-history-pagination">
+            <span>
+              {historyTotal} generation requests · Page {historyPage}
+            </span>
+            <div>
+              <button
+                type="button"
+                className="button secondary"
+                disabled={historyLoading || exporting || historyPage <= 1}
+                onClick={() => setHistoryPage((p) => p - 1)}
+              >
+                Previous history
+              </button>
+              <button
+                type="button"
+                className="button secondary"
+                disabled={historyLoading || exporting || historyPage * 20 >= historyTotal}
+                onClick={() => setHistoryPage((p) => p + 1)}
+              >
+                Next history
+              </button>
+            </div>
+          </div>
         )}
       </section>
     </>

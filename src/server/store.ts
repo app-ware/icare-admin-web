@@ -70,6 +70,12 @@ export class PortalStore {
       CREATE TABLE IF NOT EXISTS center_user_operations (id TEXT PRIMARY KEY,mode TEXT NOT NULL,actor_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,user_key TEXT NOT NULL,action TEXT NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,completed_at INTEGER);
       CREATE TABLE IF NOT EXISTS preview_report_grants (dealer_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,PRIMARY KEY(dealer_id,center_id,center_type));
       CREATE TABLE IF NOT EXISTS report_exports (id TEXT PRIMARY KEY,dealer_id INTEGER NOT NULL,mode TEXT NOT NULL,params TEXT NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,finished_at INTEGER,filename TEXT);
+      CREATE INDEX IF NOT EXISTS report_export_owner ON report_exports(mode,dealer_id,created_at,id);
+      CREATE TABLE IF NOT EXISTS report_copies (export_id TEXT PRIMARY KEY,dealer_id INTEGER NOT NULL,mode TEXT NOT NULL,data BLOB,bytes INTEGER NOT NULL,sha256 TEXT,state TEXT NOT NULL,created_at INTEGER NOT NULL,expires_at INTEGER NOT NULL);
+      CREATE INDEX IF NOT EXISTS report_copy_owner ON report_copies(mode,dealer_id,created_at,export_id);
+      CREATE TABLE IF NOT EXISTS report_deliveries (id TEXT PRIMARY KEY,export_id TEXT NOT NULL,dealer_id INTEGER NOT NULL,mode TEXT NOT NULL,bytes INTEGER NOT NULL,requested_at INTEGER NOT NULL,received_at INTEGER);
+      CREATE INDEX IF NOT EXISTS report_delivery_owner ON report_deliveries(mode,dealer_id,requested_at);
+      CREATE INDEX IF NOT EXISTS report_delivery_export ON report_deliveries(export_id,requested_at);
       CREATE TABLE IF NOT EXISTS preview_status_grants (dealer_id INTEGER NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,PRIMARY KEY(dealer_id,center_id,center_type));
       CREATE TABLE IF NOT EXISTS preview_status_versions (center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,version INTEGER NOT NULL,PRIMARY KEY(center_id,center_type));
       CREATE TABLE IF NOT EXISTS center_status_operations (id TEXT PRIMARY KEY,mode TEXT NOT NULL,actor_id INTEGER NOT NULL,actor_name TEXT NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,previous_code INTEGER,next_code INTEGER NOT NULL,reason TEXT NOT NULL,state TEXT NOT NULL,created_at INTEGER NOT NULL,completed_at INTEGER);

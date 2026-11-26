@@ -103,11 +103,13 @@ export const modules = [
       'Select up to 20 Nursery/Lite centers, including inactive centers',
       'Export center/class aggregates and counting rules; School uses a separate academic-year workbook',
       'Review own generation history and regenerate under current permissions',
+      'Recover original workbooks from private expiring saved copies and review client-reported receipts',
     ],
     acceptance: [
       'Use the correct school or nursery data source',
       'Conserve demo/non-demo totals and distinguish unique center counts from class membership',
-      'Recheck access before delivering memory-only XLSX workbooks without child details',
+      'Recheck access before delivering aggregate XLSX workbooks and private saved copies without child details',
+      'Retain bounded expiring owner/mode copies and separate download requests from client-reported browser receipts',
     ],
   },
   {

@@ -137,7 +137,9 @@ test('Excel workbooks, account history, batch scope and School year selection wo
   ]);
   expect(book.worksheets[0].rowCount).toBe(7);
   expect(book.worksheets[0].getCell('H2').value).toBe(6);
-  await expect(page.getByRole('status').filter({ hasText: 'Workbook generated' })).toBeVisible();
+  await expect(
+    page.getByRole('status').filter({ hasText: 'Workbook received by this page' }),
+  ).toBeVisible();
   await expect(page.locator('.activity-history-row').first()).toContainText('Generated');
   await noOverflow(page);
   await page.evaluate(() => window.scrollTo(0, 0));

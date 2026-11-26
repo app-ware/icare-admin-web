@@ -95,6 +95,21 @@ try {
     assert.equal(response.status, 401);
     assert.match(response.headers.get('cache-control'), /no-store/);
   }
+  for (const [route, body] of [
+    ['/api/reports/exports/00000000-0000-4000-8000-000000000001/download', {}],
+    [
+      '/api/reports/exports/00000000-0000-4000-8000-000000000001/receipt',
+      { attemptId: '00000000-0000-4000-8000-000000000002', bytes: 1 },
+    ],
+  ]) {
+    const response = await fetch(origin + route, {
+      method: 'POST',
+      headers: { Origin: origin, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    assert.equal(response.status, 401);
+    assert.match(response.headers.get('cache-control'), /no-store/);
+  }
   const preview = await fetch(origin + '/api/auth/preview', {
     method: 'POST',
     headers: { Origin: origin, 'Content-Type': 'application/json' },

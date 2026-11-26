@@ -5073,3 +5073,9 @@ main#main-content {
 .cowpay-callback-url { display: block; overflow-wrap: anywhere; padding: 16px; border: 1px solid #dbe6f2; border-radius: 12px; margin: 16px 0; }
 @media (max-width: 1100px) { .cowpay-review-grid { grid-template-columns: 1fr; } }
 @media (max-width: 700px) { .cowpay-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } .cowpay-filters, .cowpay-center-grid { grid-template-columns: 1fr; } .cowpay-search { grid-column: auto; } .cowpay-directory, .cowpay-review-panel { padding: 16px; } .cowpay-stat { padding: 16px; } .cowpay-environment-list > div { flex-wrap: wrap; gap: 8px; } }
+
+.activity-history-row .report-history-actions { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.report-history-actions small { max-width: 200px; }
+.report-history-pagination, .report-history-pagination > div { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.report-history-pagination { margin-top: 20px; font-size: 13px; color: #617b96; }
+.activity-history .panel-heading { flex-wrap: wrap; }

@@ -1,0 +1,42 @@
+# Saved report downloads and browser-reported receipts
+
+Delivered on 30 October 2026 in **Reports → Report history & saved copies**, also available in Activity & insights. This extends [chapter 12](12-activity-and-reports.md) with private copies of prepared aggregate XLSX files, current-access re-downloads, paginated generation history and separate request/browser-receipt observations. It does not change activity calculations, School year rules, operational SQL or invoice/accounting records.
+
+## User workflow and meaning
+
+**Generate Excel workbook / Generate again** always calculates a fresh report under current permissions. Once generation finishes, the server atomically records its generated state, attempts to retain a copy and records the response request. The download response includes opaque report/attempt UUIDs and expected uncompressed byte length. The page reads the complete body, checks its size and asks the browser to save it. It then reports receipt of those bytes to the server. A missing receipt acknowledgement does not cause automatic regeneration or replay; refresh history to inspect the result.
+
+**Download saved copy** returns the original bytes, filename and expiry without recalculating data or extending retention. It is separate from Generate again. The header and each history row explain that a browser receipt is client-reported and does **not** confirm that the device saved a file. Report-request counters describe response preparation; they do not prove that the response finished travelling. These are local operational observations, not a billing or immutable central audit ledger.
+
+History is private to the actor/mode, twenty rows per page, ordered deterministically even for identical timestamps. It includes generation state, saved-copy availability/expiry, request/receipt counts over the last thirty days and the School academic-year reference where applicable. Old generated receipts without files remain usable through Generate again. A preparing receipt older than fifteen minutes displays **Preparation unconfirmed**; the stored state is not changed and this does not assert that a worker stopped or resume a background job. Times are stored as UTC epoch instants and displayed in the device locale/timezone.
+
+## Access and data boundaries
+
+Every endpoint requires the existing verified opaque session and an explicit `reports.export` capability. Copies and attempts require matching export UUID, dealer and mode; another administrator cannot obtain someone else's saved report. Before each re-download or browser acknowledgement, the service parses the saved strict export request and rechecks **every** center through the existing report-scope adapter, including current stored account state/ownership/page-7 grants. Cached administrator claims do not bypass that adapter. Nursery/Lite page-7 access remains report-only; School still requires a separate single-center academic-year request. Demo mode never selects live repositories.
+
+History retains the actor's own generation metadata even when center access changes. Button availability follows the current principal's grants; the download service also checks current stored scope and center availability before releasing bytes. Scope checks cannot recall files already delivered or prevent a caller from keeping a prior download. Client work is aborted on unmount to avoid starting a delayed save after navigation.
+
+The workbook still contains only the existing aggregate center/class labels and counts, never child/parent names, identifiers, dates of birth or contacts. No workbook worksheets, bucket rules or `activation-calendar-v1` assumptions were changed. School archive requests retain their original academic-year reference. Metadata and artifacts stay in private SQLite outside the web root, separated by owner/mode. No public URL, storage provider or legacy file tree is introduced. An integrity digest and expected length are verified before a retained copy is served; failed verification returns a safe regeneration message.
+
+All download/acknowledgement actions use POST with matching Origin and strict JSON/query schemas. The download body is empty JSON; no caller-selected centers, database, file path or filename is accepted. The browser receipt binds an existing owned attempt to the same export and exact byte count; repeated acknowledgements keep the original timestamp and do not increment receipt counts. This is protocol consistency, not proof that a browser or device is trustworthy. Workbook responses use fixed XLSX MIME, attachment filenames, no-store/private caching, Cookie variation and nosniff.
+
+## Retention, quotas and failure recovery
+
+Private copies last **up to seven days**, with at most twenty active copies and 64 MiB per actor/mode, 10 MiB per file and 256 MiB globally. Cleanup removes expired bytes. To save a new copy, the oldest **same actor/mode** copies may be evicted for count/space limits. Other actors/modes are never evicted to satisfy that request. If a new copy cannot fit or exceeds the per-file bound, no existing copy is evicted for that failed save: the fresh download still succeeds, history records the non-retained reason and the UI explains that no saved copy exists. Quotas bound logical blob bytes; SQLite pages/WAL, metadata and other feature budgets require separate disk/backups capacity.
+
+Generation remains synchronous and bounded: existing six requests/account/mode/minute, twenty centers, 5,000 class rows and inspected SQL read bounds remain. Two preparations run concurrently per process; a delivered workbook is capped at 50 MiB. Downloads are limited to thirty requests/account/mode/minute, and acknowledgements to sixty. Request rows last thirty days, bounded to 5,000 per actor/mode and 50,000 globally; these counters are explicitly a thirty-day window. Fresh generation, archive/eviction changes and the initial response-attempt row publish in one SQLite transaction. Publication failure rolls these changes back and records a failed generation; no unconfirmed download is automatically replayed.
+
+Receipt acknowledgements must first arrive within twenty-four hours of an existing attempt, match its byte count and current center access, and are idempotent thereafter while the event exists. Expired/corrupt/missing copies fail closed. Old generation receipts remain, even after copy bytes or thirty-day request observations expire. No legacy `Center_Invoicing` tracker or Logging procedure is called. Accounting and Logging remain pending.
+
+This is a single-host private cache, not a durable background queue or cross-center snapshot. Each source center keeps its existing read transaction; multiple source centers are not read at one instant. Use a shared artifact/session store and worker design before multi-host deployment; accept privacy retention, disk capacity and backup/restore policy before production rollout.
+
+## API and acceptance
+
+- `GET /api/reports/exports?page=1`: owned paginated metadata, no workbook bytes.
+- `POST /api/reports/exports`: existing strict generation contract; now returns optional-retention and response-attempt metadata in headers.
+- `POST /api/reports/exports/{id}/download` with `{}`: current-scope saved copy.
+- `POST /api/reports/exports/{id}/receipt` with `{attemptId, bytes}`: idempotent client-reported receipt.
+
+The existing generation-history wrapper remains compatible and old clients can still receive fresh workbooks. Clients without the new receipt protocol create request observations only. No migration changes the existing generation table's column order or request JSON.
+
+Ten new domain/security groups verify exact bytes after source-label changes, per-owner/mode access and eviction, revoked grants/accounts, expiry/integrity, request-size/attempt binding, receipt idempotency/retention, atomic rollback/recovery, legacy/unconfirmed pagination, capacity fallback, School separation and concurrent/throttled delivery. HTTP acceptance covers anonymous/Origin/owner/query/body/method denial, unchanged bytes/filename/expiry, historical metadata and a separate live dev-account report read without operational SQL mutation. An app stop/build/restart preserves the original workbook's hash, size, filename and expiry. Browser acceptance receives two physical XLSX downloads and compares hashes, sees request/receipt counters after reload and verifies desktop/mobile layout. Results are recorded in [verification](06-verification.md).

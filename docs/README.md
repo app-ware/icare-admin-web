@@ -42,6 +42,8 @@ The subsequent authorized database inspection covers **Secure, Nursery and Schoo
 
 22. [CowPay readiness](22-cowpay-readiness.md): scoped read-only Nursery/Lite setup status, independent live/staging field presence and explicitly reviewed callback metadata. Secret replacement, enablement and provider operations remain pending.
 
+23. [Saved report downloads](23-report-saved-downloads.md): bounded private workbook copies, current-scope re-downloads, paginated history and separate download requests/client-reported browser receipts. Device save and central Logging are not claimed.
+
 ## What has been verified
 
 - The code's execution paths, database selection, form handling, validation, known side effects, and access checks have been reviewed statically.

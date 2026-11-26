@@ -1,5 +1,19 @@
 # Verification record
 
+## Saved report downloads — 30 October 2026
+
+Revalidated for consolidation on **26 November 2026**: 83 domain/security tests, the production build/TypeScript, 65-trace build privacy and anonymous-access production smoke pass. The October browser/API acceptance below remains the original record.
+
+[Chapter 23](23-report-saved-downloads.md) adds private exact-byte recovery, paginated generation metadata and separate request/client-reported byte receipts while preserving workbook calculations.
+
+- **83 domain/security tests pass**, including ten new groups for retention limits/owner-only eviction, exact-byte recovery after source-label changes, owner/admin/mode isolation, current grants/account revocation, expiry/integrity, acknowledgement binding/idempotency/retention, publication rollback/recovery, legacy/unconfirmed pagination, School separation and concurrent/throttled delivery. The existing aggregate workbook and versioned-calendar tests still pass.
+- Demo HTTP acceptance verifies unchanged bytes/filename/expiry, private no-store/Cookie headers, strict empty download bodies, Origin/anonymous/other-owner/query/method denial, paginated totals and receipt idempotency. A separate real test-account session generates an authorized historical Nursery report, retrieves the identical saved bytes and records a local receipt; there is no operational SQL mutation or legacy tracker call. Separate API test sessions were signed out.
+- A local server stop, production build and dev restart preserve the saved workbook's exact hash, byte count, filename and original expiry. The history remains available after reopening the browser; the two restart-verification HTTP downloads add request observations without browser-reported receipts.
+- Desktop browser acceptance generates a two-center fictional Nursery/Lite workbook, receives an XLSX, downloads its saved copy and compares file hashes: both are the same 10,887 bytes. Reload preserves the available copy and the observed two requests/two browser receipts. At 390×844 the page stays 390 px wide and history rows are 354 px, with usable saved-copy/regeneration controls. The desktop page stays within 1280 px. Screenshot evidence uses fictional data only; device save is not inferred from the receipt protocol.
+- Production compilation and TypeScript pass. Build privacy passes for **65 traces** plus standalone output. Production anonymous-access smoke includes the saved-download/receipt POST endpoints and keeps demo entry disabled. The browser spec's success-message expectation was updated; interactive checks use the approved in-app browser API.
+
+Retention is a bounded single-host cache, not a background queue or central Logging service. Production privacy/retention, disk capacity, backups and shared-store deployment require acceptance. Physical-device/browser save behavior and historical business-output acceptance remain outside these local checks.
+
 ## CowPay readiness — 30 October 2026
 
 [Chapter 22](22-cowpay-readiness.md) adds scoped read-only Nursery/Lite configuration status without returning merchant credentials or making provider calls.
