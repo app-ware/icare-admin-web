@@ -41,6 +41,9 @@ export class PortalStore {
     if (file !== ':memory:') mkdirSync(dirname(resolve(file)), { recursive: true, mode: 0o700 });
     this.db = new DatabaseSync(file);
     this.db.exec(`PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;
+      CREATE TABLE IF NOT EXISTS center_views (id TEXT PRIMARY KEY,mode TEXT NOT NULL,dealer_id INTEGER NOT NULL,name TEXT NOT NULL,name_key TEXT NOT NULL,filters TEXT NOT NULL,revision TEXT NOT NULL,fingerprint TEXT NOT NULL,created_at INTEGER NOT NULL,updated_at INTEGER NOT NULL,removed_at INTEGER);
+      CREATE INDEX IF NOT EXISTS center_view_owner ON center_views(mode,dealer_id,updated_at,id);
+      CREATE UNIQUE INDEX IF NOT EXISTS center_view_active_name ON center_views(mode,dealer_id,name_key) WHERE removed_at IS NULL;
       CREATE TABLE IF NOT EXISTS preview_cowpay_readiness (center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,row_count INTEGER NOT NULL,type_mismatch INTEGER NOT NULL,merchant_code_present INTEGER NOT NULL,merchant_hash_present INTEGER NOT NULL,live_token_present INTEGER NOT NULL,staging_token_present INTEGER NOT NULL,enabled_known INTEGER NOT NULL,enabled_value INTEGER,updated_at TEXT,PRIMARY KEY(center_id,center_type));
       CREATE TABLE IF NOT EXISTS preview_input_modes (center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,input_type INTEGER NOT NULL,version INTEGER NOT NULL,PRIMARY KEY(center_id,center_type));
       CREATE TABLE IF NOT EXISTS input_mode_versions (mode TEXT NOT NULL,center_id INTEGER NOT NULL,center_type INTEGER NOT NULL,version INTEGER NOT NULL,PRIMARY KEY(mode,center_id,center_type));

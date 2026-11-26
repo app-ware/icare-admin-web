@@ -1,6 +1,6 @@
 # iCareadmin remaining features and delivery order
 
-Status: **30 October 2026**.
+Status: **26 November 2026**.
 
 The rebuild provides dealer sign-in, scoped center management, dealer administration, existing center-user management, activity and aggregate Excel reports. The remaining work is concentrated in operational modules, full center provisioning, credential workflows and production readiness.
 
@@ -11,7 +11,7 @@ The comparison baseline is the [audited legacy iCareadmin](01-current-system.md)
 | Area                  | Available now                                                                                                                                                                                                      |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Access                | Existing dealer sign-in, current permissions, expiring/revocable sessions, logout and sign out other sessions.                                                                                                     |
-| Centers               | Scoped directory, search/filter/sort, profile/contact editing, manual/map coordinate updates and persistent owned creation drafts. Demo publication creates fictional centers only.                                |
+| Centers               | Scoped directory, search/filter/sort, private saved views with restore, profile/contact editing, manual/map coordinate updates and persistent owned creation drafts. Demo publication creates fictional centers only. |
 | Dealers               | Administrator-only creation, profile changes, enable/disable, administrator roles and center assignments, with conflict and self/last-administrator protections.                                                   |
 | Center branding       | Validated logo/main-photo uploads, private owned previews, atomic publication, creation-wizard save/resume and authenticated images in the new portal. Legacy image fields/URLs are unchanged.                     |
 | Alert messages        | Scoped publication/replacement, inclusive UTC dates, administrator reset, per-center outcomes and owned failed-target retries.                                                                                     |
@@ -69,5 +69,7 @@ Saved report copies and client-reported receipt history are delivered in chapter
 Organizational sign-in and MFA are additional identity roadmap items, not established legacy-parity gaps. Arabic/RTL, inactive legacy child-image/sponsor features and new editability rules remain product decisions, as recorded in [the delivery plan](05-delivery-plan.md#questions-requiring-actual-systembusiness-evidence).
 
 ## Maintaining this status
+
+[Chapter 24](24-saved-center-views.md) adds private saved directory filters with recoverable removal. Applying saved filters respects current center access; it does not resolve the integration dependencies above.
 
 When a feature is delivered, update its status here and its implementation chapter, record verification, and adjust the suggested order. Update the feature registry when module ownership changes. Keep deferred features and environment-specific acceptance limits explicit.

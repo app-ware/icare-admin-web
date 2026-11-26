@@ -44,6 +44,8 @@ The subsequent authorized database inspection covers **Secure, Nursery and Schoo
 
 23. [Saved report downloads](23-report-saved-downloads.md): bounded private workbook copies, current-scope re-downloads, paginated history and separate download requests/client-reported browser receipts. Device save and central Logging are not claimed.
 
+24. [Saved center views](24-saved-center-views.md): private named directory filters, explicit apply/update, revision protection and recoverable removal. Preferences never grant center access or retain result snapshots.
+
 ## What has been verified
 
 - The code's execution paths, database selection, form handling, validation, known side effects, and access checks have been reviewed statically.

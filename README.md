@@ -2,6 +2,8 @@
 
 Next.js rebuild and a source-backed migration dossier for the legacy iCare admin portal.
 
+[Saved center views](docs/24-saved-center-views.md) lets each account save and reopen directory filters, update named views and restore recently removed views. Results follow current center access.
+
 **Start with [the audit dossier](docs/README.md).** It maps every one of the 28 legacy screens, authentication/authorization, five SQL database roles, 59 database-access methods, reporting rules, files/integrations, findings, and implementation phases.
 
 [The database follow-up](docs/07-database-inspection.md) covers the three available catalogs (798 tables, 1,419 procedures). [Phase one](docs/08-authentication-and-centers.md) implements existing-dealer authentication, server sessions, scoped center adapters, profile editing, saved drafts and an independent light-blue interface. Accounting/Logging remain pending.

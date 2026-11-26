@@ -24,6 +24,7 @@ import {
 } from '@/domain/management';
 import { api } from '@/lib/client';
 import { CenterWizard } from './center-wizard';
+import { SavedCenterViews } from './saved-center-views';
 export function CenterDirectory({
   initial,
   initialQuery,
@@ -143,6 +144,13 @@ export function CenterDirectory({
       </div>
       {tab === 'directory' ? (
         <section className="panel directory-panel">
+          <SavedCenterViews
+            query={{ ...query, q: search }}
+            onApply={(filters) => {
+              setSearch(filters.q);
+              setQuery({ ...filters, page: 1 });
+            }}
+          />
           <div className="directory-toolbar">
             <div className="search-field">
               <Search size={18} />

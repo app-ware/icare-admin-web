@@ -58,6 +58,7 @@ try {
   assert.ok(!login.includes('Explore demo workspace'));
   for (const route of [
     '/api/centers',
+    '/api/center-views',
     '/api/maps/config',
     '/api/integrations/cowpay',
     '/api/integrations/cowpay/1/101',
@@ -106,6 +107,20 @@ try {
       method: 'POST',
       headers: { Origin: origin, 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
+    });
+    assert.equal(response.status, 401);
+    assert.match(response.headers.get('cache-control'), /no-store/);
+  }
+  for (const [path, method] of [
+    ['/api/center-views', 'POST'],
+    ['/api/center-views/00000000-0000-4000-8000-000000000001', 'PATCH'],
+    ['/api/center-views/00000000-0000-4000-8000-000000000001', 'DELETE'],
+    ['/api/center-views/00000000-0000-4000-8000-000000000001/restore', 'POST'],
+  ]) {
+    const response = await fetch(origin + path, {
+      method,
+      headers: { Origin: origin, 'Content-Type': 'application/json' },
+      body: '{}',
     });
     assert.equal(response.status, 401);
     assert.match(response.headers.get('cache-control'), /no-store/);

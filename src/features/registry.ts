@@ -31,6 +31,7 @@ export const modules = [
     ],
     workflows: [
       'Find and filter authorized centers',
+      'Save private named directory filters, apply them to current access and restore recently removed views',
       'Upload and review a private portal logo and main center photo before publishing',
       'Create a center with a guided profile, branding, location, and administrator review',
       'Save and resume an owned draft with its private logo and center photo',
@@ -42,6 +43,7 @@ export const modules = [
     ],
     acceptance: [
       'Keep center ID and type together',
+      'Keep saved views owner/mode scoped; filters never grant access or retain center result records',
       'Decode and re-encode bounded images, preserve current branding until publish, and scope preview access by owner and mode',
       'Validate drafts and recover partial provisioning',
       'Attach draft images with the profile revision; transfer images atomically on demo creation only',

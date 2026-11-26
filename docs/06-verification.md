@@ -1,5 +1,14 @@
 # Verification record
 
+## Saved center views — 26 November 2026
+
+[Chapter 24](24-saved-center-views.md) restores named filter preferences in persistent project storage after the temporary checkout disappeared.
+
+- **92 domain/security tests pass**, including nine saved-view groups for strict canonical filters/Unicode names, idempotent creation, owner/mode/admin isolation, active account/capability checks, stale/ABA changes, restore collisions, bounded owner-only archive cleanup/eviction, current directory scope, atomic failures, throttling and global capacity. Existing report security/calculation tests remain passing.
+- Demo HTTP acceptance verifies private preference CRUD/restore, safe retries and anonymous/Origin/query/body/method/stale denial. A separate existing dev-account session verifies scoped directory reads and private preference CRUD/restore. Test preferences were recoverably removed and API sessions signed out; no operational SQL row was changed.
+- Fictional browser acceptance verifies immediate search capture, save, clear/apply, URL reload, reviewed rename, two-tab stale-save rejection with a disabled Save button and working Close and refresh views action, removal and restore. At 390×844 the page remains 390 px, saved-view panel 354 px and dialog 356 px. Desktop controls also fit the existing 1280 px page. Browser viewport overrides were reset.
+- Production build/TypeScript, **68-trace** build privacy and anonymous-access smoke pass, including all saved-view mutation methods. A separate API session verifies the saved record survives app stop/build/restart with identical ID, name, filters, revision and timestamps. Runtime checks use existing locked dependencies and private storage; no dependency was added.
+
 ## Saved report downloads — 30 October 2026
 
 Revalidated for consolidation on **26 November 2026**: 83 domain/security tests, the production build/TypeScript, 65-trace build privacy and anonymous-access production smoke pass. The October browser/API acceptance below remains the original record.
