@@ -1,5 +1,12 @@
 # Verification record
 
+## Bus activation preparation — 26 November 2026
+
+- Read-only dev inspection still finds ten Nursery/Lite buses, zero School buses and no dwell/radius/input choices, settings or defaults in either catalog. The independent write switch remains off. [Redacted reference/count evidence](generated/transport-dev-readiness.json) includes no endpoint, credential, reference labels, bus names or personal records.
+- The existing rollback runner passes again for Nursery/Lite/School: lookup-ID/value distinction, missing references, insert/readback, stale revisions, inheritance, duplicate denial and current ownership/membership checks. All fixtures rolled back and original fingerprints matched; [updated rollback evidence](generated/transport-sql-checks.json). No reference seed, global default or persistent business setting was changed. Identity counters may advance under the previously documented fixture boundary.
+- The new inspection command requires explicit development/read-only flags and the exact configured dev compatibility boundary before opening SQL. Production-mode and missing-flag invocations deny execution. It remains separate from application runtime. Approved reference values and committed fixture/public-boundary acceptance are still needed before activation.
+- TypeScript passes with the new tool. The complete legacy tree matches audited source `4bee1247adeb7a0794eaf996268c88cc3a092465` (312 tracked files, untruncated); no SQL files or seed/migration paths were found. Its current reference rows/units were not guessed from UI labels or demo examples. The last application build/privacy/access checks are the saved-view checks below; this preparation changes no application runtime behavior.
+
 ## Saved center views — 26 November 2026
 
 [Chapter 24](24-saved-center-views.md) restores named filter preferences in persistent project storage after the temporary checkout disappeared.

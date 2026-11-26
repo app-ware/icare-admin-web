@@ -1,0 +1,50 @@
+{
+  "checkedAt": "2026-11-26T15:34:09.695Z",
+  "developmentOnly": true,
+  "readOnly": true,
+  "configuredWriteSwitch": false,
+  "catalogs": [
+    {
+      "role": "Nursery/Lite",
+      "counts": {
+        "radiusChoices": 0,
+        "dwellChoices": 0,
+        "inputChoices": 0,
+        "enabledInputChoices": 0,
+        "catalogDefaults": 0,
+        "overrides": 0,
+        "registeredBuses": 10
+      },
+      "referenceChoicesValid": false,
+      "missingChoices": [
+        "radius",
+        "dwell",
+        "input"
+      ]
+    },
+    {
+      "role": "School",
+      "counts": {
+        "radiusChoices": 0,
+        "dwellChoices": 0,
+        "inputChoices": 0,
+        "enabledInputChoices": 0,
+        "catalogDefaults": 0,
+        "overrides": 0,
+        "registeredBuses": 0
+      },
+      "referenceChoicesValid": false,
+      "missingChoices": [
+        "radius",
+        "dwell",
+        "input"
+      ]
+    }
+  ],
+  "remainingAcceptance": [
+    "Business-reviewed reference IDs, values, labels and units; input consumer meanings",
+    "Reviewed application of approved references without automatic repair or global-default writes",
+    "Committed disposable-fixture/public-boundary acceptance and cleanup before enabling dev writes"
+  ],
+  "limitations": "Counts/reference checks are observations, not a write-enablement decision, consistent cross-catalog snapshot, production privilege acceptance or client delivery confirmation."
+}

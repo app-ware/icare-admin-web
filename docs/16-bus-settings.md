@@ -25,3 +25,21 @@ The owner-configured dev server currently has ten Nursery buses and no School bu
 The fictional demo uses explicitly labeled example choices, separate from SQL and from live lookup seeds. Domain/security tests cover scope/type isolation, page-grant denial, forged/stale account grants, revoked ownership, strict schemas, default protection, stale ABA and receipt failure rollback. Browser acceptance verified live missing-state review and an operator override/default-restoration flow on desktop/mobile. Connected device refresh/delivery remains unverified; a portal save confirms stored configuration only.
 
 Routes: `GET /api/transport`, `GET /api/transport/{type}/{id}`, and `GET/PATCH /api/transport/{type}/{id}/{bus}`. No arbitrary database, SQL, procedure, actor or default-row selector is accepted.
+
+## Dev activation review — 26 November 2026
+
+The [fresh read-only inspection](generated/transport-dev-readiness.json) still finds ten Nursery/Lite buses, zero School buses and zero radius, dwell or input choices, settings or catalog defaults in both operational catalogs. The private transport-write switch remains false. The rollback acceptance runner was rerun successfully on this date; all temporary fixtures rolled back and the original fingerprints matched. This does not substitute for committed fixture/public-boundary acceptance.
+
+Repeat the reference/count inspection separately from the app:
+
+```sh
+NODE_ENV=development node --conditions=react-server --import tsx scripts/inspect-transport-development.ts --development-only --read-only
+```
+
+It requires the exact owner-confirmed development compatibility boundary and encrypted SQL configuration, uses fixed bounded reference reads and aggregate counts, and writes only the redacted report above. It never reads tracking, child, driver, account credential or location rows. It accepts no SQL, database or output path arguments, performs no SQL mutations, and does not enable any feature switch. Reads are observations at inspection time; later reference changes still require adapter validation/revisions.
+
+The owner needs to supply a reviewed legacy seed/export source or complete the [review template](examples/transport-reference-review.example.json). For each radius/dwell choice record the intended ID (or explicitly request a new identity), physical value, unit and display label, with the source of the unit. For input choices record the exact ID, label, enabled state and meaning expected by consuming clients. Nursery/Lite share a catalog; School must be reviewed independently. The template intentionally contains no invented choices and is not consumed by runtime or an importer. Do not infer values/units from lookup IDs or promote demo examples to live references.
+
+The GitHub connector could not access the legacy repository during this review. Existing authorized GitHub CLI access returned its complete, untruncated tree `4bee1247adeb7a0794eaf996268c88cc3a092465`, matching the audited source: 312 tracked files and no SQL files or seed/migration paths. This tree-level check supplies no approved reference values; it does not rule out exports or scripts held elsewhere.
+
+After reference review, prepare the exact application/rollback plan, verify schema/identity handling and existing consumers, and apply only the approved reference changes. Global defaults remain unchanged; a valid catalog default is required only for inheritance/restoration, while explicit overrides can work with reviewed choices and no default. Complete committed disposable-fixture checks through the public adapter, clean them up, verify the original baseline and then enable the independent dev switch. Connected-client interpretation/refresh and production rollout remain separate acceptance tasks.

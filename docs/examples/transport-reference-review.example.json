@@ -1,0 +1,22 @@
+{
+  "purpose": "Human review only; this file is not an executable seed or runtime configuration",
+  "environment": "owner-confirmed development",
+  "approved": false,
+  "reviewedBy": "",
+  "reviewedSource": "",
+  "changeCatalogDefaults": false,
+  "catalogs": [
+    {
+      "role": "Nursery/Lite",
+      "radiusChoices": [],
+      "dwellChoices": [],
+      "inputChoices": []
+    },
+    {
+      "role": "School",
+      "radiusChoices": [],
+      "dwellChoices": [],
+      "inputChoices": []
+    }
+  ]
+}
